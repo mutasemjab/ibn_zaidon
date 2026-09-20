@@ -1,0 +1,181 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Exports\TeachersExport;
+use App\Http\Controllers\Controller;
+use App\Imports\TeachersImport;
+use App\Models\AdminActivityLog;
+use App\Models\SchoolClass;
+use App\Models\Subject;
+use App\Models\Teacher;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
+class TeacherController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware($this->perm('teacher-table'))->only(['index', 'show', 'export']);
+        $this->middleware($this->perm('teacher-add'))->only(['create', 'store', 'import']);
+        $this->middleware($this->perm('teacher-edit'))->only(['edit', 'update']);
+        $this->middleware($this->perm('teacher-delete'))->only(['destroy']);
+    }
+
+    public function index(Request $request)
+    {
+        $teachers = Teacher::withCount('courses')
+            ->when($request->search, fn ($q, $s) => $q
+                ->where('name', 'like', "%{$s}%")
+                ->orWhere('email', 'like', "%{$s}%")
+                ->orWhere('national_id', 'like', "%{$s}%")
+            )
+            ->when($request->is_active !== null && $request->is_active !== '', fn ($q) =>
+                $q->where('is_active', $request->boolean('is_active'))
+            )
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.teachers.index', compact('teachers'));
+    }
+
+    public function create()
+    {
+        return view('admin.teachers.create');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name'              => 'required|string|max:200',
+            'national_id'       => 'required|string|max:50|unique:teachers,national_id',
+            'email'             => 'nullable|email|unique:teachers,email',
+            'phone'             => 'nullable|string|max:20',
+            'password'          => 'required|string|min:6',
+            'specialization_ar' => 'nullable|string|max:255',
+            'specialization_en' => 'nullable|string|max:255',
+            'bio_ar'            => 'nullable|string',
+            'bio_en'            => 'nullable|string',
+            'qualification_ar'  => 'nullable|string|max:200',
+            'qualification_en'  => 'nullable|string|max:200',
+            'years_of_experience' => 'nullable|integer|min:0',
+            'gender'            => 'nullable|in:male,female',
+            'nationality'       => 'nullable|string|max:100',
+            'is_verified'       => 'boolean',
+            'avatar'            => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
+        ]);
+
+        $data['is_verified']          = $request->boolean('is_verified');
+
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] = uploadImage('assets/uploads/teachers', $request->file('avatar'));
+        }
+
+        $teacher = Teacher::create($data);
+        AdminActivityLog::log('create', "إضافة معلم: {$teacher->name}", 'teachers', $teacher->id);
+
+        return redirect()->route('admin.teachers.index')
+            ->with('success', 'Teacher created successfully.');
+    }
+
+    public function show(Teacher $teacher)
+    {
+        $teacher->load([
+            'courses'       => fn ($q) => $q->withCount('enrollments')->latest()->limit(5),
+            'teacherClasses' => fn ($q) => $q->with(['schoolClass', 'subject'])->orderBy('class_id'),
+        ]);
+
+        $allClasses  = SchoolClass::where('is_active', true)->orderBy('name')->get();
+        $allSubjects = Subject::where('is_active', true)
+            ->with(['category.parent.parent'])
+            ->orderBy('name_ar')
+            ->get();
+
+        return view('admin.teachers.show', compact('teacher', 'allClasses', 'allSubjects'));
+    }
+
+    public function edit(Teacher $teacher)
+    {
+        return view('admin.teachers.edit', compact('teacher'));
+    }
+
+    public function update(Request $request, Teacher $teacher)
+    {
+        $data = $request->validate([
+            'name'              => 'required|string|max:200',
+            'national_id'       => 'required|string|max:50|unique:teachers,national_id,' . $teacher->id,
+            'email'             => 'nullable|email|unique:teachers,email,' . $teacher->id,
+            'phone'             => 'nullable|string|max:20',
+            'password'          => 'nullable|string|min:6',
+            'specialization_ar' => 'nullable|string|max:255',
+            'specialization_en' => 'nullable|string|max:255',
+            'bio_ar'            => 'nullable|string',
+            'bio_en'            => 'nullable|string',
+            'qualification_ar'  => 'nullable|string|max:200',
+            'qualification_en'  => 'nullable|string|max:200',
+            'years_of_experience' => 'nullable|integer|min:0',
+            'gender'            => 'nullable|in:male,female',
+            'nationality'       => 'nullable|string|max:100',
+            'is_active'         => 'boolean',
+            'is_verified'       => 'boolean',
+            
+            'avatar'            => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
+        ]);
+
+        $data['is_active']            = $request->boolean('is_active');
+        $data['is_verified']          = $request->boolean('is_verified');
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        if ($request->hasFile('avatar')) {
+            $data['avatar'] = uploadImage('assets/uploads/teachers', $request->file('avatar'));
+        }
+
+        $teacher->update($data);
+        AdminActivityLog::log('update', "تعديل معلم: {$teacher->name}", 'teachers', $teacher->id);
+
+        return redirect()->route('admin.teachers.index')
+            ->with('success', 'Teacher updated successfully.');
+    }
+
+    public function destroy(Teacher $teacher)
+    {
+        if ($teacher->courses()->exists()) {
+            return redirect()->route('admin.teachers.index')
+                ->with('error', 'لا يمكن حذف المعلم لأن لديه دورات — احذف أو أعد إسناد دوراته أولاً.');
+        }
+
+        AdminActivityLog::log('delete', "حذف معلم: {$teacher->name}", 'teachers', $teacher->id);
+        $teacher->forceDelete();
+
+        return redirect()->route('admin.teachers.index')
+            ->with('success', 'Teacher deleted successfully.');
+    }
+
+    public function export(Request $request)
+    {
+        $filters  = $request->only(['search', 'is_active']);
+        $filename = 'teachers_' . now()->format('Y-m-d') . '.xlsx';
+
+        return Excel::download(new TeachersExport($filters), $filename);
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls,csv|max:5120',
+        ]);
+
+        $importer = new TeachersImport();
+        Excel::import($importer, $request->file('file'));
+
+        $msg = "تم استيراد {$importer->imported} معلم بنجاح.";
+        if ($importer->skipped) $msg .= " تم تخطي {$importer->skipped}.";
+        if ($importer->errors)  $msg .= ' أخطاء: ' . implode(' | ', $importer->errors);
+
+        return back()->with('success', $msg);
+    }
+}

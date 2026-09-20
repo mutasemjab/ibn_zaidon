@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\zaidon\" /B)",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\layouts\")",
+      "Bash(Out-Null)",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\partials\")",
+      "Bash(Write-Output \"Directories ready\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\layouts\")",
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\partials\")"
+    ]
+  }
+}
