@@ -22,12 +22,12 @@
         <form method="POST" action="{{ route('student.login.post') }}" novalidate>
             @csrf
             <div class="mb-3">
-                <label class="z-label">الرقم الوطني أو البريد الإلكتروني</label>
-                <input type="text" name="login"
-                       class="z-input {{ $errors->has('login') ? 'is-invalid' : '' }}"
-                       value="{{ old('login') }}"
-                       placeholder="أدخل رقمك الوطني أو بريدك" required autofocus dir="ltr">
-                @error('login')<span class="z-error">{{ $message }}</span>@enderror
+                <label class="z-label">رقم الهاتف</label>
+                <input type="tel" name="phone"
+                       class="z-input {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                       value="{{ old('phone') }}"
+                       placeholder="07X XXX XXXX" required autofocus dir="ltr">
+                @error('phone')<span class="z-error">{{ $message }}</span>@enderror
             </div>
             <div class="mb-3">
                 <div class="d-flex justify-content-between align-items-center mb-1">

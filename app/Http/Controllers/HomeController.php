@@ -29,9 +29,9 @@ class HomeController extends Controller
         ];
 
         $categories = Category::active()
+            ->roots()
             ->withCount(['courses' => fn ($q) => $q->where('is_published', true)])
             ->orderBy('order_index')
-            ->limit(4)
             ->get();
 
         $allFeatured = Course::with(['teacher', 'category'])
@@ -253,17 +253,19 @@ class HomeController extends Controller
 
     public function courses(Request $request)
     {
-        $categories = Category::active()->orderBy('order_index')->get();
+        $categories = Category::active()->roots()->orderBy('order_index')->get();
 
         $query = Course::with(['teacher', 'category'])
             ->where('is_published', true);
 
-        if ($request->filled('category')) {
-            $query->where('category_id', (int) $request->category);
-        }
-
+        $currentSubject = null;
         if ($request->filled('subject')) {
             $query->where('subject_id', (int) $request->subject);
+            $currentSubject = Subject::find((int) $request->subject);
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category_id', (int) $request->category);
         }
 
         if ($request->filled('q')) {
@@ -283,7 +285,7 @@ class HomeController extends Controller
 
         $courses = $query->paginate(12)->withQueryString();
 
-        return view('front.courses', compact('courses', 'categories'));
+        return view('front.courses', compact('courses', 'categories', 'currentSubject'));
     }
 
     public function courseDetail(int $id)

@@ -8,10 +8,16 @@
     <div class="container">
         <div class="z-breadcrumb mb-2">
             <a href="{{ route('home') }}">الرئيسية</a>
+            @if(isset($currentSubject) && $currentSubject && $currentSubject->category)
+                <span class="sep">/</span>
+                <a href="{{ route('categories.show', $currentSubject->category_id) }}">{{ $currentSubject->category->name_ar }}</a>
+            @endif
             <span class="sep">/</span>
-            <span>الدورات</span>
+            <span>{{ isset($currentSubject) && $currentSubject ? $currentSubject->name_ar : 'الدورات' }}</span>
         </div>
-        <h1 style="color:#fff;font-size:clamp(1.5rem,3vw,2rem);margin:0">الدورات التعليمية</h1>
+        <h1 style="color:#fff;font-size:clamp(1.5rem,3vw,2rem);margin:0">
+            {{ isset($currentSubject) && $currentSubject ? 'دورات ' . $currentSubject->name_ar : 'الدورات التعليمية' }}
+        </h1>
     </div>
 </div>
 

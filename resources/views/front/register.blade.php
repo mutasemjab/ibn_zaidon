@@ -32,18 +32,18 @@
 
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                    <label class="z-label">الرقم الوطني <span class="text-danger">*</span></label>
-                    <input type="text" name="national_id"
-                           class="z-input {{ $errors->has('national_id') ? 'is-invalid' : '' }}"
-                           value="{{ old('national_id') }}" placeholder="XXXXXXXXXX" dir="ltr" required>
-                    @error('national_id')<span class="z-error">{{ $message }}</span>@enderror
-                </div>
-                <div class="col-md-6">
-                    <label class="z-label">رقم الهاتف</label>
+                    <label class="z-label">رقم الهاتف <span class="text-danger">*</span></label>
                     <input type="tel" name="phone"
                            class="z-input {{ $errors->has('phone') ? 'is-invalid' : '' }}"
-                           value="{{ old('phone') }}" placeholder="+962 7X XXX XXXX" dir="ltr">
+                           value="{{ old('phone') }}" placeholder="07X XXX XXXX" dir="ltr" required>
                     @error('phone')<span class="z-error">{{ $message }}</span>@enderror
+                </div>
+                <div class="col-md-6">
+                    <label class="z-label">الرقم الوطني</label>
+                    <input type="text" name="national_id"
+                           class="z-input {{ $errors->has('national_id') ? 'is-invalid' : '' }}"
+                           value="{{ old('national_id') }}" placeholder="XXXXXXXXXX" dir="ltr">
+                    @error('national_id')<span class="z-error">{{ $message }}</span>@enderror
                 </div>
             </div>
 

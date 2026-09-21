@@ -7,7 +7,8 @@
       "Bash(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\partials\")",
       "Bash(Write-Output \"Directories ready\")",
       "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\layouts\")",
-      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\partials\")"
+      "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\partials\")",
+      "Bash(xargs grep *)"
     ]
   }
 }

@@ -176,31 +176,33 @@
             <h2 class="section-heading">اختر تخصصك</h2>
             <p class="section-desc mx-auto">تصفّح دوراتنا التعليمية حسب المرحلة الدراسية والتخصص</p>
         </div>
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
             @forelse($categories as $category)
-            <div class="col-lg-3 col-md-4 col-6 anim-fade-up anim-d{{ min($loop->index + 1, 4) }}">
-                <a href="{{ route('courses.index', ['category' => $category->id]) }}" class="cat-card">
-                    <div class="cat-icon">{{ $category->icon ?? '📚' }}</div>
-                    <h5>{{ $category->name_ar ?? $category->name }}</h5>
+            <div class="col-lg-4 col-md-5 col-10 anim-fade-up anim-d{{ min($loop->index + 1, 4) }}">
+                <a href="{{ route('categories.show', $category->id) }}" class="cat-card" style="padding:2.5rem 1.5rem">
+                    <div class="cat-icon" style="font-size:2.5rem;margin-bottom:1rem">
+                        @if($category->icon)<i class="bi {{ $category->icon }}"></i>@else📚@endif
+                    </div>
+                    <h5 style="font-size:1.2rem">{{ $category->name_ar ?? $category->name }}</h5>
                     <span class="cat-count">{{ $category->courses_count ?? 0 }} دورة</span>
                 </a>
             </div>
             @empty
-            @foreach([['📐','الرياضيات',12],['⚛️','العلوم',8],['📖','اللغة العربية',10],['🌍','التاريخ والجغرافيا',6]] as $c)
-            <div class="col-lg-3 col-md-4 col-6">
-                <div class="cat-card">
-                    <div class="cat-icon">{{ $c[0] }}</div>
-                    <h5>{{ $c[1] }}</h5>
-                    <span class="cat-count">{{ $c[2] }} دورة</span>
+            <div class="col-lg-4 col-md-5 col-10">
+                <div class="cat-card" style="padding:2.5rem 1.5rem">
+                    <div class="cat-icon" style="font-size:2.5rem"><i class="bi bi-backpack2"></i></div>
+                    <h5 style="font-size:1.2rem">الصفوف الرئيسية</h5>
+                    <span class="cat-count">الصف الأول حتى العاشر</span>
                 </div>
             </div>
-            @endforeach
+            <div class="col-lg-4 col-md-5 col-10">
+                <div class="cat-card" style="padding:2.5rem 1.5rem">
+                    <div class="cat-icon" style="font-size:2.5rem"><i class="bi bi-mortarboard"></i></div>
+                    <h5 style="font-size:1.2rem">التوجيهي</h5>
+                    <span class="cat-count">اول وثاني ثانوي</span>
+                </div>
+            </div>
             @endforelse
-        </div>
-        <div class="text-center mt-5">
-            <a href="{{ route('courses.index') }}" class="btn-z btn-z-outline btn-z-lg">
-                <i class="bi bi-grid-3x3-gap-fill"></i> عرض جميع التصنيفات
-            </a>
         </div>
     </div>
 </section>

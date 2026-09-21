@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentAuthController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ Route::group([
     Route::post('/exams/{id}/submit',              [HomeController::class, 'examSubmit'])->name('exams.submit');
     Route::get('/exams/{examId}/result/{attemptId}', [HomeController::class, 'examResult'])->name('exams.result');
     Route::get('/teachers/{id}',                   [HomeController::class, 'teacherProfile'])->name('teachers.show');
+    Route::get('/categories/{id}',                 [CategoryController::class, 'show'])->name('categories.show');
 
     // ── Cart ────────────────────────────────────────────────────────────────
     Route::get('/cart',                [CartController::class, 'index'])->name('cart.index');
