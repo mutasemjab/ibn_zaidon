@@ -141,15 +141,7 @@
                     </select>
                     <small class="text-muted">{{ __('messages.category_auto_hint') }}</small>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">الصفوف الدراسية</label>
-                    <select name="class_ids[]" class="form-select" multiple size="6">
-                        @foreach($classes as $class)
-                            <option value="{{ $class->id }}" @selected(in_array($class->id, old('class_ids', $course->classes->pluck('id')->all())))>{{ $class->name }}</option>
-                        @endforeach
-                    </select>
-                    <small class="text-muted">اختر صف واحد أو أكثر — اترك الكل بدون اختيار إذا الدورة تناسب كل الصفوف</small>
-                </div>
+              
                 <div class="mb-3">
                     <label class="form-label">{{ __('messages.difficulty') }}</label>
                     <select name="difficulty_level" class="form-select">

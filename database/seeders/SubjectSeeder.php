@@ -62,7 +62,7 @@ class SubjectSeeder extends Seeder
 
         // Build lookup: grade_order_index → [1 => sem1_cat_id, 2 => sem2_cat_id]
         $gradeCategories = Category::where('level', 1)
-            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Basic Grades'))
+            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Main Grades'))
             ->with(['children' => fn ($q) => $q->orderBy('order_index')])
             ->orderBy('order_index')
             ->get();
@@ -99,9 +99,9 @@ class SubjectSeeder extends Seeder
         //
         // Pairs use stream order_index (1=health, 2=engineering, 3=business, 4=humanities)
 
-        // Stream categories (level 1 under Tawjihi), each with ministry/school children
-        $streamCategories = Category::where('level', 1)
-            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Tawjihi'))
+        // Stream categories (level 2 under grade-12 under Tawjihi), each with ministry/school children
+        $streamCategories = Category::where('level', 2)
+            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Tawjihi Grade 12'))
             ->with(['children' => fn ($q) => $q->orderBy('order_index')])
             ->orderBy('order_index')
             ->get()

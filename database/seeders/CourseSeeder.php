@@ -33,17 +33,24 @@ class CourseSeeder extends Seeder
             }
         }
 
-        // stream order_index → [1 => ministry_cat_id]
+        // stream order_index → ministry_cat_id (level-3 مواد وزارية under each grade-12 stream)
         $tawjihiMinCatIds = [];
         if ($tawjihiRoot) {
-            $streams = Category::where('level', 1)
+            $grade12 = Category::where('level', 1)
                 ->where('parent_id', $tawjihiRoot->id)
-                ->with(['children' => fn ($q) => $q->orderBy('order_index')])
-                ->get();
-            foreach ($streams as $stream) {
-                foreach ($stream->children as $sub) {
-                    if ($sub->order_index === 1) {
-                        $tawjihiMinCatIds[$stream->order_index] = $sub->id;
+                ->where('name_en', 'Tawjihi Grade 12')
+                ->with([
+                    'children'          => fn ($q) => $q->orderBy('order_index'),
+                    'children.children' => fn ($q) => $q->orderBy('order_index'),
+                ])
+                ->first();
+
+            if ($grade12) {
+                foreach ($grade12->children as $stream) {
+                    foreach ($stream->children as $subCat) {
+                        if ($subCat->order_index === 1) {
+                            $tawjihiMinCatIds[$stream->order_index] = $subCat->id;
+                        }
                     }
                 }
             }

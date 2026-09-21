@@ -32,9 +32,8 @@ class CourseController extends Controller
         $categories = Category::roots()->active()->get();
         $subjects   = $this->subjectsWithPath();
         $teachers   = Teacher::where('is_active', true)->get();
-        $classes    = SchoolClass::where('is_active', true)->orderBy('name')->get();
 
-        return view('admin.courses.create', compact('categories', 'subjects', 'teachers', 'classes'));
+        return view('admin.courses.create', compact('categories', 'subjects', 'teachers'));
     }
 
     public function store(Request $request)
@@ -44,7 +43,6 @@ class CourseController extends Controller
             'category_id'      => 'nullable|exists:categories,id',
             'subject_id'       => 'nullable|exists:subjects,id',
             'class_ids'        => 'nullable|array',
-            'class_ids.*'      => 'exists:classes,id',
             'title_ar'         => 'required|string|max:255',
             'title_en'         => 'required|string|max:255',
             'description_ar'   => 'nullable|string',
@@ -92,9 +90,8 @@ class CourseController extends Controller
         $categories = Category::roots()->active()->get();
         $subjects   = $this->subjectsWithPath();
         $teachers   = Teacher::where('is_active', true)->get();
-        $classes    = SchoolClass::where('is_active', true)->orderBy('name')->get();
 
-        return view('admin.courses.edit', compact('course', 'categories', 'subjects', 'teachers', 'classes'));
+        return view('admin.courses.edit', compact('course', 'categories', 'subjects', 'teachers'));
     }
 
     public function update(Request $request, int $id)
@@ -106,7 +103,6 @@ class CourseController extends Controller
             'category_id'      => 'nullable|exists:categories,id',
             'subject_id'       => 'nullable|exists:subjects,id',
             'class_ids'        => 'nullable|array',
-            'class_ids.*'      => 'exists:classes,id',
             'title_ar'         => 'required|string|max:255',
             'title_en'         => 'required|string|max:255',
             'description_ar'   => 'nullable|string',

@@ -13,33 +13,41 @@ class TeacherSeeder extends Seeder
     {
         // Preload grade-10 semester category IDs for grade-specific lookups
         $g10 = Category::where('level', 1)
-            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Basic Grades'))
+            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Main Grades'))
             ->where('order_index', 10)
             ->with('children')
             ->first();
         $g10SemIds = $g10?->children->pluck('id')->toArray() ?? [];
 
         $g9 = Category::where('level', 1)
-            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Basic Grades'))
+            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Main Grades'))
             ->where('order_index', 9)
             ->with('children')
             ->first();
         $g9SemIds = $g9?->children->pluck('id')->toArray() ?? [];
 
         $g7to10SemIds = Category::where('level', 2)
-            ->whereHas('parent.parent', fn ($q) => $q->where('name_en', 'Basic Grades'))
+            ->whereHas('parent.parent', fn ($q) => $q->where('name_en', 'Main Grades'))
             ->whereHas('parent', fn ($q) => $q->whereIn('order_index', [7, 8, 9, 10]))
             ->pluck('id')->toArray();
 
-        // Tawjihi category IDs keyed by stream order_index and type (1=ministry, 2=school)
-        $tawjihiSubCats = Category::where('level', 2)
-            ->whereHas('parent.parent', fn ($q) => $q->where('name_en', 'Tawjihi'))
-            ->with('parent')
+        // Ministry sub-category IDs under grade-12 streams (level 3: مواد وزارية / مواد مدرسية)
+        $grade12Streams = Category::where('level', 2)
+            ->whereHas('parent', fn ($q) => $q->where('name_en', 'Tawjihi Grade 12'))
+            ->with(['children' => fn ($q) => $q->orderBy('order_index')])
+            ->orderBy('order_index')
             ->get()
-            ->groupBy(fn ($c) => $c->parent->order_index . '_' . $c->order_index);
+            ->keyBy('order_index');
 
-        $healthMin    = $tawjihiSubCats->get('1_1')?->pluck('id')->toArray() ?? [];
-        $engMin       = $tawjihiSubCats->get('2_1')?->pluck('id')->toArray() ?? [];
+        $streamSubCatIds = [];
+        foreach ($grade12Streams as $streamOrder => $stream) {
+            foreach ($stream->children as $sub) {
+                $streamSubCatIds[$streamOrder][$sub->order_index] = $sub->id;
+            }
+        }
+
+        $healthMin = isset($streamSubCatIds[1][1]) ? [$streamSubCatIds[1][1]] : [];
+        $engMin    = isset($streamSubCatIds[2][1]) ? [$streamSubCatIds[2][1]] : [];
 
         $teachers = [
             [

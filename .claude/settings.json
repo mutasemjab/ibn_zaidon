@@ -9,7 +9,9 @@
       "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\layouts\")",
       "PowerShell(New-Item -ItemType Directory -Force \"c:\\\\xampp\\\\htdocs\\\\zaidon\\\\resources\\\\views\\\\front\\\\partials\")",
       "Bash(xargs grep *)",
-      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\ibn_zaidon\" /b)"
+      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\ibn_zaidon\" /b)",
+      "Bash(php artisan *)",
+      "Bash(composer install *)"
     ]
   }
 }
