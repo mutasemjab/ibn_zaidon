@@ -1,34 +1,42 @@
 @extends('front.layouts.app')
-@section('seo_title', \App\Models\SiteSetting::val('site_name') . ' | ' . \App\Models\SiteSetting::val('site_tagline'))
-@section('meta_desc', 'أكاديمية ابن زيدون التعليمية — أفضل منصة تعليم إلكتروني في الأردن. دورات تفاعلية للصفوف 1-10 والتوجيهي، إشراف نخبة المعلمين الأردنيين، امتحانات ذكية، وأوراق عمل احترافية. سجّل مجاناً الآن!')
-@section('meta_keywords', 'أكاديمية ابن زيدون التعليمية, دورات توجيهي أردن, منصة تعليمية أردنية, كورسات الصف العاشر, دروس أونلاين أردن, تعلم إلكتروني أردن, امتحانات التوجيهي, دروس خصوصية أونلاين, أفضل منصة تعليمية أردن, ابن زيدون التعليمية, دورات الصف التاسع, دورات الصف العاشر')
+@php
+    $siteName    = \App\Models\SiteSetting::val('site_name')    ?: __('front.site_name');
+    $siteTagline = \App\Models\SiteSetting::val('site_tagline') ?: __('front.site_tagline');
+    $aboutDesc   = \App\Models\SiteSetting::val('about_description');
+@endphp
+@section('seo_title', $siteName . ' | ' . $siteTagline)
 
 @push('json_ld')
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebPage",
-      "@id": "{{ url('/') }}/#webpage",
-      "url": "{{ url('/') }}",
-      "name": "{{ \App\Models\SiteSetting::val('site_name') }} | {{ \App\Models\SiteSetting::val('site_tagline') }}",
-      "isPartOf": { "@id": "{{ url('/') }}/#website" },
-      "about": { "@id": "{{ url('/') }}/#organization" },
-      "description": "{{ \App\Models\SiteSetting::val('about_description') }}",
-      "inLanguage": "ar"
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {"@type":"Question","name":"ما هي أكاديمية ابن زيدون التعليمية؟","acceptedAnswer":{"@type":"Answer","text":"{{ \App\Models\SiteSetting::val('about_description') }}"}},
-        {"@type":"Question","name":"هل تقدم أكاديمية ابن زيدون دورات للتوجيهي؟","acceptedAnswer":{"@type":"Answer","text":"نعم، تقدم أكاديمية ابن زيدون دورات شاملة لاول ثانوي وثاني ثانوي (التوجيهي) لجميع الفروع."}},
-        {"@type":"Question","name":"كيف يمكن التسجيل في أكاديمية ابن زيدون؟","acceptedAnswer":{"@type":"Answer","text":"يمكن التسجيل عبر الموقع الإلكتروني بإدخال رقم الهاتف وكلمة المرور، والتسجيل مجاني."}}
-      ]
-    }
-  ]
-}
-</script>
+@php
+    $homeLd = [
+        '@context' => 'https://schema.org',
+        '@graph'   => [
+            [
+                '@type'       => 'WebPage',
+                '@id'         => url('/') . '/#webpage',
+                'url'         => url('/'),
+                'name'        => $siteName . ' | ' . $siteTagline,
+                'isPartOf'    => ['@id' => url('/') . '/#website'],
+                'about'       => ['@id' => url('/') . '/#organization'],
+                'description' => $aboutDesc,
+                'inLanguage'  => app()->getLocale(),
+            ],
+            [
+                '@type'      => 'FAQPage',
+                'mainEntity' => collect([
+                    [__('front.home_faq_1_q', ['site' => $siteName]), $aboutDesc],
+                    [__('front.home_faq_2_q', ['site' => $siteName]), __('front.home_faq_2_a', ['site' => $siteName])],
+                    [__('front.home_faq_3_q', ['site' => $siteName]), __('front.home_faq_3_a')],
+                ])->filter(fn ($qa) => filled($qa[1]))->map(fn ($qa) => [
+                    '@type'          => 'Question',
+                    'name'           => $qa[0],
+                    'acceptedAnswer' => ['@type' => 'Answer', 'text' => $qa[1]],
+                ])->values()->all(),
+            ],
+        ],
+    ];
+@endphp
+<script type="application/ld+json">{!! json_encode($homeLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) !!}</script>
 @endpush
 
 @section('content')
@@ -86,7 +94,7 @@
                             <i class="bi bi-book"></i>
                         </div>
                         <div class="mini-text flex-grow-1">
-                            <h6>{{ Str::limit($course->title_ar ?? $course->title ?? '', 32) }}</h6>
+                            <h6>{{ Str::limit($course->title, 32) }}</h6>
                             <span>{{ $course->teacher->name ?? __('front.hero_teacher_fallback') }}</span>
                         </div>
                         <span style="color:var(--z-highlight);font-weight:800;font-size:.88rem;white-space:nowrap">
@@ -211,7 +219,7 @@
                     <div class="cat-icon" style="font-size:2.5rem;margin-bottom:1rem">
                         @if($category->icon)<i class="bi {{ $category->icon }}"></i>@else📚@endif
                     </div>
-                    <h5 style="font-size:1.2rem">{{ $category->name_ar ?? $category->name }}</h5>
+                    <h5 style="font-size:1.2rem">{{ $category->name }}</h5>
                     <span class="cat-count">{{ $category->courses_count ?? 0 }} {{ __('front.cat_courses_count') }}</span>
                 </a>
             </div>
@@ -251,7 +259,7 @@
                                 <span class="tag tag-trending">{{ __('front.tag_trending') }}</span>
                             @endif
                         </div>
-                        <div class="course-title">{{ $course->title_ar ?? $course->title ?? '' }}</div>
+                        <div class="course-title">{{ $course->title }}</div>
                         <div class="course-teacher">
                             <div class="av-xs"><i class="bi bi-person-fill"></i></div>
                             <span>{{ $course->teacher->name ?? __('front.hero_teacher_fallback') }}</span>
@@ -364,7 +372,7 @@
                 <div class="teacher-card">
                     <div class="t-photo-ph"><i class="bi bi-person-circle"></i></div>
                     <div class="t-name">{{ $teacher->name }}</div>
-                    <div class="t-subj">{{ $teacher->specialization_ar ?? $teacher->specialization ?? __('front.teachers_fallback_subj') }}</div>
+                    <div class="t-subj">{{ $teacher->specialization ?: __('front.teachers_fallback_subj') }}</div>
                     <div class="stars">
                         @for($i=1;$i<=5;$i++)<i class="bi bi-star{{ $i<=round($teacher->average_rating??4.8)?'-fill':'' }}"></i>@endfor
                         <span class="rv">({{ number_format($teacher->average_rating??4.8,1) }})</span>

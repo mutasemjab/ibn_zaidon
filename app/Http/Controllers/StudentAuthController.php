@@ -37,9 +37,7 @@ class StudentAuthController extends Controller
         if (! $student->is_active) {
             return back()
                 ->withInput($request->only('phone'))
-                ->withErrors(['phone' => app()->getLocale() === 'ar'
-                    ? 'الحساب موقوف، تواصل مع الإدارة'
-                    : 'Account is suspended. Contact admin.']);
+                ->withErrors(['phone' => __('front.auth_account_suspended')]);
         }
 
         Auth::guard('student')->login($student, $request->boolean('remember'));

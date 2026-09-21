@@ -13,6 +13,12 @@ class SiteSettingSeeder extends Seeder
             // ── Site Identity ─────────────────────────────────────────────────
             ['site_name',          'general', 'أكاديمية ابن زيدون التعليمية', 'Ibn Zaidon Educational Academy'],
             ['site_tagline',       'general', 'منصة التميّز التعليمي في الأردن', 'Jordan\'s Premier Educational Platform'],
+            ['meta_description',   'general',
+                'أكاديمية ابن زيدون التعليمية — منصة تعليم إلكتروني رائدة في الأردن. دورات تفاعلية للمرحلة الأساسية والتوجيهي، امتحانات ذكية، وأوراق عمل احترافية بإشراف نخبة من المعلمين.',
+                'Ibn Zaidon Educational Academy — a leading e-learning platform in Jordan. Interactive courses for basic grades and Tawjihi, smart exams, and professional worksheets from top teachers.'],
+            ['meta_keywords',      'general',
+                'أكاديمية ابن زيدون, دورات تعليمية أردن, منصة تعليمية أردنية, توجيهي, دروس أونلاين, امتحانات التوجيهي',
+                'Ibn Zaidon Academy, online courses Jordan, Jordanian e-learning platform, Tawjihi, online lessons, Tawjihi exams'],
 
             // ── Hero ──────────────────────────────────────────────────────────
             ['hero_badge',         'hero', '🌟 منصة تعليمية رقم 1 في الأردن', '🌟 Jordan\'s #1 Educational Platform'],
@@ -79,6 +85,10 @@ class SiteSettingSeeder extends Seeder
             ['social_twitter',    'social', '', ''],
             ['social_tiktok',     'social', '', ''],
             ['social_whatsapp',   'social', '', ''],
+            ['social_snapchat',   'social', '', ''],
+
+            // ── Payment ──────────────────────────────────────────────────────
+            ['cliq_alias',        'payment', 'ZAIDON', 'ZAIDON'],
 
             // ── Mobile Apps ──────────────────────────────────────────────────
             ['app_google_play',   'apps', '', ''],
@@ -86,7 +96,8 @@ class SiteSettingSeeder extends Seeder
         ];
 
         foreach ($settings as [$key, $group, $ar, $en]) {
-            SiteSetting::updateOrCreate(
+            // firstOrCreate: re-running the seeder must not overwrite values edited in the admin panel.
+            SiteSetting::firstOrCreate(
                 ['key' => $key],
                 ['value_ar' => $ar, 'value_en' => $en, 'group' => $group]
             );

@@ -52,6 +52,13 @@ class Course extends Model
             : ($this->description_en ?? $this->description_ar ?? '');
     }
 
+    public function getWhatYouLearnAttribute(): string
+    {
+        return app()->getLocale() === 'ar'
+            ? ($this->what_you_learn_ar ?: $this->what_you_learn_en ?: '')
+            : ($this->what_you_learn_en ?: $this->what_you_learn_ar ?: '');
+    }
+
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);

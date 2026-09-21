@@ -1,12 +1,17 @@
-@php $cartCount = count(session('cart', [])); @endphp
+@php
+    $cartCount   = count(session('cart', []));
+    $otherLocale = app()->getLocale() === 'ar' ? 'en' : 'ar';
+    $switchUrl   = \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($otherLocale, null, [], true);
+@endphp
 
 <nav class="z-navbar">
     <div class="container z-nav-wrap">
 
         {{-- Brand --}}
         <a href="{{ route('home') }}" class="z-brand">
-            <span class="z-brand-icon">ز</span>
-            <span>{{ \App\Models\SiteSetting::val('site_name') ?: __('front.site_name') }}</span>
+            @php $brandName = \App\Models\SiteSetting::val('site_name') ?: __('front.site_name'); @endphp
+            <span class="z-brand-icon">{{ mb_substr($brandName, 0, 1) }}</span>
+            <span>{{ $brandName }}</span>
         </a>
 
         {{-- Desktop Links --}}
@@ -29,6 +34,11 @@
 
         {{-- Actions --}}
         <div class="z-nav-actions">
+
+            {{-- Language switch --}}
+            <a href="{{ $switchUrl }}" class="btn-z btn-z-ghost btn-z-sm" hreflang="{{ $otherLocale }}" lang="{{ $otherLocale }}">
+                <i class="bi bi-translate"></i> {{ __('front.switch_to_' . $otherLocale) }}
+            </a>
 
             {{-- Cart --}}
             <a href="{{ route('cart.index') }}" class="cart-btn" title="{{ __('front.nav_cart') }}">
@@ -92,6 +102,9 @@
             <li class="exam-link"><a href="{{ route('exams.index') }}">{{ __('front.nav_exams') }}</a></li>
         </ul>
         <div class="z-nav-actions border-top border-white border-opacity-10 pt-3 mt-2">
+            <a href="{{ $switchUrl }}" class="btn-z btn-z-ghost btn-z-sm me-1" hreflang="{{ $otherLocale }}" lang="{{ $otherLocale }}">
+                <i class="bi bi-translate"></i> {{ __('front.switch_to_' . $otherLocale) }}
+            </a>
             @auth('student')
                 <span class="text-white-50 small me-2">{{ auth('student')->user()->name }}</span>
                 <form method="POST" action="{{ route('student.logout') }}" class="d-inline">

@@ -1,25 +1,28 @@
 @extends('front.layouts.app')
-@section('seo_title', $category->name_ar . ' | أكاديمية ابن زيدون التعليمية')
-@section('meta_desc', 'تصفّح دورات ' . $category->name_ar . ' في أكاديمية ابن زيدون التعليمية — دورات تفاعلية بإشراف
-    نخبة المعلمين الأردنيين. سجّل الآن وابدأ التعلم!')
+@php
+    $siteName = \App\Models\SiteSetting::val('site_name') ?: __('front.site_name');
+    $isRtl    = app()->getLocale() === 'ar';
+@endphp
+@section('seo_title', $category->name . ' | ' . $siteName)
+@section('meta_desc', __('front.cat_meta_desc', ['name' => $category->name, 'site' => $siteName]))
 
-    @push('json_ld')
-        <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "{{ url('/') }}" }
-    @if($category->parent)
-    ,{ "@type": "ListItem", "position": 2, "name": "{{ $category->parent->name_ar }}", "item": "{{ route('categories.show', $category->parent_id) }}" }
-    ,{ "@type": "ListItem", "position": 3, "name": "{{ $category->name_ar }}", "item": "{{ url()->current() }}" }
-    @else
-    ,{ "@type": "ListItem", "position": 2, "name": "{{ $category->name_ar }}", "item": "{{ url()->current() }}" }
-    @endif
-  ]
-}
-</script>
-    @endpush
+@push('json_ld')
+    @php
+        $crumbs = [['name' => __('front.home'), 'item' => url('/')]];
+        if ($category->parent) {
+            $crumbs[] = ['name' => $category->parent->name, 'item' => route('categories.show', $category->parent_id)];
+        }
+        $crumbs[] = ['name' => $category->name, 'item' => url()->current()];
+        $breadcrumbLd = [
+            '@context'        => 'https://schema.org',
+            '@type'           => 'BreadcrumbList',
+            'itemListElement' => collect($crumbs)->values()->map(fn ($c, $i) => [
+                '@type' => 'ListItem', 'position' => $i + 1, 'name' => $c['name'], 'item' => $c['item'],
+            ])->all(),
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($breadcrumbLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) !!}</script>
+@endpush
 
 @section('content')
 
@@ -27,24 +30,24 @@
     <div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:2.5rem 0">
         <div class="container">
             <div class="z-breadcrumb mb-2">
-                <a href="{{ route('home') }}">الرئيسية</a>
+                <a href="{{ route('home') }}">{{ __('front.home') }}</a>
                 @if ($category->parent)
                     <span class="sep">/</span>
                     @if ($category->parent->parent_id)
                         <a
-                            href="{{ route('categories.show', $category->parent->parent_id) }}">{{ $category->parent->parent->name_ar ?? '' }}</a>
+                            href="{{ route('categories.show', $category->parent->parent_id) }}">{{ $category->parent->parent->name ?? '' }}</a>
                         <span class="sep">/</span>
                     @endif
-                    <a href="{{ route('categories.show', $category->parent_id) }}">{{ $category->parent->name_ar }}</a>
+                    <a href="{{ route('categories.show', $category->parent_id) }}">{{ $category->parent->name }}</a>
                 @endif
                 <span class="sep">/</span>
-                <span>{{ $category->name_ar }}</span>
+                <span>{{ $category->name }}</span>
             </div>
             <h1 style="color:#fff;font-size:clamp(1.4rem,3vw,2rem);margin:0">
                 @if ($category->icon)
                     <i class="bi {{ $category->icon }} me-2"></i>
                 @endif
-                {{ $category->name_ar }}
+                {{ $category->name }}
             </h1>
         </div>
     </div>
@@ -55,7 +58,7 @@
             $hasChildren = $category->children->isNotEmpty();
             $hasSubjects = $category->subjects->isNotEmpty();
 
-            // Check if all children are semester-type (contain "الفصل")
+            // Semester-type children are detected on the stored Arabic name ("الفصل"), regardless of UI language
             $isSemesterBased = $hasChildren && $category->children->every(fn($c) => str_contains($c->name_ar, 'الفصل'));
 
             // Collect subjects grouped by semester (for grade pages)
@@ -64,14 +67,18 @@
                 foreach ($category->children as $sem) {
                     $semesterGroups->push([
                         'id' => $sem->id,
-                        'name' => $sem->name_ar,
+                        'name' => $sem->name,
                         'subjects' => $sem->subjects,
                     ]);
                 }
             }
             $allSemesterSubjects = $semesterGroups->flatMap(
                 fn($g) => $g['subjects']->map(
-                    fn($s) => array_merge($s->toArray(), ['_sem_id' => $g['id'], '_sem_name' => $g['name']]),
+                    fn($s) => array_merge($s->toArray(), [
+                        'name' => $s->name,
+                        '_sem_id' => $g['id'],
+                        '_sem_name' => $g['name'],
+                    ]),
                 ),
             );
         @endphp
@@ -82,12 +89,12 @@
             @if ($allSemesterSubjects->isEmpty())
                 <div class="text-center py-5">
                     <i class="bi bi-journal-x" style="font-size:4rem;color:var(--z-border)"></i>
-                    <h5 style="color:var(--z-text-muted);margin-top:1rem">لا توجد مواد في هذا الصف بعد</h5>
+                    <h5 style="color:var(--z-text-muted);margin-top:1rem">{{ __('front.cat_page_no_subjects') }}</h5>
                 </div>
             @else
                 {{-- Semester filter tabs --}}
                 <div class="mb-4 d-flex gap-2 flex-wrap" id="semTabs">
-                    <button class="btn-z btn-z-primary btn-z-sm sem-btn active" data-sem="all">الكل</button>
+                    <button class="btn-z btn-z-primary btn-z-sm sem-btn active" data-sem="all">{{ __('front.cat_sem_all') }}</button>
                     @foreach ($semesterGroups as $sem)
                         <button class="btn-z btn-z-outline btn-z-sm sem-btn" data-sem="{{ $sem['id'] }}">
                             <i class="bi bi-{{ $loop->index === 0 ? '1' : '2' }}-circle"></i>
@@ -105,8 +112,8 @@
                                     <i class="bi {{ $subject['icon'] }}"></i>@else📚
                                     @endif
                                 </div>
-                                <h5>{{ $subject['name_ar'] }}</h5>
-                                <span class="cat-count">{{ $subject['courses_count'] ?? 0 }} دورة</span>
+                                <h5>{{ $subject['name'] }}</h5>
+                                <span class="cat-count">{{ $subject['courses_count'] ?? 0 }} {{ __('front.cat_courses_count') }}</span>
                                 <small
                                     style="color:var(--z-text-muted);font-size:.75rem;margin-top:.25rem;display:block">{{ $subject['_sem_name'] }}</small>
                             </a>
@@ -144,7 +151,7 @@
                                 <i class="bi {{ $child->icon }}" style="font-size:2rem"></i>@else📚
                                 @endif
                             </div>
-                            <h5>{{ $child->name_ar }}</h5>
+                            <h5>{{ $child->name }}</h5>
                             @php
                                 $subCount = $child->subjects->count();
                                 $childCount = $child->children->count();
@@ -152,11 +159,11 @@
                                 $nestedSubCount = $child->children->sum(fn($c) => $c->subjects->count());
                             @endphp
                             @if ($subCount > 0)
-                                <span class="cat-count">{{ $subCount }} مادة</span>
+                                <span class="cat-count">{{ $subCount }} {{ __('front.cat_subjects_count') }}</span>
                             @elseif($nestedSubCount > 0)
-                                <span class="cat-count">{{ $nestedSubCount }} مادة</span>
+                                <span class="cat-count">{{ $nestedSubCount }} {{ __('front.cat_subjects_count') }}</span>
                             @elseif($childCount > 0)
-                                <span class="cat-count">{{ $childCount }} تصنيف</span>
+                                <span class="cat-count">{{ $childCount }} {{ __('front.cat_category_count') }}</span>
                             @endif
                         </a>
                     </div>
@@ -174,8 +181,8 @@
                                 <i class="bi {{ $subject->icon }}"></i>@else📚
                                 @endif
                             </div>
-                            <h5>{{ $subject->name_ar }}</h5>
-                            <span class="cat-count">{{ $subject->courses_count ?? 0 }} دورة</span>
+                            <h5>{{ $subject->name }}</h5>
+                            <span class="cat-count">{{ $subject->courses_count ?? 0 }} {{ __('front.cat_courses_count') }}</span>
                         </a>
                     </div>
                 @endforeach
@@ -185,8 +192,8 @@
         @else
             <div class="text-center py-5">
                 <i class="bi bi-folder2-open" style="font-size:4rem;color:var(--z-border)"></i>
-                <h5 style="color:var(--z-text-muted);margin-top:1rem">لا يوجد محتوى في هذا التصنيف بعد</h5>
-                <a href="{{ route('home') }}" class="btn-z btn-z-outline mt-3">العودة للرئيسية</a>
+                <h5 style="color:var(--z-text-muted);margin-top:1rem">{{ __('front.cat_page_empty') }}</h5>
+                <a href="{{ route('home') }}" class="btn-z btn-z-outline mt-3">{{ __('front.cat_back_home') }}</a>
             </div>
         @endif
 

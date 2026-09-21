@@ -20,7 +20,7 @@
             {{-- Brand --}}
             <div class="col-lg-4 col-md-6">
                 <div class="footer-brand">
-                    <h3><span style="color:var(--z-highlight)">ز</span> {{ $siteName }}</h3>
+                    <h3><span style="color:var(--z-highlight)">{{ mb_substr($siteName, 0, 1) }}</span> {{ $siteName }}</h3>
                     <p>{{ $footerDesc }}</p>
                     <div class="social-links mt-3">
                         @if($fb)<a href="{{ $fb }}" class="social-link" aria-label="Facebook" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>@endif

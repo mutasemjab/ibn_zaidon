@@ -90,9 +90,7 @@ class CartController extends Controller
         if (! $cardNumber) {
             return back()
                 ->withInput()
-                ->with('activation_error', app()->getLocale() === 'ar'
-                    ? 'رقم الكارت غير صحيح أو تم استخدامه مسبقاً.'
-                    : 'Invalid card number or already used.');
+                ->with('activation_error', __('front.flash_card_invalid'));
         }
 
         $student    = auth('student')->user();
@@ -120,9 +118,7 @@ class CartController extends Controller
         session()->forget('cart');
 
         return redirect()->route('home')
-            ->with('activation_success', app()->getLocale() === 'ar'
-                ? 'تم تفعيل الدورات بنجاح! يمكنك البدء الآن.'
-                : 'Courses activated successfully! You can start now.');
+            ->with('activation_success', __('front.flash_courses_activated'));
     }
 
     private function getCart(): array

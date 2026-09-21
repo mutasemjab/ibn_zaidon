@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Exam;
 use App\Models\ExamAttempt;
+use App\Models\SiteSetting;
 use App\Models\Student;
 use App\Models\StudentAnswer;
 use App\Models\Subject;
@@ -22,10 +23,11 @@ class HomeController extends Controller
     public function index()
     {
         $stats = [
-            'students'     => Student::count() ?: 2400,
-            'courses'      => Course::where('is_published', true)->count() ?: 120,
-            'teachers'     => Teacher::where('is_active', true)->count() ?: 120,
-            'satisfaction' => 98,
+            // Live counts; when there is no data yet, use the numbers set in Admin → Site Settings.
+            'students'     => Student::count() ?: (int) SiteSetting::raw('stats_students'),
+            'courses'      => Course::where('is_published', true)->count() ?: (int) SiteSetting::raw('stats_courses'),
+            'teachers'     => Teacher::where('is_active', true)->count() ?: (int) SiteSetting::raw('stats_teachers'),
+            'satisfaction' => (int) SiteSetting::raw('stats_satisfaction'),
         ];
 
         $categories = Category::active()
@@ -100,7 +102,7 @@ class HomeController extends Controller
 
         $toChip = fn ($s) => [
             'id'           => $s->id,
-            'l'            => $s->name_ar,
+            'l'            => $s->name,
             'l_en'         => $s->name_en,
             'e'            => $s->icon  ?? '📚',
             'bg'           => $s->color_class ?? 'si-blue',
@@ -121,9 +123,9 @@ class HomeController extends Controller
 
                 $grades[] = [
                     'n'        => $grade->order_index,  // 1..10 — used by overlay JS ORDINALS array
-                    'label'    => $grade->name_ar,
+                    'label'    => $grade->name,
                     'label_en' => $grade->name_en,
-                    'stage'    => $primaryRoot->name_ar,
+                    'stage'    => $primaryRoot->name,
                     'semesters'=> $semesters,
                     'subjects' => $allSubjects->unique('id')->map($toChip)->values(), // for badge count
                 ];
@@ -156,7 +158,7 @@ class HomeController extends Controller
                     // Grade 11: subjects attached directly to the grade category
                     $tawjihiGrades->push([
                         'id'       => $grade->id,
-                        'label'    => $grade->name_ar,
+                        'label'    => $grade->name,
                         'label_en' => $grade->name_en,
                         'type'     => 'subjects',
                         'subjects' => $directSubjects->map($toChip)->values(),
@@ -175,7 +177,7 @@ class HomeController extends Controller
                         }
                         $gradeFields->push([
                             'id'       => $stream->id,
-                            'label'    => $stream->name_ar,
+                            'label'    => $stream->name,
                             'label_en' => $stream->name_en,
                             'icon'     => $stream->icon ?? '📚',
                             'sub'      => null,
@@ -186,7 +188,7 @@ class HomeController extends Controller
                     }
                     $tawjihiGrades->push([
                         'id'       => $grade->id,
-                        'label'    => $grade->name_ar,
+                        'label'    => $grade->name,
                         'label_en' => $grade->name_en,
                         'type'     => 'fields',
                         'fields'   => $gradeFields->values(),
@@ -208,8 +210,8 @@ class HomeController extends Controller
             ->pluck('academic_year')
             ->map(fn ($year) => [
                 'year'  => (string) $year,
-                'label' => 'جيل ' . $year,
-                'pill'  => 'متاح الآن',
+                'label' => __('front.exam_generation', ['year' => $year]),
+                'pill'  => __('front.exam_available_now'),
                 'hot'   => true,
             ])
             ->values()
@@ -331,13 +333,11 @@ class HomeController extends Controller
 
         $course = Course::where('id', $id)->where('is_published', true)->firstOrFail();
 
-        $isAr = app()->getLocale() === 'ar';
-
         // Already enrolled?
         if (Enrollment::where('student_id', auth('student')->id())
                 ->where('course_id', $course->id)->exists()) {
             return redirect()->route('courses.show', $id)
-                ->with('activation_success', $isAr ? 'أنت مسجّل في هذه الدورة بالفعل.' : 'You are already enrolled in this course.')
+                ->with('activation_success', __('front.flash_already_enrolled'))
                 ->with('activated_course', $course->id);
         }
 
@@ -349,7 +349,7 @@ class HomeController extends Controller
 
         if (! $cardNumber) {
             return redirect()->route('courses.show', $id)
-                ->with('activation_error', $isAr ? 'رقم الكارت غير صحيح أو تم استخدامه مسبقاً.' : 'Invalid card number or already used.')
+                ->with('activation_error', __('front.flash_card_invalid'))
                 ->with('error_course', $course->id);
         }
 
@@ -370,7 +370,7 @@ class HomeController extends Controller
         });
 
         return redirect()->route('courses.show', $id)
-            ->with('activation_success', $isAr ? 'تم تفعيل الدورة بنجاح! يمكنك البدء الآن.' : 'Course activated successfully! You can start now.')
+            ->with('activation_success', __('front.flash_course_activated'))
             ->with('activated_course', $course->id);
     }
 
@@ -415,7 +415,7 @@ class HomeController extends Controller
 
         if ($exam->questions->isEmpty()) {
             return redirect()->route('exams.show', $id)
-                ->with('error', app()->getLocale() === 'ar' ? 'لا توجد أسئلة في هذا الامتحان بعد.' : 'This exam has no questions yet.');
+                ->with('error', __('front.flash_exam_no_questions'));
         }
 
         // Shuffle if configured

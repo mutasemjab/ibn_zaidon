@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
+use App\Support\SiteSettingsSchema;
 use Illuminate\Http\Request;
 
 class SiteSettingController extends Controller
@@ -16,73 +17,51 @@ class SiteSettingController extends Controller
     public function edit()
     {
         $settings = SiteSetting::all()->keyBy('key');
-        return view('admin.site-settings.edit', compact('settings'));
+        $tabs     = SiteSettingsSchema::tabs();
+
+        return view('admin.site-settings.edit', compact('settings', 'tabs'));
     }
 
     public function update(Request $request)
     {
-        $bilingual = [
-            'hero_badge', 'hero_subtitle',
-            'about_title', 'about_description',
-            'about_value1_title', 'about_value1_desc',
-            'about_value2_title', 'about_value2_desc',
-            'about_value3_title', 'about_value3_desc',
-            'about_value4_title', 'about_value4_desc',
-            'contact_address', 'contact_hours',
-        ];
+        $request->validate(SiteSettingsSchema::rules());
 
-        $single = [
-            'hero'    => ['hero_image'],
-            'about'   => ['about_years', 'about_image_main', 'about_image_secondary'],
-            'contact' => ['contact_phone', 'contact_email', 'contact_whatsapp'],
-            'social'  => ['social_facebook', 'social_instagram', 'social_youtube', 'social_twitter', 'social_tiktok', 'social_snapchat', 'social_whatsapp'],
-            'apps'    => ['app_google_play', 'app_store'],
-        ];
+        foreach (SiteSettingsSchema::fields() as $key => $field) {
+            $group = $field['group'];
 
-        // Groups for bilingual keys
-        $keyGroup = [
-            'hero_badge' => 'hero', 'hero_subtitle' => 'hero',
-            'about_title' => 'about', 'about_description' => 'about',
-            'about_value1_title' => 'about', 'about_value1_desc' => 'about',
-            'about_value2_title' => 'about', 'about_value2_desc' => 'about',
-            'about_value3_title' => 'about', 'about_value3_desc' => 'about',
-            'about_value4_title' => 'about', 'about_value4_desc' => 'about',
-            'contact_address' => 'contact', 'contact_hours' => 'contact',
-        ];
-
-        // Save bilingual fields
-        foreach ($bilingual as $key) {
-            SiteSetting::updateOrCreate(
-                ['key' => $key],
-                [
-                    'value_ar' => $request->input("{$key}_ar"),
-                    'value_en' => $request->input("{$key}_en"),
-                    'group'    => $keyGroup[$key] ?? 'general',
-                ]
-            );
-        }
-
-        // Save single-value fields (URLs, numbers, etc.)
-        foreach ($single as $group => $keys) {
-            foreach ($keys as $key) {
-                $value = $request->input($key, '');
-
-                // Handle image uploads
-                if (in_array($key, ['hero_image', 'about_image_main', 'about_image_secondary'])) {
-                    if ($request->hasFile($key)) {
-                        $value = uploadImage('assets/uploads/site', $request->file($key));
-                    } else {
-                        // Keep existing value if no new file uploaded
-                        $existing = SiteSetting::raw($key);
-                        $value = $existing;
-                    }
+            if ($field['bilingual']) {
+                // Skip fields that were not part of the submitted form so nothing gets wiped by accident.
+                if (! $request->exists("{$key}_ar") && ! $request->exists("{$key}_en")) {
+                    continue;
                 }
-
                 SiteSetting::updateOrCreate(
                     ['key' => $key],
-                    ['value_ar' => $value, 'value_en' => $value, 'group' => $group]
+                    [
+                        'value_ar' => $request->input("{$key}_ar"),
+                        'value_en' => $request->input("{$key}_en"),
+                        'group'    => $group,
+                    ]
                 );
+                continue;
             }
+
+            if ($field['type'] === 'image') {
+                // No new upload → keep the existing file.
+                if (! $request->hasFile($key)) {
+                    continue;
+                }
+                $value = uploadImage('assets/uploads/site', $request->file($key));
+            } else {
+                if (! $request->exists($key)) {
+                    continue;
+                }
+                $value = (string) $request->input($key, '');
+            }
+
+            SiteSetting::updateOrCreate(
+                ['key' => $key],
+                ['value_ar' => $value, 'value_en' => $value, 'group' => $group]
+            );
         }
 
         SiteSetting::clearCache();
