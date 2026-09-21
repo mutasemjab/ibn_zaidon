@@ -1,5 +1,5 @@
 @extends('front.layouts.app')
-@section('title', $teacher->name.' — زيدون')
+@section('title', $teacher->name.' — ابن زيدون')
 
 @section('content')
 
@@ -22,7 +22,7 @@
             <div class="col">
                 <h1 style="color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:.4rem">{{ $teacher->name }}</h1>
                 <div style="color:rgba(255,255,255,.72);font-size:.97rem;margin-bottom:.75rem">
-                    {{ $teacher->specialization ?? 'معلم زيدون' }}
+                    {{ $teacher->specialization ?? 'معلم ابن زيدون' }}
                 </div>
                 <div class="d-flex flex-wrap gap-3">
                     <span style="background:rgba(245,166,35,.18);color:var(--z-highlight);padding:.3rem .85rem;border-radius:50px;font-size:.82rem;font-weight:700">
@@ -53,7 +53,7 @@
                 <p style="color:var(--z-text-muted);font-size:.9rem;line-height:1.8">{{ $teacher->bio }}</p>
                 @else
                 <p style="color:var(--z-text-muted);font-size:.9rem">
-                    معلم متخصص ومتميز في منصة زيدون التعليمية يمتلك خبرة واسعة في تقديم المحتوى التعليمي الرقمي.
+                    معلم متخصص ومتميز في أكاديمية ابن زيدون التعليمية يمتلك خبرة واسعة في تقديم المحتوى التعليمي الرقمي.
                 </p>
                 @endif
 

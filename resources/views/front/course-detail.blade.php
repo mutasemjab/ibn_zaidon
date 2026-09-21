@@ -1,5 +1,56 @@
 @extends('front.layouts.app')
-@section('title', ($course->title_ar ?? $course->title).' — زيدون')
+@section('seo_title', ($course->title_ar ?? $course->title).' | أكاديمية ابن زيدون التعليمية')
+@section('meta_desc', Str::limit(strip_tags($course->description_ar ?? $course->description ?? 'دورة تعليمية متميزة من أكاديمية ابن زيدون التعليمية بإشراف '.($course->teacher->name ?? 'نخبة المعلمين').' — سجّل الآن واستفد من محتوى تفاعلي احترافي.'), 160))
+@section('og_type', 'article')
+
+@push('json_ld')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "{{ $course->title_ar ?? $course->title }}",
+  "description": "{{ Str::limit(strip_tags($course->description_ar ?? $course->description ?? ''), 300) }}",
+  "url": "{{ url()->current() }}",
+  "provider": {
+    "@type": "EducationalOrganization",
+    "@id": "{{ url('/') }}/#organization",
+    "name": "أكاديمية ابن زيدون التعليمية"
+  },
+  @if($course->teacher)
+  "instructor": {
+    "@type": "Person",
+    "name": "{{ $course->teacher->name }}",
+    "jobTitle": "{{ $course->teacher->specialization ?? 'معلم متخصص' }}"
+  },
+  @endif
+  "inLanguage": "ar",
+  "educationalLevel": "{{ $course->category->name_ar ?? 'المرحلة الأساسية والتوجيهي' }}",
+  "offers": {
+    "@type": "Offer",
+    "price": "{{ $course->price ?? 0 }}",
+    "priceCurrency": "JOD",
+    "availability": "https://schema.org/InStock",
+    "category": "{{ ($course->price ?? 0) == 0 ? 'مجاني' : 'مدفوع' }}"
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "inLanguage": "ar"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "{{ url('/') }}" },
+    { "@type": "ListItem", "position": 2, "name": "الدورات",  "item": "{{ route('courses.index') }}" },
+    { "@type": "ListItem", "position": 3, "name": "{{ $course->title_ar ?? $course->title }}", "item": "{{ url()->current() }}" }
+  ]
+}
+</script>
+@endpush
 
 @section('content')
 
@@ -276,7 +327,7 @@
                         <i class="bi bi-person-circle"></i>
                     </div>
                     <div style="font-weight:700;color:var(--z-primary);font-size:.95rem">{{ $course->teacher->name }}</div>
-                    <div style="font-size:.8rem;color:var(--z-text-muted);margin-bottom:.6rem">{{ $course->teacher->specialization ?? 'معلم زيدون' }}</div>
+                    <div style="font-size:.8rem;color:var(--z-text-muted);margin-bottom:.6rem">{{ $course->teacher->specialization ?? 'معلم ابن زيدون' }}</div>
                     <a href="{{ route('teachers.show', $course->teacher->id) }}"
                        class="btn-z btn-z-outline btn-z-sm">عرض الملف الشخصي</a>
                 </div>

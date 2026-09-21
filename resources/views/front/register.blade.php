@@ -1,5 +1,5 @@
 @extends('front.layouts.app')
-@section('title', 'إنشاء حساب — زيدون')
+@section('title', 'إنشاء حساب — ابن زيدون')
 
 @section('content')
 <div class="auth-wrap">
@@ -9,7 +9,7 @@
                 <div style="width:56px;height:56px;background:var(--z-primary);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;font-size:1.5rem;font-weight:900;color:#fff">ز</div>
                 <h2>إنشاء حساب جديد</h2>
             </a>
-            <p>انضم إلى آلاف الطلاب في منصة زيدون التعليمية</p>
+            <p>انضم إلى آلاف الطلاب في أكاديمية ابن زيدون التعليمية</p>
         </div>
 
         @if($errors->any())
@@ -80,7 +80,7 @@
                     <a href="#" style="color:var(--z-accent)">الشروط والأحكام</a>
                     و
                     <a href="#" style="color:var(--z-accent)">سياسة الخصوصية</a>
-                    لمنصة زيدون التعليمية
+                    لأكاديمية ابن زيدون التعليمية
                 </label>
                 @error('terms')<span class="z-error w-100">{{ $message }}</span>@enderror
             </div>

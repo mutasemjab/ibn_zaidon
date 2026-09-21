@@ -1,6 +1,81 @@
 @extends('front.layouts.app')
 
-@section('title', 'زيدون التعليمية — الرئيسية')
+@section('seo_title', 'أكاديمية ابن زيدون التعليمية | دورات توجيهي وأساسي أردن | تعلم أونلاين')
+@section('meta_desc', 'أكاديمية ابن زيدون التعليمية — أفضل منصة تعليم إلكتروني في الأردن. دورات تفاعلية للصفوف 1-10 والتوجيهي، إشراف نخبة المعلمين الأردنيين، امتحانات ذكية، وأوراق عمل احترافية. سجّل مجاناً الآن!')
+@section('meta_keywords', 'أكاديمية ابن زيدون التعليمية, دورات توجيهي أردن, منصة تعليمية أردنية, كورسات الصف العاشر, دروس أونلاين أردن, تعلم إلكتروني أردن, امتحانات التوجيهي, دروس خصوصية أونلاين, أفضل منصة تعليمية أردن, ابن زيدون التعليمية, دورات الصف التاسع, دورات الصف العاشر')
+
+@push('json_ld')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "{{ url('/') }}/#webpage",
+      "url": "{{ url('/') }}",
+      "name": "أكاديمية ابن زيدون التعليمية | دورات توجيهي وأساسي أردن",
+      "isPartOf": { "@id": "{{ url('/') }}/#website" },
+      "about": { "@id": "{{ url('/') }}/#organization" },
+      "description": "أفضل منصة تعليم إلكتروني في الأردن للمرحلة الأساسية والتوجيهي",
+      "inLanguage": "ar"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "ما هي أكاديمية ابن زيدون التعليمية؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "أكاديمية ابن زيدون التعليمية منصة تعليم إلكتروني أردنية متخصصة في تقديم دورات تفاعلية للمرحلة الأساسية (الصفوف من الأول حتى العاشر) والتوجيهي (اول وثاني ثانوي)، إلى جانب امتحانات ذكية وأوراق عمل احترافية بإشراف نخبة من المعلمين المتميزين في الأردن."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "هل تقدم أكاديمية ابن زيدون دورات للتوجيهي؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، تقدم أكاديمية ابن زيدون دورات شاملة لاول ثانوي وثاني ثانوي (التوجيهي) لجميع الفروع: الفرع الصحي، فرع الهندسة والعلوم والتكنولوجيا، فرع إدارة الأعمال، وفرع الآداب والعلوم الإنسانية. تشمل الدورات جميع المواد الوزارية والمدرسية."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ما الصفوف الدراسية التي تغطيها أكاديمية ابن زيدون؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "تغطي أكاديمية ابن زيدون التعليمية جميع صفوف المرحلة الأساسية من الصف الأول حتى الصف العاشر، بالإضافة إلى الصف الحادي عشر (اول ثانوي) والصف الثاني عشر (التوجيهي / ثاني ثانوي)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "كيف يمكن التسجيل في أكاديمية ابن زيدون التعليمية؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "يمكن التسجيل في أكاديمية ابن زيدون التعليمية بسهولة عبر الموقع الإلكتروني. انقر على زر 'إنشاء حساب جديد'، أدخل اسمك ورقم هاتفك وكلمة المرور، ثم ابدأ التعلم فوراً. التسجيل مجاني ومتاح طوال اليوم."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "هل يمكن الوصول لدورات أكاديمية ابن زيدون من الهاتف؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، أكاديمية ابن زيدون التعليمية متوافقة مع جميع الأجهزة — هاتف ذكي، تابلت، أو حاسوب. يمكنك الوصول إلى دوراتك وامتحاناتك في أي وقت ومن أي مكان."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ما أسعار الدورات في أكاديمية ابن زيدون؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "تقدم أكاديمية ابن زيدون التعليمية دورات بأسعار مناسبة في متناول جميع الطلاب. بعض الدورات متاحة مجاناً، وتُفعَّل الدورات المدفوعة عبر بطاقات خدش متوفرة في نقاط بيع معتمدة في جميع أنحاء الأردن."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+@endpush
 
 @section('content')
 
@@ -54,7 +129,7 @@
                         </div>
                         <div class="mini-text flex-grow-1">
                             <h6>{{ Str::limit($course->title_ar ?? $course->title ?? 'دورة تعليمية', 32) }}</h6>
-                            <span>{{ $course->teacher->name ?? 'معلم زيدون' }}</span>
+                            <span>{{ $course->teacher->name ?? 'معلم ابن زيدون' }}</span>
                         </div>
                         <span style="color:var(--z-highlight);font-weight:800;font-size:.88rem;white-space:nowrap">
                             {{ $course->price > 0 ? number_format($course->price, 0).' د.أ' : 'مجاني' }}
@@ -63,11 +138,11 @@
                     @empty
                     <div class="mini-course">
                         <div class="mini-ico gold"><i class="bi bi-mortarboard"></i></div>
-                        <div class="mini-text"><h6>رياضيات — الصف العاشر</h6><span>معلم زيدون</span></div>
+                        <div class="mini-text"><h6>رياضيات — الصف العاشر</h6><span>معلم ابن زيدون</span></div>
                     </div>
                     <div class="mini-course">
                         <div class="mini-ico blue"><i class="bi bi-atom"></i></div>
-                        <div class="mini-text"><h6>فيزياء — التوجيهي</h6><span>معلم زيدون</span></div>
+                        <div class="mini-text"><h6>فيزياء — التوجيهي</h6><span>معلم ابن زيدون</span></div>
                     </div>
                     @endforelse
                     <div class="text-center mt-3">
@@ -121,7 +196,7 @@
                 <div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:var(--z-radius-xl);height:380px;display:flex;align-items:center;justify-content:center">
                     <div class="text-center text-white">
                         <i class="bi bi-mortarboard-fill" style="font-size:6rem;opacity:.35"></i>
-                        <div style="font-size:1.5rem;font-weight:800;margin-top:1rem;opacity:.8">منصة زيدون</div>
+                        <div style="font-size:1.5rem;font-weight:800;margin-top:1rem;opacity:.8">أكاديمية ابن زيدون</div>
                         <div style="font-size:.9rem;opacity:.5;margin-top:.4rem">التعليمية</div>
                     </div>
                 </div>
@@ -133,7 +208,7 @@
             <div class="col-lg-7 anim-fade-up anim-d2">
                 <span class="section-label">من نحن</span>
                 <h2 class="section-heading">نبني جيلاً واعياً<br>ومتفوقاً</h2>
-                <p class="section-desc mb-4">منصة زيدون التعليمية منصة أردنية متخصصة في تقديم المحتوى التعليمي الرقمي للطلبة في مختلف المراحل الدراسية. نعمل مع نخبة من المعلمين المتميزين لتقديم محتوى عالي الجودة يُمكّن الطالب من التفوق والنجاح.</p>
+                <p class="section-desc mb-4">أكاديمية ابن زيدون التعليمية منصة أردنية متخصصة في تقديم المحتوى التعليمي الرقمي للطلبة في مختلف المراحل الدراسية. نعمل مع نخبة من المعلمين المتميزين لتقديم محتوى عالي الجودة يُمكّن الطالب من التفوق والنجاح.</p>
                 <div class="feat-item">
                     <div class="feat-icon"><i class="bi bi-lightbulb-fill"></i></div>
                     <div class="feat-body">
@@ -236,7 +311,7 @@
                         <div class="course-title">{{ $course->title_ar ?? $course->title ?? 'دورة تعليمية' }}</div>
                         <div class="course-teacher">
                             <div class="av-xs"><i class="bi bi-person-fill"></i></div>
-                            <span>{{ $course->teacher->name ?? 'معلم زيدون' }}</span>
+                            <span>{{ $course->teacher->name ?? 'معلم ابن زيدون' }}</span>
                         </div>
                     </div>
                     <div class="course-foot">
@@ -311,7 +386,7 @@
             <div class="col-lg-4">
                 <div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:var(--z-radius-lg);padding:2rem;color:#fff;height:100%">
                     <div style="font-size:3rem;margin-bottom:1rem">🎯</div>
-                    <h4 style="color:#fff;font-weight:800;margin-bottom:1rem">لماذا زيدون؟</h4>
+                    <h4 style="color:#fff;font-weight:800;margin-bottom:1rem">لماذا ابن زيدون؟</h4>
                     @foreach(['محتوى مُحدَّث باستمرار','إشراف مباشر من المعلمين','نتائج فورية وتحليل تفصيلي','دعم فني على مدار الساعة','أسعار في متناول الجميع'] as $f)
                     <div class="d-flex align-items-center gap-2 mb-2">
                         <i class="bi bi-check-circle-fill" style="color:var(--z-highlight)"></i>
@@ -343,7 +418,7 @@
                 <div class="teacher-card">
                     <div class="t-photo-ph"><i class="bi bi-person-circle"></i></div>
                     <div class="t-name">{{ $teacher->name }}</div>
-                    <div class="t-subj">{{ $teacher->specialization ?? 'معلم زيدون' }}</div>
+                    <div class="t-subj">{{ $teacher->specialization ?? 'معلم ابن زيدون' }}</div>
                     <div class="stars">
                         @for($i=1;$i<=5;$i++)<i class="bi bi-star{{ $i<=round($teacher->rating??4.8)?'-fill':'' }}"></i>@endfor
                         <span class="rv">({{ number_format($teacher->rating??4.8,1) }})</span>
@@ -365,7 +440,7 @@
                 <div class="teacher-card">
                     <div class="t-photo-ph"><i class="bi bi-person-circle"></i></div>
                     <div class="t-name">{{ $t }}</div>
-                    <div class="t-subj">معلم زيدون</div>
+                    <div class="t-subj">معلم ابن زيدون</div>
                     <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                         <span class="rv">(4.9)</span>

@@ -5,7 +5,7 @@
             {{-- Brand --}}
             <div class="col-lg-4 col-md-6">
                 <div class="footer-brand">
-                    <h3><span style="color:var(--z-highlight)">ز</span> زيدون التعليمية</h3>
+                    <h3><span style="color:var(--z-highlight)">ز</span> أكاديمية ابن زيدون التعليمية</h3>
                     <p>منصة تعليمية متكاملة تقدم دورات، امتحانات، وأوراق عمل للمرحلة الأساسية والتوجيهي في المملكة الأردنية الهاشمية.</p>
                     <div class="social-links mt-3">
                         <a href="#" class="social-link" aria-label="فيسبوك"><i class="bi bi-facebook"></i></a>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="footer-bottom">
-            <span>© {{ date('Y') }} زيدون التعليمية. جميع الحقوق محفوظة.</span>
+            <span>© {{ date('Y') }} أكاديمية ابن زيدون التعليمية. جميع الحقوق محفوظة.</span>
             <div class="pay-logos">
                 <span class="pay-logo">VISA</span>
                 <span class="pay-logo">MC</span>

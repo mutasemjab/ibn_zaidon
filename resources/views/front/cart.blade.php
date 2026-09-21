@@ -1,5 +1,5 @@
 @extends('front.layouts.app')
-@section('title', 'سلة التسوق — زيدون')
+@section('title', 'سلة التسوق — ابن زيدون')
 
 @section('content')
 
@@ -49,7 +49,7 @@
                 <div style="flex:1;min-width:0">
                     <div class="cart-title">{{ $course->title_ar ?? $course->title }}</div>
                     <div class="cart-sub">
-                        <i class="bi bi-person-fill me-1"></i>{{ $course->teacher->name ?? 'معلم زيدون' }}
+                        <i class="bi bi-person-fill me-1"></i>{{ $course->teacher->name ?? 'معلم ابن زيدون' }}
                         @if($course->category)
                         &nbsp;·&nbsp;<i class="bi bi-tag me-1"></i>{{ $course->category->name_ar ?? $course->category->name }}
                         @endif

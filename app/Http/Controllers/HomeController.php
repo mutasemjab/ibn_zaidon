@@ -557,6 +557,20 @@ class HomeController extends Controller
         return view('front.exam-result', compact('exam', 'attempt'));
     }
 
+    public function sitemap()
+    {
+        $categories = Category::active()->roots()->orderBy('order_index')->get();
+        $allCategories = Category::active()->orderBy('order_index')->get();
+        $courses = Course::where('is_published', true)
+            ->select('id', 'updated_at')
+            ->orderByDesc('updated_at')
+            ->get();
+
+        return response()
+            ->view('sitemap', compact('categories', 'allCategories', 'courses'))
+            ->header('Content-Type', 'application/xml');
+    }
+
     public function teacherProfile(int $id)
     {
         $teacher = Teacher::with([

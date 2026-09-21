@@ -1,5 +1,5 @@
 @extends('front.layouts.app')
-@section('title', 'تسجيل الدخول — زيدون')
+@section('title', 'تسجيل الدخول — ابن زيدون')
 
 @section('content')
 <div class="auth-wrap">
@@ -7,7 +7,7 @@
         <div class="auth-logo">
             <a href="{{ route('home') }}" style="text-decoration:none">
                 <div style="width:56px;height:56px;background:var(--z-primary);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;font-size:1.5rem;font-weight:900;color:#fff">ز</div>
-                <h2>زيدون التعليمية</h2>
+                <h2>أكاديمية ابن زيدون التعليمية</h2>
             </a>
             <p>سجّل دخولك لمتابعة دوراتك وامتحاناتك</p>
         </div>

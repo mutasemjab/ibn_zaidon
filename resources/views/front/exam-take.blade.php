@@ -1,5 +1,5 @@
 @extends('front.layouts.app')
-@section('title', 'امتحان: '.$exam->title.' — زيدون')
+@section('title', 'امتحان: '.$exam->title.' — ابن زيدون')
 
 @section('content')
 

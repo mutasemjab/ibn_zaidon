@@ -25,6 +25,7 @@ Route::group([
     Route::get('/exams/{examId}/result/{attemptId}', [HomeController::class, 'examResult'])->name('exams.result');
     Route::get('/teachers/{id}',                   [HomeController::class, 'teacherProfile'])->name('teachers.show');
     Route::get('/categories/{id}',                 [CategoryController::class, 'show'])->name('categories.show');
+    Route::get('/sitemap.xml',                     [HomeController::class, 'sitemap'])->name('sitemap');
 
     // ── Cart ────────────────────────────────────────────────────────────────
     Route::get('/cart',                [CartController::class, 'index'])->name('cart.index');

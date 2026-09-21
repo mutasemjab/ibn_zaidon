@@ -1,2 +1,41 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Block admin & internal areas
+Disallow: /admin/
+Disallow: /teacher/
+Disallow: /ar/admin/
+Disallow: /ar/teacher/
+Disallow: /en/admin/
+Disallow: /en/teacher/
+Disallow: /cart
+Disallow: /cart/checkout
+Disallow: /login
+Disallow: /register
+Disallow: /logout
+Disallow: /native-cookie-test
+
+# Allow major AI crawlers explicitly
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Sitemap — IMPORTANT: replace with your actual domain before going live
+Sitemap: https://www.ibnzaidon.jo/sitemap.xml

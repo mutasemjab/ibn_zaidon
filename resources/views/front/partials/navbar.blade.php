@@ -8,7 +8,7 @@
         {{-- Brand --}}
         <a href="{{ route('home') }}" class="z-brand">
             <span class="z-brand-icon">ز</span>
-            <span>زيدون</span>
+            <span>أكاديمية ابن زيدون التعليمية</span>
         </a>
 
         {{-- Desktop Links --}}

@@ -1,5 +1,5 @@
 @extends('front.layouts.app')
-@section('title', 'الدورات التعليمية — زيدون')
+@section('title', 'الدورات التعليمية — ابن زيدون')
 
 @section('content')
 
@@ -113,7 +113,7 @@
                             <div class="course-title">{{ $course->title_ar ?? $course->title }}</div>
                             <div class="course-teacher">
                                 <div class="av-xs"><i class="bi bi-person-fill"></i></div>
-                                <span>{{ $course->teacher->name ?? 'معلم زيدون' }}</span>
+                                <span>{{ $course->teacher->name ?? 'معلم ابن زيدون' }}</span>
                             </div>
                             @if($course->category)
                             <div style="font-size:.78rem;color:var(--z-text-muted);margin-top:.3rem">

@@ -1,5 +1,24 @@
 @extends('front.layouts.app')
-@section('title', $category->name_ar . ' — زيدون')
+@section('seo_title', $category->name_ar . ' | أكاديمية ابن زيدون التعليمية')
+@section('meta_desc', 'تصفّح دورات '.$category->name_ar.' في أكاديمية ابن زيدون التعليمية — دورات تفاعلية بإشراف نخبة المعلمين الأردنيين. سجّل الآن وابدأ التعلم!')
+
+@push('json_ld')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "{{ url('/') }}" }
+    @if($category->parent)
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ $category->parent->name_ar }}", "item": "{{ route('categories.show', $category->parent_id) }}" }
+    ,{ "@type": "ListItem", "position": 3, "name": "{{ $category->name_ar }}", "item": "{{ url()->current() }}" }
+    @else
+    ,{ "@type": "ListItem", "position": 2, "name": "{{ $category->name_ar }}", "item": "{{ url()->current() }}" }
+    @endif
+  ]
+}
+</script>
+@endpush
 
 @section('content')
 
