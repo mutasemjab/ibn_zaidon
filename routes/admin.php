@@ -173,7 +173,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('site-settings',           [SiteSettingController::class, 'edit'])->name('admin.site-settings.edit');
         Route::put('site-settings',           [SiteSettingController::class, 'update'])->name('admin.site-settings.update');
         Route::post('site-settings/toggle-price-display', [SiteSettingController::class, 'togglePriceDisplay'])->name('admin.site-settings.toggle-price');
-        Route::post('site-settings/toggle-website-mode', [SiteSettingController::class, 'toggleWebsiteMode'])->name('admin.site-settings.toggle-website');
 
         // ── Contact Messages ──────────────────────────────────────────
 

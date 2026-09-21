@@ -82,18 +82,4 @@ class SiteSettingController extends Controller
 
         return back()->with('success', "تم تغيير إعداد السعر: {$label}");
     }
-
-    public function toggleWebsiteMode()
-    {
-        $raw     = SiteSetting::raw('website_mode');
-        $current = ($raw === '0') ? '0' : '1';
-        $new     = $current === '1' ? '0' : '1';
-
-        SiteSetting::set('website_mode', $new, $new, 'general');
-        SiteSetting::clearCache();
-
-        $label = $new === '1' ? 'الموقع مفتوح للزوار' : 'الموقع في وضع Landing Page';
-
-        return back()->with('success', "تم تغيير وضع الموقع: {$label}");
-    }
 }
