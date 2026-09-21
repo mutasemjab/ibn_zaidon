@@ -328,7 +328,7 @@
 
     <div class="l-brand">
         <div class="l-brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
-        <div class="l-brand-name">Al<span>IbnZaidon</span></div>
+        <div class="l-brand-name"><span>IbnZaidon</span></div>
     </div>
 
     <div class="l-hero">
