@@ -41,15 +41,13 @@ class StudentController extends Controller
             ->paginate(15)
             ->withQueryString();
 
-        $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
 
-        return view('admin.students.index', compact('students', 'classes'));
+        return view('admin.students.index', compact('students'));
     }
 
     public function create()
     {
-        $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
-        return view('admin.students.create', compact('classes'));
+        return view('admin.students.create');
     }
 
     public function store(Request $request)
@@ -62,7 +60,6 @@ class StudentController extends Controller
             'password'    => 'required|string|min:6',
             'gender'      => 'nullable|in:male,female',
             'nationality' => 'nullable|string|max:100',
-            'class_id'    => 'nullable|exists:classes,id',
             'avatar'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
         ]);
 
@@ -79,7 +76,7 @@ class StudentController extends Controller
 
     public function show(Request $request, Student $student)
     {
-        $student->load(['enrollments.course', 'examAttempts.exam', 'siblings.schoolClass']);
+        $student->load(['enrollments.course', 'examAttempts.exam',]);
 
         $siblingResults = collect();
         if ($request->filled('sibling_search')) {
@@ -96,13 +93,12 @@ class StudentController extends Controller
                 ->get();
         }
 
-        return view('admin.students.show', compact('student', 'siblingResults'));
+        return view('admin.students.show', compact('student'));
     }
 
     public function edit(Student $student)
     {
-        $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
-        return view('admin.students.edit', compact('student', 'classes'));
+        return view('admin.students.edit', compact('student'));
     }
 
     public function update(Request $request, Student $student)
@@ -115,7 +111,6 @@ class StudentController extends Controller
             'password'    => 'nullable|string|min:6',
             'gender'      => 'nullable|in:male,female',
             'nationality' => 'nullable|string|max:100',
-            'class_id'    => 'nullable|exists:classes,id',
             'is_active'   => 'boolean',
             'avatar'      => 'nullable|image|mimes:jpg,jpeg,png,webp|max:1024',
         ]);
@@ -153,27 +148,5 @@ class StudentController extends Controller
             ->with('success', 'Student deleted successfully.');
     }
 
-    public function export(Request $request)
-    {
-        $filters = $request->only(['search', 'is_active', 'class_id']);
-        $filename = 'students_' . now()->format('Y-m-d') . '.xlsx';
-
-        return Excel::download(new StudentsExport($filters), $filename);
-    }
-
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx,xls,csv|max:5120',
-        ]);
-
-        $importer = new StudentsImport();
-        Excel::import($importer, $request->file('file'));
-
-        $msg = "تم استيراد {$importer->imported} طالب بنجاح.";
-        if ($importer->skipped)  $msg .= " تم تخطي {$importer->skipped}.";
-        if ($importer->errors)   $msg .= ' أخطاء: ' . implode(' | ', $importer->errors);
-
-        return back()->with('success', $msg);
-    }
+   
 }

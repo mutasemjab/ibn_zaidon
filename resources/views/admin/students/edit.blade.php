@@ -60,15 +60,7 @@
                 <label class="form-label">{{ __('messages.nationality') }}</label>
                 <input type="text" name="nationality" value="{{ old('nationality', $student->nationality) }}" class="form-control">
             </div>
-            <div class="col-md-6">
-                <label class="form-label">{{ __('messages.class_label') }}</label>
-                <select name="class_id" class="form-select">
-                    <option value="">— {{ __('messages.select_class') }} —</option>
-                    @foreach($classes as $class)
-                        <option value="{{ $class->id }}" @selected(old('class_id', $student->class_id) == $class->id)>{{ $class->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+       
             <div class="col-md-6">
                 <div class="form-check form-switch mt-3">
                     <input class="form-check-input" type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $student->is_active))>

@@ -57,15 +57,6 @@
                 <label class="form-label">{{ __('messages.nationality') }}</label>
                 <input type="text" name="nationality" value="{{ old('nationality') }}" class="form-control">
             </div>
-            <div class="col-md-6">
-                <label class="form-label">{{ __('messages.class_label') }}</label>
-                <select name="class_id" class="form-select">
-                    <option value="">— {{ __('messages.select_class') }} —</option>
-                    @foreach($classes as $class)
-                        <option value="{{ $class->id }}" @selected(old('class_id') == $class->id)>{{ $class->name }}</option>
-                    @endforeach
-                </select>
-            </div>
             <div class="col-12">
                 <label class="form-label">{{ __('messages.avatar_label') }}</label>
                 <input type="file" name="avatar" accept="image/*" class="form-control">
