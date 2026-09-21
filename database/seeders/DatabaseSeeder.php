@@ -16,9 +16,6 @@ class DatabaseSeeder extends Seeder
             TeacherSeeder::class,
             CourseSeeder::class,
             ExamSeeder::class,
-            ClassesSeeder::class,
-            KindergartenSeeder::class,
-            ConductDocumentSeeder::class,
             SiteSettingSeeder::class,
         ]);
     }
