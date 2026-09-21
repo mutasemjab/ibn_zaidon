@@ -64,7 +64,7 @@ class CourseSeeder extends Seeder
         $courses = [
             // ── Math ─────────────────────────────────────────────────────
             [
-                'teacher_email'  => 'mohammad.zayoud@baheth.jo',
+                'teacher_email'  => 'mohammad.zayoud@IbnZaidon.jo',
                 'subject'        => $gradeSubject('الرياضيات', 10, 1),
                 'category_id'    => $primaryRoot?->id,
                 'title_ar'       => 'الرياضيات الشامل — الصف العاشر',
@@ -89,7 +89,7 @@ class CourseSeeder extends Seeder
                 ],
             ],
             [
-                'teacher_email'  => 'mohammad.zayoud@baheth.jo',
+                'teacher_email'  => 'mohammad.zayoud@IbnZaidon.jo',
                 'subject'        => $tawjihiSubject('الرياضيات', 1), // health stream
                 'category_id'    => $tawjihiRoot?->id,
                 'title_ar'       => 'رياضيات التوجيهي — الفرع الصحي (الشامل)',
@@ -114,7 +114,7 @@ class CourseSeeder extends Seeder
                 ],
             ],
             [
-                'teacher_email'  => 'mohammad.zayoud@baheth.jo',
+                'teacher_email'  => 'mohammad.zayoud@IbnZaidon.jo',
                 'subject'        => $gradeSubject('الفيزياء', 10, 1),
                 'category_id'    => $primaryRoot?->id,
                 'title_ar'       => 'الفيزياء المكثّف — الصف العاشر',
@@ -139,7 +139,7 @@ class CourseSeeder extends Seeder
             ],
             // ── Arabic ───────────────────────────────────────────────────
             [
-                'teacher_email'  => 'sara.namer@baheth.jo',
+                'teacher_email'  => 'sara.namer@IbnZaidon.jo',
                 'subject'        => $gradeSubject('اللغة العربية', 9, 1),
                 'category_id'    => $primaryRoot?->id,
                 'title_ar'       => 'اللغة العربية الشامل — الصف التاسع',
@@ -163,7 +163,7 @@ class CourseSeeder extends Seeder
                 ],
             ],
             [
-                'teacher_email'  => 'sara.namer@baheth.jo',
+                'teacher_email'  => 'sara.namer@IbnZaidon.jo',
                 'subject'        => $tawjihiSubject('اللغة العربية وآدابها', 1), // health stream
                 'category_id'    => $tawjihiRoot?->id,
                 'title_ar'       => 'عربي توجيهي — الشامل لجميع الفروع',
@@ -190,7 +190,7 @@ class CourseSeeder extends Seeder
             ],
             // ── Chemistry ────────────────────────────────────────────────
             [
-                'teacher_email'  => 'khaled.shraida@baheth.jo',
+                'teacher_email'  => 'khaled.shraida@IbnZaidon.jo',
                 'subject'        => $gradeSubject('الكيمياء', 10, 1),
                 'category_id'    => $primaryRoot?->id,
                 'title_ar'       => 'الكيمياء المتقدم — الصف العاشر',
@@ -214,7 +214,7 @@ class CourseSeeder extends Seeder
                 ],
             ],
             [
-                'teacher_email'  => 'khaled.shraida@baheth.jo',
+                'teacher_email'  => 'khaled.shraida@IbnZaidon.jo',
                 'subject'        => $tawjihiSubject('الكيمياء', 1), // health stream
                 'category_id'    => $tawjihiRoot?->id,
                 'title_ar'       => 'كيمياء توجيهي — الفرع الصحي والهندسي',
@@ -240,7 +240,7 @@ class CourseSeeder extends Seeder
             ],
             // ── English ──────────────────────────────────────────────────
             [
-                'teacher_email'  => 'rana.jarrar@baheth.jo',
+                'teacher_email'  => 'rana.jarrar@IbnZaidon.jo',
                 'subject'        => $gradeSubject('اللغة الإنجليزية', 9, 1),
                 'category_id'    => $primaryRoot?->id,
                 'title_ar'       => 'اللغة الإنجليزية الشامل — الصف التاسع',
@@ -264,7 +264,7 @@ class CourseSeeder extends Seeder
                 ],
             ],
             [
-                'teacher_email'  => 'rana.jarrar@baheth.jo',
+                'teacher_email'  => 'rana.jarrar@IbnZaidon.jo',
                 'subject'        => $tawjihiSubject('اللغة الإنجليزية', 1), // health stream
                 'category_id'    => $tawjihiRoot?->id,
                 'title_ar'       => 'إنجليزي التوجيهي — الشامل لجميع الفروع',

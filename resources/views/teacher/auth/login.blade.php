@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Login — Al-Baheth</title>
+    <title>Teacher Login — Ibn Zaidon</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -446,7 +446,7 @@
         </a>
 
         <div class="r-footer">
-            &copy; {{ date('Y') }} Al-Baheth. Empowering educators everywhere.
+            &copy; {{ date('Y') }} Ibn Zaidon. Empowering educators everywhere.
         </div>
 
     </div>

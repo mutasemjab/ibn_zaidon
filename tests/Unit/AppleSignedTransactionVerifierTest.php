@@ -13,7 +13,7 @@ class AppleSignedTransactionVerifierTest extends TestCase
         parent::setUp();
 
         config([
-            'apple_iap.bundle_id' => 'com.baheth.school',
+            'apple_iap.bundle_id' => 'com.IbnZaidon.school',
             // The cryptographic fixture predates the production switch to
             // per-course non-consumables. Override only the expected type so
             // the fixture can continue exercising signature verification.
@@ -29,8 +29,8 @@ class AppleSignedTransactionVerifierTest extends TestCase
     {
         $verified = (new AppleSignedTransactionVerifier())->verify($this->fixture());
 
-        $this->assertSame('com.baheth.school', $verified['bundle_id']);
-        $this->assertSame('com.baheth.school.course.access', $verified['product_id']);
+        $this->assertSame('com.IbnZaidon.school', $verified['bundle_id']);
+        $this->assertSame('com.IbnZaidon.school.course.access', $verified['product_id']);
         $this->assertSame('200000000099999', $verified['transaction_id']);
         $this->assertSame('2c6cdbad-2b37-8e8d-927d-68260000002a', $verified['app_account_token']);
         $this->assertSame('Sandbox', $verified['environment']);

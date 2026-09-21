@@ -5,10 +5,10 @@
 The API verifies StoreKit 2 signed transactions for the Flutter application.
 Before submitting the iOS app:
 
-1. Set `APPLE_IAP_BUNDLE_ID=com.baheth.school` and
-   `APPLE_IAP_COURSE_PRODUCT_PREFIX=com.baheth.school.course.v2.`. Each paid
+1. Set `APPLE_IAP_BUNDLE_ID=com.IbnZaidon.school` and
+   `APPLE_IAP_COURSE_PRODUCT_PREFIX=com.IbnZaidon.school.course.v2.`. Each paid
    course must have a matching **Non-Consumable** product whose ID ends with
-   the database course ID, for example `com.baheth.school.course.v2.42`.
+   the database course ID, for example `com.IbnZaidon.school.course.v2.42`.
 2. Keep `APPLE_IAP_ALLOWED_ENVIRONMENTS=Production,Sandbox`; App Review uses
    Sandbox transactions against the deployed API.
 3. Run `php artisan migrate --force` to backfill every student's permanent

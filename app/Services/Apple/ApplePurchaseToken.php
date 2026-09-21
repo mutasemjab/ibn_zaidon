@@ -6,7 +6,7 @@ use App\Exceptions\ApplePurchaseException;
 
 class ApplePurchaseToken
 {
-    private const CONTEXT = 'com.baheth.school.course.access';
+    private const CONTEXT = 'com.IbnZaidon.school.course.access';
 
     private const MAX_COURSE_ID = 2147483647;
 

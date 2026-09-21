@@ -44,9 +44,9 @@ class TeacherSeeder extends Seeder
         $teachers = [
             [
                 'name'               => 'أ. محمد أحمد الزيود',
-                'email'              => 'mohammad.zayoud@baheth.jo',
+                'email'              => 'mohammad.zayoud@IbnZaidon.jo',
                 'phone'              => '+962799001001',
-                'password'           => 'baheth2024',
+                'password'           => 'IbnZaidon2024',
                 'specialization_ar'  => 'الرياضيات والفيزياء',
                 'specialization_en'  => 'Mathematics & Physics',
                 'bio_ar'             => 'مدرس الرياضيات والفيزياء لأكثر من ١٥ عاماً. خبرة واسعة في توجيهي العلمي.',
@@ -68,9 +68,9 @@ class TeacherSeeder extends Seeder
             ],
             [
                 'name'               => 'أ. سارة عبدالله النمر',
-                'email'              => 'sara.namer@baheth.jo',
+                'email'              => 'sara.namer@IbnZaidon.jo',
                 'phone'              => '+962799001002',
-                'password'           => 'baheth2024',
+                'password'           => 'IbnZaidon2024',
                 'specialization_ar'  => 'اللغة العربية وآدابها',
                 'specialization_en'  => 'Arabic Language & Literature',
                 'bio_ar'             => 'متخصصة في تدريس اللغة العربية للمراحل الأساسية والتوجيهي.',
@@ -91,9 +91,9 @@ class TeacherSeeder extends Seeder
             ],
             [
                 'name'               => 'أ. خالد نادر الشريدة',
-                'email'              => 'khaled.shraida@baheth.jo',
+                'email'              => 'khaled.shraida@IbnZaidon.jo',
                 'phone'              => '+962799001003',
-                'password'           => 'baheth2024',
+                'password'           => 'IbnZaidon2024',
                 'specialization_ar'  => 'الكيمياء والعلوم',
                 'specialization_en'  => 'Chemistry & Sciences',
                 'bio_ar'             => 'مدرس الكيمياء لمرحلة التوجيهي الفرع العلمي والصحي.',
@@ -116,9 +116,9 @@ class TeacherSeeder extends Seeder
             ],
             [
                 'name'               => 'أ. رنا هاني جرار',
-                'email'              => 'rana.jarrar@baheth.jo',
+                'email'              => 'rana.jarrar@IbnZaidon.jo',
                 'phone'              => '+962799001004',
-                'password'           => 'baheth2024',
+                'password'           => 'IbnZaidon2024',
                 'specialization_ar'  => 'اللغة الإنجليزية',
                 'specialization_en'  => 'English Language',
                 'bio_ar'             => 'معلمة اللغة الإنجليزية للمراحل الأساسية والتوجيهي بخبرة ١٢ عاماً.',
