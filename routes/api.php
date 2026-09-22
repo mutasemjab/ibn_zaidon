@@ -82,8 +82,6 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
     Route::get('worksheets',                [WorksheetController::class, 'index']);
     Route::get('worksheets/{id}',           [WorksheetController::class, 'show']);
 
-    // ── Conduct document (public — read only) ─────────────────────────────
-    Route::get('conduct', [ConductController::class, 'show']);
 
     // ── Protected routes (require Bearer token) ────────────────────────────
     Route::middleware('auth:sanctum')->group(function () {
@@ -92,9 +90,6 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
         Route::post('auth/logout',          [AuthController::class, 'logout']);
         Route::delete('auth/delete-account', [AuthController::class, 'deleteAccount']);
 
-        // Switch to a linked sibling account without re-entering credentials
-        // (the sibling link is created by an admin from the dashboard)
-        Route::post('auth/switch-sibling/{siblingId}', [AuthController::class, 'switchSibling']);
 
         // Home (featured/trending courses + top teachers — filtered by the student's class)
         Route::get('home', [HomeController::class, 'index']);
@@ -131,26 +126,6 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
         // GET  /courses/{id}/my-progress
         Route::post('lessons/{id}/progress',       [LessonProgressController::class, 'update']);
         Route::get('courses/{id}/my-progress',     [LessonProgressController::class, 'courseProgress']);
-
-        // Educational notes / daily planner (المفكرة اليومية — filtered by student's class + date reached)
-        Route::get('educational-notes', [EducationalNoteController::class, 'index']);
-
-        // Weekly planner (المفكرة الأسبوعية — filtered by student's class + start_date reached)
-        Route::get('weekly-planner', [WeeklyPlannerController::class, 'index']);
-
-        // Class schedule image (جدول الحصص) — for the logged-in student's class
-        Route::get('class-schedule', [ClassScheduleController::class, 'index']);
-
-        // Exam schedule image (جدول الامتحانات) — for the logged-in student's class
-        Route::get('exam-schedule', [ExamScheduleController::class, 'index']);
-
-        // Announcements (الإعلانات — filtered by student's class or global)
-        Route::get('announcements',      [AnnouncementController::class, 'index']);
-        Route::get('announcements/{id}', [AnnouncementController::class, 'show']);
-
-        // Conduct document — sign + status (auth required)
-        Route::get('conduct/status', [ConductController::class, 'status']);
-        Route::post('conduct/sign',  [ConductController::class, 'sign']);
 
         // Push notifications
         // POST /device-token          body: { fcm_token: "..." }

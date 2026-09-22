@@ -27,4 +27,15 @@ class Worksheet extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    public function getTitleAttribute(): string
+    {
+        return app()->getLocale() === 'ar'
+            ? ($this->title_ar ?? $this->title_en)
+            : ($this->title_en ?? $this->title_ar);
+    }
+
+    public function getTagAttribute(): ?string
+    {
+        return app()->getLocale() === 'ar' ? $this->tag_ar : $this->tag_en;
+    }
 }

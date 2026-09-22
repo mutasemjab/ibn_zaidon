@@ -908,4 +908,31 @@ return [
     'flash_exam_no_questions'  => 'لا توجد أسئلة في هذا الامتحان بعد.',
     'auth_account_suspended'   => 'الحساب موقوف، تواصل مع الإدارة',
     'exam_available_now'       => 'متاح الآن',
+
+    // ── Resource pages (worksheets / prev-years / question-banks / pos) ───
+    'filter_subject_label'  => 'المادة',
+    'filter_all_subjects'   => 'جميع المواد',
+    'pdf_pages_label'       => 'صفحة',
+    'pdf_download_btn'      => 'تحميل PDF',
+
+    'ws_page_header'        => 'أوراق العمل',
+    'ws_count_suffix'       => 'ورقة عمل',
+    'ws_no_results'         => 'لا توجد أوراق عمل متاحة حالياً',
+
+    'py_page_header'        => 'أسئلة السنوات السابقة',
+    'py_count_suffix'       => 'امتحان',
+    'py_no_results'         => 'لا توجد أسئلة متاحة حالياً',
+    'py_filter_year'        => 'السنة',
+    'py_all_years'          => 'جميع السنوات',
+
+    'qb_page_header'        => 'بنك الأسئلة',
+    'qb_count_suffix'       => 'بنك أسئلة',
+    'qb_no_results'         => 'لا يوجد بنك أسئلة متاح حالياً',
+
+    'pos_page_header'       => 'نقاط البيع',
+    'pos_count_suffix'      => 'نقطة بيع',
+    'pos_no_results'        => 'لا توجد نقاط بيع مضافة حالياً',
+    'pos_city_label'        => 'المحافظة',
+    'pos_all_cities'        => 'جميع المحافظات',
+    'pos_map_btn'           => 'الموقع على الخريطة',
 ];

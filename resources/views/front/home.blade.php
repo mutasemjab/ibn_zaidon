@@ -280,7 +280,7 @@
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-file-earmark-ruled"></i></div><div><h6>{{ __('front.svc_ws_title1') }}</h6><p>{{ __('front.svc_ws_desc1') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-pencil-square"></i></div><div><h6>{{ __('front.svc_ws_title2') }}</h6><p>{{ __('front.svc_ws_desc2') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-printer"></i></div><div><h6>{{ __('front.svc_ws_title3') }}</h6><p>{{ __('front.svc_ws_desc3') }}</p></div></div>
-                    <div class="text-center mt-3"><a href="{{ route('exams.index') }}" class="btn-z btn-z-primary"><i class="bi bi-download"></i> {{ __('front.svc_ws_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('worksheets.index') }}" class="btn-z btn-z-primary"><i class="bi bi-download"></i> {{ __('front.svc_ws_btn') }}</a></div>
                 </div>
                 <div class="svc-panel" id="svc-py">
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-calendar3"></i></div><div><h6>{{ __('front.svc_py_title1') }}</h6><p>{{ __('front.svc_py_desc1') }}</p></div></div>
@@ -289,19 +289,19 @@
                     @empty
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-file-earmark-check"></i></div><div><h6>{{ __('front.exams_leaderboard_title') }}</h6><p>{{ __('front.svc_py_exam_desc') }}</p></div></div>
                     @endforelse
-                    <div class="text-center mt-3"><a href="{{ route('exams.index') }}" class="btn-z btn-z-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('front.svc_py_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('previous-years.index') }}" class="btn-z btn-z-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('front.svc_py_btn') }}</a></div>
                 </div>
                 <div class="svc-panel" id="svc-qb">
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-database"></i></div><div><h6>{{ __('front.svc_qb_title1') }}</h6><p>{{ __('front.svc_qb_desc1') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-shuffle"></i></div><div><h6>{{ __('front.svc_qb_title2') }}</h6><p>{{ __('front.svc_qb_desc2') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-graph-up-arrow"></i></div><div><h6>{{ __('front.svc_qb_title3') }}</h6><p>{{ __('front.svc_qb_desc3') }}</p></div></div>
-                    <div class="text-center mt-3"><a href="{{ route('exams.index') }}" class="btn-z btn-z-primary"><i class="bi bi-collection"></i> {{ __('front.svc_qb_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('question-banks.index') }}" class="btn-z btn-z-primary"><i class="bi bi-collection"></i> {{ __('front.svc_qb_btn') }}</a></div>
                 </div>
                 <div class="svc-panel" id="svc-ps">
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-shop-window"></i></div><div><h6>{{ __('front.svc_sp_title1') }}</h6><p>{{ __('front.svc_sp_desc1') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-credit-card-2-front"></i></div><div><h6>{{ __('front.svc_sp_title2') }}</h6><p>{{ __('front.svc_sp_desc2') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-geo-alt-fill"></i></div><div><h6>{{ __('front.svc_sp_title3') }}</h6><p>{{ __('front.svc_sp_desc3') }}</p></div></div>
-                    <div class="text-center mt-3"><a href="#contact" class="btn-z btn-z-primary"><i class="bi bi-pin-map"></i> {{ __('front.svc_sp_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('pos.index') }}" class="btn-z btn-z-primary"><i class="bi bi-pin-map"></i> {{ __('front.svc_sp_btn') }}</a></div>
                 </div>
             </div>
             <div class="col-lg-4">

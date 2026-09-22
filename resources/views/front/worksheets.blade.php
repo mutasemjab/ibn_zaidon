@@ -1,5 +1,5 @@
 @extends('front.layouts.app')
-@section('title', __('front.qb_page_header'))
+@section('title', __('front.ws_page_header'))
 
 @section('content')
 @php $isRtl = app()->getLocale() === 'ar'; @endphp
@@ -9,10 +9,10 @@
         <div class="z-breadcrumb mb-2">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>
             <span class="sep">/</span>
-            <span>{{ __('front.qb_page_header') }}</span>
+            <span>{{ __('front.ws_page_header') }}</span>
         </div>
         <h1 style="color:#fff;font-size:clamp(1.5rem,3vw,2rem);margin:0">
-            <i class="bi bi-database-check me-2"></i>{{ __('front.qb_page_header') }}
+            <i class="bi bi-file-earmark-ruled me-2"></i>{{ __('front.ws_page_header') }}
         </h1>
     </div>
 </div>
@@ -30,7 +30,7 @@
                 <h6 style="font-weight:700;color:var(--z-primary);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem">
                     <i class="bi bi-funnel-fill"></i> {{ __('front.courses_filter_title') }}
                 </h6>
-                <form method="GET" action="{{ route('question-banks.index') }}">
+                <form method="GET" action="{{ route('worksheets.index') }}">
                     <div class="mb-3">
                         <label class="z-label">{{ __('front.search') }}</label>
                         <input type="text" name="q" class="z-input" value="{{ request('q') }}" placeholder="{{ __('front.courses_search_ph') }}">
@@ -48,7 +48,7 @@
                         <i class="bi bi-search"></i> {{ __('front.courses_apply_filter') }}
                     </button>
                     @if(request()->hasAny(['q','subject']))
-                        <a href="{{ route('question-banks.index') }}" class="btn-z btn-z-outline btn-z-block mt-2">
+                        <a href="{{ route('worksheets.index') }}" class="btn-z btn-z-outline btn-z-block mt-2">
                             <i class="bi bi-x-circle"></i> {{ __('front.courses_clear_filter') }}
                         </a>
                     @endif
@@ -60,14 +60,14 @@
         <div class="col-lg-9">
             <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
                 <span style="color:var(--z-text-muted);font-size:.9rem">
-                    <strong style="color:var(--z-primary)">{{ $items->total() }}</strong> {{ __('front.qb_count_suffix') }}
+                    <strong style="color:var(--z-primary)">{{ $items->total() }}</strong> {{ __('front.ws_count_suffix') }}
                 </span>
             </div>
 
             @if($items->isEmpty())
                 <div class="text-center py-5">
-                    <i class="bi bi-database-x" style="font-size:4rem;color:var(--z-border)"></i>
-                    <h5 style="color:var(--z-text-muted);margin-top:1rem">{{ __('front.qb_no_results') }}</h5>
+                    <i class="bi bi-file-earmark-x" style="font-size:4rem;color:var(--z-border)"></i>
+                    <h5 style="color:var(--z-text-muted);margin-top:1rem">{{ __('front.ws_no_results') }}</h5>
                 </div>
             @else
                 <div class="row g-4">
@@ -77,11 +77,11 @@
                             'title'      => $item->title,
                             'tag'        => $item->tag,
                             'subject'    => $item->subject?->name,
-                            'year'       => null,
+                            'year'       => $item->year,
                             'pages'      => $item->pages,
-                            'pdfUrl'     => asset('assets/uploads/questionBank/' . $item->pdf_file),
-                            'icon'       => 'bi-database-check',
-                            'colorClass' => 'pdf-card-purple',
+                            'pdfUrl'     => asset('assets/uploads/worksheets/' . $item->pdf_file),
+                            'icon'       => 'bi-file-earmark-ruled',
+                            'colorClass' => 'pdf-card-green',
                         ])
                     </div>
                     @endforeach
