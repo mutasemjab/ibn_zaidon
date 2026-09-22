@@ -900,4 +900,31 @@ return [
     'flash_exam_no_questions'  => 'This exam has no questions yet.',
     'auth_account_suspended'   => 'Account is suspended. Contact admin.',
     'exam_available_now'       => 'Available now',
+
+    // ── Resource pages (worksheets / prev-years / question-banks / pos) ───
+    'filter_subject_label'  => 'Subject',
+    'filter_all_subjects'   => 'All subjects',
+    'pdf_pages_label'       => 'pages',
+    'pdf_download_btn'      => 'Download PDF',
+
+    'ws_page_header'        => 'Worksheets',
+    'ws_count_suffix'       => 'worksheet',
+    'ws_no_results'         => 'No worksheets available at the moment',
+
+    'py_page_header'        => 'Previous Year Exams',
+    'py_count_suffix'       => 'exam',
+    'py_no_results'         => 'No exams available at the moment',
+    'py_filter_year'        => 'Year',
+    'py_all_years'          => 'All years',
+
+    'qb_page_header'        => 'Question Banks',
+    'qb_count_suffix'       => 'question bank',
+    'qb_no_results'         => 'No question banks available at the moment',
+
+    'pos_page_header'       => 'Points of Sale',
+    'pos_count_suffix'      => 'location',
+    'pos_no_results'        => 'No locations added yet',
+    'pos_city_label'        => 'City',
+    'pos_all_cities'        => 'All cities',
+    'pos_map_btn'           => 'View on Map',
 ];

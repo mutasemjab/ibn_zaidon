@@ -16,7 +16,6 @@ class NotificationController extends Controller
 
     public function sendForm()
     {
-        $classes  = SchoolClass::where('is_active', true)->orderBy('name')->get();
         $students = Student::where('is_active', true)->orderBy('name')->get(['id', 'name', 'national_id']);
 
         return view('admin.notifications.send', compact('classes', 'students'));

@@ -12,6 +12,7 @@ class SiteSettingSeeder extends Seeder
         $settings = [
             // ── Site Identity ─────────────────────────────────────────────────
             ['site_name',          'general', 'أكاديمية ابن زيدون التعليمية', 'Ibn Zaidon Educational Academy'],
+            ['site_logo',          'general', '', ''],
             ['site_tagline',       'general', 'منصة التميّز التعليمي في الأردن', 'Jordan\'s Premier Educational Platform'],
             ['meta_description',   'general',
                 'أكاديمية ابن زيدون التعليمية — منصة تعليم إلكتروني رائدة في الأردن. دورات تفاعلية للمرحلة الأساسية والتوجيهي، امتحانات ذكية، وأوراق عمل احترافية بإشراف نخبة من المعلمين.',

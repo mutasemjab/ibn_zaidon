@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ResourcePageController;
 use App\Http\Controllers\StudentAuthController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -26,6 +27,10 @@ Route::group([
     Route::get('/teachers/{id}',                   [HomeController::class, 'teacherProfile'])->name('teachers.show');
     Route::get('/categories/{id}',                 [CategoryController::class, 'show'])->name('categories.show');
     Route::get('/sitemap.xml',                     [HomeController::class, 'sitemap'])->name('sitemap');
+    Route::get('/worksheets',                      [ResourcePageController::class, 'worksheets'])->name('worksheets.index');
+    Route::get('/previous-years',                  [ResourcePageController::class, 'previousYears'])->name('previous-years.index');
+    Route::get('/question-banks',                  [ResourcePageController::class, 'questionBanks'])->name('question-banks.index');
+    Route::get('/pos',                             [ResourcePageController::class, 'pos'])->name('pos.index');
 
     // ── Cart ────────────────────────────────────────────────────────────────
     Route::get('/cart',                [CartController::class, 'index'])->name('cart.index');

@@ -76,6 +76,7 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
     Route::get('worksheets',                [WorksheetController::class, 'index']);
     Route::get('worksheets/{id}',           [WorksheetController::class, 'show']);
 
+
     // ── Protected routes (require Bearer token) ────────────────────────────
     Route::middleware('auth:sanctum')->group(function () {
 
@@ -83,9 +84,6 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
         Route::post('auth/logout',          [AuthController::class, 'logout']);
         Route::delete('auth/delete-account', [AuthController::class, 'deleteAccount']);
 
-        // Switch to a linked sibling account without re-entering credentials
-        // (the sibling link is created by an admin from the dashboard)
-        Route::post('auth/switch-sibling/{siblingId}', [AuthController::class, 'switchSibling']);
 
         // Home (featured/trending courses + top teachers — filtered by the student's class)
         Route::get('home', [HomeController::class, 'index']);

@@ -42,11 +42,6 @@
                         <label class="form-check-label" for="t_all">كل الطلاب</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="target" id="t_class" value="class"
-                               @checked(old('target') === 'class') onchange="showTarget(this.value)">
-                        <label class="form-check-label" for="t_class">صف محدد</label>
-                    </div>
-                    <div class="form-check">
                         <input class="form-check-input" type="radio" name="target" id="t_student" value="student"
                                @checked(old('target') === 'student') onchange="showTarget(this.value)">
                         <label class="form-check-label" for="t_student">طالب محدد</label>
@@ -54,16 +49,6 @@
                 </div>
             </div>
 
-            <div class="col-12" id="class_select" style="{{ old('target') === 'class' ? '' : 'display:none' }}">
-                <label class="form-label">اختر الصف</label>
-                <select name="class_id" class="form-select @error('class_id') is-invalid @enderror">
-                    <option value="">— اختر —</option>
-                    @foreach($classes as $class)
-                        <option value="{{ $class->id }}" @selected(old('class_id') == $class->id)>{{ $class->name }}</option>
-                    @endforeach
-                </select>
-                @error('class_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-            </div>
 
             <div class="col-12" id="student_select" style="{{ old('target') === 'student' ? '' : 'display:none' }}">
                 <label class="form-label">اختر الطالب</label>
@@ -106,7 +91,6 @@
 @push('scripts')
 <script>
 function showTarget(val) {
-    document.getElementById('class_select').style.display   = val === 'class'   ? '' : 'none';
     document.getElementById('student_select').style.display = val === 'student' ? '' : 'none';
 }
 </script>

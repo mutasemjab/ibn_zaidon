@@ -12,7 +12,6 @@ class QuestionBank extends Model
     protected $fillable = [
         'teacher_id',
         'subject_id',
-        'class_id',
         'title_ar',
         'title_en',
         'tag_ar',
@@ -37,11 +36,6 @@ class QuestionBank extends Model
     public function subject()
     {
         return $this->belongsTo(Subject::class);
-    }
-
-    public function schoolClass()
-    {
-        return $this->belongsTo(SchoolClass::class, 'class_id');
     }
 
     public function getTitleAttribute()

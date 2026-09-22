@@ -118,44 +118,14 @@
     </div>
 </section>
 
-{{-- ════════════ STATS STRIP ════════════ --}}
-<section class="stats-strip">
-    <div class="container">
-        <div class="row g-4 align-items-center text-center">
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['students'] }}" data-suffix="+">0</span>
-                    <span class="stat-txt"><i class="bi bi-people-fill me-1"></i>{{ __('front.stat_enrolled') }}</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['courses'] }}" data-suffix="+">0</span>
-                    <span class="stat-txt"><i class="bi bi-play-btn-fill me-1"></i>{{ __('front.stat_available_courses') }}</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['teachers'] }}" data-suffix="+">0</span>
-                    <span class="stat-txt"><i class="bi bi-person-badge-fill me-1"></i>{{ __('front.stat_top_teacher') }}</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['satisfaction'] }}" data-suffix="%">0</span>
-                    <span class="stat-txt"><i class="bi bi-star-fill me-1"></i>{{ __('front.stat_satisfaction_pct') }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 {{-- ════════════ ABOUT ════════════ --}}
 <section class="section-pad" id="about">
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-5 anim-fade-up">
-                <div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:var(--z-radius-xl);height:380px;display:flex;align-items:center;justify-content:center">
+                <div class="about-visual-inner" style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:var(--z-radius-xl);height:380px;display:flex;align-items:center;justify-content:center">
                     <div class="text-center text-white">
                         <i class="bi bi-mortarboard-fill" style="font-size:6rem;opacity:.35"></i>
                         <div style="font-size:1.5rem;font-weight:800;margin-top:1rem;opacity:.8">{{ SiteSetting::val('site_name') }}</div>
@@ -214,7 +184,7 @@
         </div>
         <div class="row g-4 justify-content-center">
             @forelse($categories as $category)
-            <div class="col-lg-4 col-md-5 col-10 anim-fade-up anim-d{{ min($loop->index + 1, 4) }}">
+            <div class="col-lg-4 col-md-6 col-6 anim-fade-up anim-d{{ min($loop->index + 1, 4) }}">
                 <a href="{{ route('categories.show', $category->id) }}" class="cat-card" style="padding:2.5rem 1.5rem">
                     <div class="cat-icon" style="font-size:2.5rem;margin-bottom:1rem">
                         @if($category->icon)<i class="bi {{ $category->icon }}"></i>@else📚@endif
@@ -310,7 +280,7 @@
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-file-earmark-ruled"></i></div><div><h6>{{ __('front.svc_ws_title1') }}</h6><p>{{ __('front.svc_ws_desc1') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-pencil-square"></i></div><div><h6>{{ __('front.svc_ws_title2') }}</h6><p>{{ __('front.svc_ws_desc2') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-printer"></i></div><div><h6>{{ __('front.svc_ws_title3') }}</h6><p>{{ __('front.svc_ws_desc3') }}</p></div></div>
-                    <div class="text-center mt-3"><a href="{{ route('exams.index') }}" class="btn-z btn-z-primary"><i class="bi bi-download"></i> {{ __('front.svc_ws_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('worksheets.index') }}" class="btn-z btn-z-primary"><i class="bi bi-download"></i> {{ __('front.svc_ws_btn') }}</a></div>
                 </div>
                 <div class="svc-panel" id="svc-py">
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-calendar3"></i></div><div><h6>{{ __('front.svc_py_title1') }}</h6><p>{{ __('front.svc_py_desc1') }}</p></div></div>
@@ -319,19 +289,19 @@
                     @empty
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-file-earmark-check"></i></div><div><h6>{{ __('front.exams_leaderboard_title') }}</h6><p>{{ __('front.svc_py_exam_desc') }}</p></div></div>
                     @endforelse
-                    <div class="text-center mt-3"><a href="{{ route('exams.index') }}" class="btn-z btn-z-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('front.svc_py_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('previous-years.index') }}" class="btn-z btn-z-primary"><i class="bi bi-arrow-left-circle"></i> {{ __('front.svc_py_btn') }}</a></div>
                 </div>
                 <div class="svc-panel" id="svc-qb">
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-database"></i></div><div><h6>{{ __('front.svc_qb_title1') }}</h6><p>{{ __('front.svc_qb_desc1') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-shuffle"></i></div><div><h6>{{ __('front.svc_qb_title2') }}</h6><p>{{ __('front.svc_qb_desc2') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-graph-up-arrow"></i></div><div><h6>{{ __('front.svc_qb_title3') }}</h6><p>{{ __('front.svc_qb_desc3') }}</p></div></div>
-                    <div class="text-center mt-3"><a href="{{ route('exams.index') }}" class="btn-z btn-z-primary"><i class="bi bi-collection"></i> {{ __('front.svc_qb_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('question-banks.index') }}" class="btn-z btn-z-primary"><i class="bi bi-collection"></i> {{ __('front.svc_qb_btn') }}</a></div>
                 </div>
                 <div class="svc-panel" id="svc-ps">
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-shop-window"></i></div><div><h6>{{ __('front.svc_sp_title1') }}</h6><p>{{ __('front.svc_sp_desc1') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-credit-card-2-front"></i></div><div><h6>{{ __('front.svc_sp_title2') }}</h6><p>{{ __('front.svc_sp_desc2') }}</p></div></div>
                     <div class="svc-item"><div class="svc-item-icon"><i class="bi bi-geo-alt-fill"></i></div><div><h6>{{ __('front.svc_sp_title3') }}</h6><p>{{ __('front.svc_sp_desc3') }}</p></div></div>
-                    <div class="text-center mt-3"><a href="#contact" class="btn-z btn-z-primary"><i class="bi bi-pin-map"></i> {{ __('front.svc_sp_btn') }}</a></div>
+                    <div class="text-center mt-3"><a href="{{ route('pos.index') }}" class="btn-z btn-z-primary"><i class="bi bi-pin-map"></i> {{ __('front.svc_sp_btn') }}</a></div>
                 </div>
             </div>
             <div class="col-lg-4">

@@ -1,1 +1,0 @@
-@include('front.layouts.app')

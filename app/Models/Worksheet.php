@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Worksheet extends Model
 {
     protected $fillable = [
-        'teacher_id', 'subject_id', 'class_id', 'title_ar', 'title_en',
+        'teacher_id', 'subject_id', 'title_ar', 'title_en',
         'tag_ar', 'tag_en',
         'year', 'pages', 'file_size', 'sort_order',
         'pdf_file', 'status',
@@ -27,8 +27,15 @@ class Worksheet extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function schoolClass()
+    public function getTitleAttribute(): string
     {
-        return $this->belongsTo(SchoolClass::class, 'class_id');
+        return app()->getLocale() === 'ar'
+            ? ($this->title_ar ?? $this->title_en)
+            : ($this->title_en ?? $this->title_ar);
+    }
+
+    public function getTagAttribute(): ?string
+    {
+        return app()->getLocale() === 'ar' ? $this->tag_ar : $this->tag_en;
     }
 }
