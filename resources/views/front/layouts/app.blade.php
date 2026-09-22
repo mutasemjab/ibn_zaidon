@@ -118,7 +118,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     @endif
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="{{ asset('assets_front/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets_front/css/style.css') }}?v={{ filemtime(base_path('assets_front/css/style.css')) }}" rel="stylesheet">
 
     @stack('styles')
 </head>
@@ -187,7 +187,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 {{-- Brand JS --}}
-<script src="{{ asset('assets_front/js/app.js') }}"></script>
+<script src="{{ asset('assets_front/js/app.js') }}?v={{ filemtime(base_path('assets_front/js/app.js')) }}"></script>
 
 @stack('scripts')
 </body>

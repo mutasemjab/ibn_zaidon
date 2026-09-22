@@ -118,37 +118,7 @@
     </div>
 </section>
 
-{{-- ════════════ STATS STRIP ════════════ --}}
-<section class="stats-strip">
-    <div class="container">
-        <div class="row g-4 align-items-center text-center">
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['students'] }}" data-suffix="+">0</span>
-                    <span class="stat-txt"><i class="bi bi-people-fill me-1"></i>{{ __('front.stat_enrolled') }}</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['courses'] }}" data-suffix="+">0</span>
-                    <span class="stat-txt"><i class="bi bi-play-btn-fill me-1"></i>{{ __('front.stat_available_courses') }}</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['teachers'] }}" data-suffix="+">0</span>
-                    <span class="stat-txt"><i class="bi bi-person-badge-fill me-1"></i>{{ __('front.stat_top_teacher') }}</span>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <div class="stat-block">
-                    <span class="stat-num" data-count="{{ $stats['satisfaction'] }}" data-suffix="%">0</span>
-                    <span class="stat-txt"><i class="bi bi-star-fill me-1"></i>{{ __('front.stat_satisfaction_pct') }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 {{-- ════════════ ABOUT ════════════ --}}
 <section class="section-pad" id="about">

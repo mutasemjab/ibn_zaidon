@@ -24,6 +24,9 @@ class SiteSettingsSchema
                     [
                         'title'  => ['ar' => 'هوية الموقع', 'en' => 'Site identity'],
                         'fields' => [
+                            self::one('site_logo', 'general', 'image', 'شعار الموقع (Logo)', 'Site logo', [
+                                'hint' => ['ar' => 'يُعرض في شريط التنقل. PNG أو SVG بخلفية شفافة مُفضَّل.', 'en' => 'Displayed in the navbar. PNG or SVG with transparent background preferred.'],
+                            ]),
                             self::bi('site_name', 'general', 'text', 'اسم الموقع', 'Site name'),
                             self::bi('site_tagline', 'general', 'text', 'الشعار النصي', 'Tagline'),
                             self::bi('meta_description', 'general', 'textarea', 'وصف الموقع (SEO)', 'Site description (SEO)', ['rows' => 3]),

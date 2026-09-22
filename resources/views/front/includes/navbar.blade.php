@@ -14,7 +14,7 @@
         @endphp
         <a href="{{ route('home') }}" class="z-brand">
             @if($brandLogo)
-                <img src="{{ $brandLogo }}" alt="{{ $brandName }}" class="z-brand-logo">
+                <img src="{{ asset('assets/uploads/site/' . $brandLogo) }}" alt="{{ $brandName }}" class="z-brand-logo">
             @else
                 <span class="z-brand-icon">{{ mb_substr($brandName, 0, 1) }}</span>
                 <span>{{ $brandName }}</span>
