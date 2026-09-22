@@ -64,7 +64,6 @@
                     <th>#</th>
                     <th>الطالب</th>
                     <th>الهاتف</th>
-                    <th>الصف</th>
                     <th>الدروس المنجزة</th>
                     <th>التقدم</th>
                     <th>تاريخ التسجيل</th>
@@ -91,7 +90,6 @@
                         </a>
                     </td>
                     <td style="color:var(--muted);font-size:.82rem">{{ $student->phone ?? '—' }}</td>
-                    <td style="font-size:.82rem;color:var(--muted)">{{ $student->schoolClass->name ?? '—' }}</td>
                     <td>
                         <span style="font-weight:600">{{ $completedLessons }}</span>
                         <span style="color:var(--muted)"> / {{ $totalLessons }}</span>

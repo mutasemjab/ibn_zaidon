@@ -85,16 +85,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-4">
-                <label class="form-label">الصف الدراسي</label>
-                <select name="class_id" class="form-select">
-                    <option value="">— اختر الصف —</option>
-                    @foreach($classes as $class)
-                        <option value="{{ $class->id }}" @selected(old('class_id', $exam->class_id) == $class->id)>{{ $class->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
             {{-- ── Course Placement ── --}}
             @php
                 $currentPlacement = old('placement_type',

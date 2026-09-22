@@ -19,11 +19,6 @@ class TeacherController extends Controller
         $query = Teacher::where('is_active', true)
             ->orderByDesc('total_students');
 
-        if ($request->user('sanctum')?->class_id) {
-            $classId = $request->user()->class_id;
-            $query->whereHas('teacherClasses', fn ($q) => $q->where('class_id', $classId));
-        }
-
         if ($request->filled('search')) {
             $s = $request->search;
             $query->where(fn ($q) => $q
@@ -56,7 +51,6 @@ class TeacherController extends Controller
         $courses = Course::with(['subject', 'category'])
             ->published()
             ->where('teacher_id', $id)
-            ->when($request->user('sanctum')?->class_id, fn ($q, $classId) => $q->where('class_id', $classId))
             ->latest()
             ->get()
             ->map(fn ($c) => [

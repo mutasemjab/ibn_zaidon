@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\{Category, Course, Enrollment, LessonProgress, SchoolClass, Subject, Teacher};
+use App\Models\{Category, Course, Enrollment, LessonProgress, Subject, Teacher};
 use App\Models\AdminActivityLog;
 use App\Services\CourseService;
 use Illuminate\Http\Request;
@@ -42,7 +42,6 @@ class CourseController extends Controller
             'teacher_id'       => 'required|exists:teachers,id',
             'category_id'      => 'nullable|exists:categories,id',
             'subject_id'       => 'nullable|exists:subjects,id',
-            'class_ids'        => 'nullable|array',
             'title_ar'         => 'required|string|max:255',
             'title_en'         => 'required|string|max:255',
             'description_ar'   => 'nullable|string',
@@ -62,15 +61,12 @@ class CourseController extends Controller
             'thumbnail'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $classIds = $data['class_ids'] ?? [];
-        unset($data['class_ids']);
-
         $data['is_published']      = $request->boolean('is_published');
         $data['is_featured']       = $request->boolean('is_featured');
         $data['is_free']           = $request->boolean('is_free');
         $data['sequential_videos'] = $request->boolean('sequential_videos');
 
-        $course = $this->courses->create($data, $request->file('thumbnail'), $classIds);
+        $course = $this->courses->create($data, $request->file('thumbnail'));
         AdminActivityLog::log('create', "إضافة دورة: {$data['title_ar']}", 'courses', $course->id);
 
         return redirect()->route('admin.courses.index')
@@ -102,7 +98,6 @@ class CourseController extends Controller
             'teacher_id'       => 'required|exists:teachers,id',
             'category_id'      => 'nullable|exists:categories,id',
             'subject_id'       => 'nullable|exists:subjects,id',
-            'class_ids'        => 'nullable|array',
             'title_ar'         => 'required|string|max:255',
             'title_en'         => 'required|string|max:255',
             'description_ar'   => 'nullable|string',
@@ -122,15 +117,12 @@ class CourseController extends Controller
             'thumbnail'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $classIds = $data['class_ids'] ?? [];
-        unset($data['class_ids']);
-
         $data['is_published']      = $request->boolean('is_published');
         $data['is_featured']       = $request->boolean('is_featured');
         $data['is_free']           = $request->boolean('is_free');
         $data['sequential_videos'] = $request->boolean('sequential_videos');
 
-        $this->courses->update($course, $data, $request->file('thumbnail'), $classIds);
+        $this->courses->update($course, $data, $request->file('thumbnail'));
         AdminActivityLog::log('update', "تعديل دورة: {$course->title_ar}", 'courses', $course->id);
 
         return redirect()->route('admin.courses.index')
@@ -149,30 +141,20 @@ class CourseController extends Controller
 
     public function progress(int $id)
     {
-        $course = Course::with(['units.lessons', 'classes'])->findOrFail($id);
+        $course = Course::with('units.lessons')->findOrFail($id);
 
         $lessonIds    = $course->units->flatMap->lessons->pluck('id');
         $totalLessons = $lessonIds->count();
 
-        // 1) students in linked school classes (course_classes pivot + direct class_id)
-        $classIds = $course->classes->pluck('id');
-        if ($course->class_id && ! $classIds->contains($course->class_id)) {
-            $classIds->push($course->class_id);
-        }
-        $classStudentIds = $classIds->isNotEmpty()
-            ? \App\Models\Student::whereIn('class_id', $classIds)->where('is_active', true)->pluck('id')
-            : collect();
-
-        // 2) students who already have lesson progress (catch-all for free access)
+        // 1) students who already have lesson progress (catch-all for free access)
         $progressStudentIds = $lessonIds->isNotEmpty()
             ? LessonProgress::whereIn('lesson_id', $lessonIds)->distinct()->pluck('student_id')
             : collect();
 
-        // 3) enrolled students (for paid courses)
+        // 2) enrolled students (for paid courses)
         $enrolledIds = Enrollment::where('course_id', $id)->pluck('student_id');
 
-        $allStudentIds = $classStudentIds
-            ->merge($progressStudentIds)
+        $allStudentIds = $progressStudentIds
             ->merge($enrolledIds)
             ->unique()->filter()->values();
 

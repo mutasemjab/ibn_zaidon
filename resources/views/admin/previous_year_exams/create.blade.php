@@ -29,20 +29,6 @@
                 </div>
 
                 <div class="mb-3">
-                    <label>الصف الدراسي</label>
-
-                    <select name="class_id" class="form-control">
-                        <option value="">— اختر الصف —</option>
-                        @foreach ($classes as $class)
-                            <option value="{{ $class->id }}"
-                                {{ old('class_id') == $class->id ? 'selected' : '' }}>
-                                {{ $class->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="mb-3">
                     <label>{{ __('messages.year_label') }} <span class="text-danger">*</span></label>
 
                     <input type="number" name="year" class="form-control" required>

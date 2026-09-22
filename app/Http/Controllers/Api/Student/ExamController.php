@@ -27,10 +27,6 @@ class ExamController extends Controller
             ['is_published' => true]
         );
 
-        if ($request->user()?->class_id) {
-            $filters['class_id'] = $request->user()->class_id;
-        }
-
         $paginated = $this->service->list($filters, 15);
 
         return response()->json([
@@ -231,7 +227,6 @@ class ExamController extends Controller
             'course'  => $exam->course?->only(['id', 'title_ar', 'title_en']),
             'subject' => ['id' => $exam->subject?->id, 'name' => $exam->subject?->name],
             'teacher' => ['id' => $exam->teacher?->id, 'name' => $exam->teacher?->name],
-            'class'   => ['id' => $exam->schoolClass?->id, 'name' => $exam->schoolClass?->name],
         ];
     }
 }

@@ -23,10 +23,6 @@ class CourseController extends Controller
             'is_published' => true,
         ]);
 
-        if ($request->user()?->class_id) {
-            $filters['class_id'] = $request->user()->class_id;
-        }
-
         if ($request->filled('featured')) {
             $filters['is_featured'] = true;
         }
@@ -105,7 +101,6 @@ class CourseController extends Controller
             ],
             'category' => ['id' => $course->category?->id, 'name' => $course->category?->name],
             'subject'  => ['id' => $course->subject?->id,  'name' => $course->subject?->name],
-            'class'    => ['id' => $course->schoolClass?->id, 'name' => $course->schoolClass?->name],
         ];
     }
 

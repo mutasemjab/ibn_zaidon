@@ -1,0 +1,131 @@
+<?php $__env->startSection('title', 'تقدم الطلاب — ' . ($course->title_ar ?: $course->title_en)); ?>
+
+<?php $__env->startSection('content'); ?>
+
+<div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-3">
+    <div>
+        <h1 class="page-title">تقدم الطلاب</h1>
+        <p class="page-sub"><?php echo e($course->title_ar ?: $course->title_en); ?> · <?php echo e($students->count()); ?> طالب · <?php echo e($totalLessons); ?> درس</p>
+    </div>
+    <a href="<?php echo e(route('admin.courses.show', $course->id)); ?>" class="btn-outline-sm">
+        <i class="bi bi-arrow-left"></i> رجوع للكورس
+    </a>
+</div>
+
+<?php
+    $avgPct = $students->count()
+        ? round($students->avg(fn($s) => $enrollmentsByStudent[$s->id]->progress_percentage
+            ?? ($totalLessons ? round(($completedByStudent[$s->id] ?? 0) / $totalLessons * 100) : 0)))
+        : 0;
+    $completedCount = $students->filter(fn($s) => ($enrollmentsByStudent[$s->id]->is_completed ?? false))->count();
+?>
+
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="panel-card text-center py-3">
+            <div style="font-size:1.6rem;font-weight:700;color:var(--primary)"><?php echo e($students->count()); ?></div>
+            <div style="font-size:.8rem;color:var(--muted)">إجمالي الطلاب</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="panel-card text-center py-3">
+            <div style="font-size:1.6rem;font-weight:700;color:#059669"><?php echo e($completedCount); ?></div>
+            <div style="font-size:.8rem;color:var(--muted)">أتمّوا الكورس</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="panel-card text-center py-3">
+            <div style="font-size:1.6rem;font-weight:700;color:#d97706"><?php echo e($avgPct); ?>%</div>
+            <div style="font-size:.8rem;color:var(--muted)">متوسط التقدم</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="panel-card text-center py-3">
+            <div style="font-size:1.6rem;font-weight:700;color:var(--text)"><?php echo e($totalLessons); ?></div>
+            <div style="font-size:.8rem;color:var(--muted)">إجمالي الدروس</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="panel-card">
+    <div class="panel-card-body p-0" style="overflow-x:auto">
+        <?php if($students->isEmpty()): ?>
+        <div class="text-center py-5" style="color:var(--muted)">
+            <i class="bi bi-people" style="font-size:2.5rem;display:block;margin-bottom:12px"></i>
+            لا يوجد طلاب مرتبطون بهذا الكورس بعد.
+        </div>
+        <?php else: ?>
+        <table class="data-table" style="white-space:nowrap">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>الطالب</th>
+                    <th>الهاتف</th>
+                    <th>الدروس المنجزة</th>
+                    <th>التقدم</th>
+                    <th>تاريخ التسجيل</th>
+                    <th>الحالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
+                    $enrollment       = $enrollmentsByStudent[$student->id] ?? null;
+                    $completedLessons = $completedByStudent[$student->id] ?? 0;
+                    $pct = $enrollment
+                        ? $enrollment->progress_percentage
+                        : ($totalLessons ? round($completedLessons / $totalLessons * 100) : 0);
+                    $barColor    = $pct >= 100 ? '#059669' : ($pct >= 50 ? '#d97706' : 'var(--primary)');
+                    $isCompleted = $enrollment?->is_completed ?? false;
+                    $expired     = $enrollment?->expires_at && $enrollment->expires_at->isPast();
+                ?>
+                <tr>
+                    <td style="color:var(--muted)"><?php echo e($loop->iteration); ?></td>
+                    <td>
+                        <a href="<?php echo e(route('admin.students.show', $student->id)); ?>" style="font-weight:500;color:var(--primary)">
+                            <?php echo e($student->name); ?>
+
+                        </a>
+                    </td>
+                    <td style="color:var(--muted);font-size:.82rem"><?php echo e($student->phone ?? '—'); ?></td>
+                    <td>
+                        <span style="font-weight:600"><?php echo e($completedLessons); ?></span>
+                        <span style="color:var(--muted)"> / <?php echo e($totalLessons); ?></span>
+                    </td>
+                    <td style="min-width:160px">
+                        <div class="d-flex align-items-center gap-2">
+                            <div style="flex:1;height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden">
+                                <div style="height:100%;width:<?php echo e($pct); ?>%;background:<?php echo e($barColor); ?>;border-radius:99px"></div>
+                            </div>
+                            <span style="font-size:.8rem;font-weight:600;min-width:36px"><?php echo e($pct); ?>%</span>
+                        </div>
+                    </td>
+                    <td style="color:var(--muted);font-size:.82rem">
+                        <?php echo e($enrollment?->enrolled_at?->format('Y-m-d') ?? '—'); ?>
+
+                        <?php if($expired): ?>
+                            <span class="pill pill-warning" style="font-size:.7rem">منتهي</span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?php if($isCompleted): ?>
+                            <span class="pill pill-success">مكتمل</span>
+                        <?php elseif($completedLessons > 0): ?>
+                            <span class="pill pill-warning">جارٍ</span>
+                        <?php else: ?>
+                            <span class="pill pill-neutral">لم يبدأ</span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+        </table>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\zaidon\resources\views\admin\courses\progress.blade.php ENDPATH**/ ?>

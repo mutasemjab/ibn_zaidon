@@ -66,12 +66,4 @@ class Teacher extends Authenticatable
     {
         return $this->belongsToMany(Subject::class, 'teacher_subjects');
     }
-
-
-    // كل طلاب الصفوف اللي بدرّسها المعلم
-    public function students()
-    {
-        $classIds = $this->teacherClasses()->distinct()->pluck('class_id');
-        return Student::whereIn('class_id', $classIds);
-    }
 }

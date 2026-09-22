@@ -6,7 +6,6 @@ use App\Exports\StudentsExport;
 use App\Http\Controllers\Controller;
 use App\Imports\StudentsImport;
 use App\Models\AdminActivityLog;
-use App\Models\SchoolClass;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,9 +29,6 @@ class StudentController extends Controller
                     ->orWhere('email', 'like', "%{$s}%")
                     ->orWhere('national_id', 'like', "%{$s}%")
                 )
-            )
-            ->when($request->filled('class_id'), fn ($q) =>
-                $q->where('class_id', $request->class_id)
             )
             ->when($request->is_active !== null && $request->is_active !== '', fn ($q) =>
                 $q->where('is_active', $request->boolean('is_active'))

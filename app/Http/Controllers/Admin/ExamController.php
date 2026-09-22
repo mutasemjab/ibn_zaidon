@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\{Course, Exam, Question, SchoolClass, Subject, Teacher, TeacherClass};
+use App\Models\{Course, Exam, Question, Subject, Teacher};
 use App\Services\ExamService;
 use Illuminate\Http\{JsonResponse, Request};
+use Illuminate\Support\Facades\DB;
 
 class ExamController extends Controller
 {
@@ -30,10 +31,9 @@ class ExamController extends Controller
         $courses         = Course::where('is_published', true)->get();
         $subjects        = $this->subjectsWithPath();
         $teachers        = Teacher::orderBy('name')->get();
-        $classes         = SchoolClass::where('is_active', true)->orderBy('name')->get();
         $teacherSubjects = $this->teacherSubjectsMap();
 
-        return view('admin.exams.create', compact('courses', 'subjects', 'teachers', 'classes', 'teacherSubjects'));
+        return view('admin.exams.create', compact('courses', 'subjects', 'teachers', 'teacherSubjects'));
     }
 
     private function subjectsWithPath(): \Illuminate\Database\Eloquent\Collection
@@ -44,12 +44,12 @@ class ExamController extends Controller
             ->sortBy(fn ($s) => $s->full_path);
     }
 
-    // Maps every teacher_id to the subject_ids assigned to them in teacher_classes,
-    // so the exam form can restrict the subject list to the selected teacher's
-    // own subjects — same as what the teacher sees in their own panel.
+    // Maps every teacher_id to the subject_ids assigned to them (teacher_subjects
+    // pivot), so the exam form can restrict the subject list to the selected
+    // teacher's own subjects — same as what the teacher sees in their own panel.
     private function teacherSubjectsMap(): \Illuminate\Support\Collection
     {
-        return TeacherClass::whereNotNull('subject_id')
+        return DB::table('teacher_subjects')
             ->get(['teacher_id', 'subject_id'])
             ->groupBy('teacher_id')
             ->map(fn ($rows) => $rows->pluck('subject_id')->unique()->values());
@@ -83,7 +83,6 @@ class ExamController extends Controller
             'lesson_id'               => 'nullable|exists:lessons,id',
             'subject_id'              => 'nullable|exists:subjects,id',
             'teacher_id'              => 'nullable|exists:teachers,id',
-            'class_id'                => 'nullable|exists:classes,id',
             'title_ar'                => 'required|string|max:255',
             'title_en'                => 'required|string|max:255',
             'description_ar'          => 'nullable|string',
@@ -140,10 +139,9 @@ class ExamController extends Controller
         $courses         = Course::where('is_published', true)->get();
         $subjects        = $this->subjectsWithPath();
         $teachers        = Teacher::orderBy('name')->get();
-        $classes         = SchoolClass::where('is_active', true)->orderBy('name')->get();
         $teacherSubjects = $this->teacherSubjectsMap();
 
-        return view('admin.exams.edit', compact('exam', 'courses', 'subjects', 'teachers', 'classes', 'teacherSubjects'));
+        return view('admin.exams.edit', compact('exam', 'courses', 'subjects', 'teachers', 'teacherSubjects'));
     }
 
     public function update(Request $request, int $id)
@@ -156,7 +154,6 @@ class ExamController extends Controller
             'lesson_id'               => 'nullable|exists:lessons,id',
             'subject_id'              => 'nullable|exists:subjects,id',
             'teacher_id'              => 'nullable|exists:teachers,id',
-            'class_id'                => 'nullable|exists:classes,id',
             'title_ar'                => 'required|string|max:255',
             'title_en'                => 'required|string|max:255',
             'description_ar'          => 'nullable|string',

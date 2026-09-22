@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\SchoolClass;
 use App\Models\Subject;
 use App\Models\Worksheet;
 use Illuminate\Http\Request;
@@ -27,15 +26,13 @@ class WorksheetController extends Controller
     public function create()
     {
         $subjects = $this->subjectsWithPath();
-        $classes = $this->myClasses();
-        return view('teacher.worksheets.create', compact('subjects', 'classes'));
+        return view('teacher.worksheets.create', compact('subjects'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'subject_id' => 'nullable|exists:subjects,id',
-            'class_id'   => 'nullable|exists:classes,id',
             'title_ar'   => 'required|string|max:255',
             'title_en'   => 'nullable|string|max:255',
             'tag_ar'     => 'nullable|string|max:255',
@@ -53,7 +50,6 @@ class WorksheetController extends Controller
         Worksheet::create([
             'teacher_id' => $this->teacherId(),
             'subject_id' => $request->subject_id,
-            'class_id'   => $request->class_id,
             'title_ar'   => $request->title_ar,
             'title_en'   => $request->title_en ?: $request->title_ar,
             'tag_ar'     => $request->tag_ar,
@@ -73,8 +69,7 @@ class WorksheetController extends Controller
     {
         abort_unless($worksheet->teacher_id === $this->teacherId(), 403);
         $subjects = $this->subjectsWithPath();
-        $classes = $this->myClasses();
-        return view('teacher.worksheets.edit', compact('worksheet', 'subjects', 'classes'));
+        return view('teacher.worksheets.edit', compact('worksheet', 'subjects'));
     }
 
     public function update(Request $request, Worksheet $worksheet)
@@ -83,7 +78,6 @@ class WorksheetController extends Controller
 
         $request->validate([
             'subject_id' => 'nullable|exists:subjects,id',
-            'class_id'   => 'nullable|exists:classes,id',
             'title_ar'   => 'required|string|max:255',
             'title_en'   => 'nullable|string|max:255',
             'tag_ar'     => 'nullable|string|max:255',
@@ -102,7 +96,6 @@ class WorksheetController extends Controller
 
         $worksheet->update([
             'subject_id' => $request->subject_id,
-            'class_id'   => $request->class_id,
             'title_ar'   => $request->title_ar,
             'title_en'   => $request->title_en ?: $request->title_ar,
             'tag_ar'     => $request->tag_ar,
@@ -126,20 +119,10 @@ class WorksheetController extends Controller
 
     private function subjectsWithPath(): \Illuminate\Support\Collection
     {
-        $teacher = auth('teacher')->user();
-
-        return Subject::whereIn('id', $teacher->teacherClasses()->whereNotNull('subject_id')->pluck('subject_id'))
+        return auth('teacher')->user()->subjects()
             ->with(['category.parent.parent'])
             ->get()
             ->sortBy(fn($s) => $s->full_path)
             ->values();
-    }
-
-    private function myClasses(): \Illuminate\Database\Eloquent\Collection
-    {
-        return SchoolClass::where('is_active', true)
-            ->whereIn('id', auth('teacher')->user()->teacherClasses()->pluck('class_id'))
-            ->orderBy('name')
-            ->get();
     }
 }

@@ -25,7 +25,7 @@
         </ul>
 
         {{-- ── Users ────────────────────────────────────────── --}}
-        @if($u?->canAny(['student-table','teacher-table','enrollment-table','class-table']))
+        @if($u?->canAny(['student-table','teacher-table','enrollment-table']))
         <div class="nav-label">{{ __('messages.users') }}</div>
         <ul>
             @if($u?->can('student-table'))

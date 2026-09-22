@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\QuestionBank;
-use App\Models\SchoolClass;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -32,16 +31,14 @@ class QuestionBankController extends Controller
     public function create()
     {
         $subjects = $this->subjectsWithPath();
-        $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
 
-        return view('admin.question_banks.create', compact('subjects', 'classes'));
+        return view('admin.question_banks.create', compact('subjects'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'subject_id' => 'required|exists:subjects,id',
-            'class_id' => 'nullable|exists:classes,id',
 
             'title_ar' => 'required',
             'title_en' => 'nullable',
@@ -63,7 +60,6 @@ class QuestionBankController extends Controller
 
         QuestionBank::create([
             'subject_id' => $request->subject_id,
-            'class_id' => $request->class_id,
 
             'title_ar' => $request->title_ar,
             'title_en' => $request->title_en ?: $request->title_ar,
@@ -89,16 +85,14 @@ class QuestionBankController extends Controller
     public function edit(QuestionBank $questionBank)
     {
         $subjects = $this->subjectsWithPath();
-        $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
 
-        return view('admin.question_banks.edit', compact('questionBank', 'subjects', 'classes'));
+        return view('admin.question_banks.edit', compact('questionBank', 'subjects'));
     }
 
     public function update(Request $request, QuestionBank $questionBank)
     {
         $request->validate([
             'subject_id' => 'required|exists:subjects,id',
-            'class_id' => 'nullable|exists:classes,id',
 
             'title_ar' => 'required',
             'title_en' => 'nullable',
@@ -124,7 +118,6 @@ class QuestionBankController extends Controller
 
         $questionBank->update([
             'subject_id' => $request->subject_id,
-            'class_id' => $request->class_id,
 
             'title_ar' => $request->title_ar,
             'title_en' => $request->title_en ?: $request->title_ar,

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\SchoolClass;
 use App\Models\Student;
 use App\Models\StudentNotification;
 use Google\Client as GoogleClient;
@@ -85,15 +84,13 @@ class FCMController
     /**
      * Send notification to multiple students and store in DB.
      *
-     * @param  array|int|null  $target  null=all, int=class_id, 'student:N'=specific student
+     * @param  string|null  $target  null=all, 'student:N'=specific student
      */
     public static function sendToStudents(string $title, string $body, $target = null, string $screen = 'home'): array
     {
         $query = Student::where('is_active', true);
 
-        if (is_int($target)) {
-            $query->where('class_id', $target);
-        } elseif (is_string($target) && str_starts_with($target, 'student:')) {
+        if (is_string($target) && str_starts_with($target, 'student:')) {
             $studentId = (int) str_replace('student:', '', $target);
             $query->where('id', $studentId);
         }

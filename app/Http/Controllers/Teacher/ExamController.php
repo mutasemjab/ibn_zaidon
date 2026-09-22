@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\{Course, Exam, ExamAttempt, Question, SchoolClass, Subject};
+use App\Models\{Course, Exam, ExamAttempt, Question, Subject};
 use App\Services\ExamService;
 use Illuminate\Http\Request;
 
@@ -44,7 +44,7 @@ class ExamController extends Controller
 
     private function teacherSubjects(): \Illuminate\Support\Collection
     {
-        return Subject::whereIn('id', $this->teacher()->teacherClasses()->whereNotNull('subject_id')->pluck('subject_id'))
+        return $this->teacher()->subjects()
             ->with(['category.parent.parent'])
             ->get()
             ->sortBy(fn($s) => $s->full_path)
@@ -53,29 +53,15 @@ class ExamController extends Controller
 
     private function teacherHasSubject(int $subjectId): bool
     {
-        return $this->teacher()->teacherClasses()->where('subject_id', $subjectId)->exists();
-    }
-
-    private function teacherHasClass(int $classId): bool
-    {
-        return $this->teacher()->teacherClasses()->where('class_id', $classId)->exists();
-    }
-
-    private function myClasses(): \Illuminate\Database\Eloquent\Collection
-    {
-        return SchoolClass::where('is_active', true)
-            ->whereIn('id', $this->teacher()->teacherClasses()->pluck('class_id'))
-            ->orderBy('name')
-            ->get();
+        return $this->teacher()->subjects()->where('subjects.id', $subjectId)->exists();
     }
 
     public function create()
     {
         $courses  = Course::where('teacher_id', $this->teacher()->id)->get();
         $subjects = $this->teacherSubjects();
-        $classes  = $this->myClasses();
 
-        return view('teacher.exams.create', compact('courses', 'subjects', 'classes'));
+        return view('teacher.exams.create', compact('courses', 'subjects'));
     }
 
     public function store(Request $request)
@@ -83,7 +69,6 @@ class ExamController extends Controller
         $data = $request->validate([
             'course_id'               => 'nullable|exists:courses,id',
             'subject_id'              => 'nullable|exists:subjects,id',
-            'class_id'                => 'nullable|exists:classes,id',
             'title_ar'                => 'required|string|max:255',
             'title_en'                => 'required|string|max:255',
             'description_ar'          => 'nullable|string',
@@ -106,10 +91,6 @@ class ExamController extends Controller
 
         if (! empty($data['subject_id'])) {
             abort_unless($this->teacherHasSubject($data['subject_id']), 403);
-        }
-
-        if (! empty($data['class_id'])) {
-            abort_unless($this->teacherHasClass($data['class_id']), 403);
         }
 
         $data['teacher_id']              = $this->teacher()->id;
@@ -141,9 +122,8 @@ class ExamController extends Controller
 
         $courses  = Course::where('teacher_id', $this->teacher()->id)->get();
         $subjects = $this->teacherSubjects();
-        $classes  = $this->myClasses();
 
-        return view('teacher.exams.edit', compact('exam', 'courses', 'subjects', 'classes'));
+        return view('teacher.exams.edit', compact('exam', 'courses', 'subjects'));
     }
 
     public function update(Request $request, int $id)
@@ -155,7 +135,6 @@ class ExamController extends Controller
         $data = $request->validate([
             'course_id'               => 'nullable|exists:courses,id',
             'subject_id'              => 'nullable|exists:subjects,id',
-            'class_id'                => 'nullable|exists:classes,id',
             'title_ar'                => 'required|string|max:255',
             'title_en'                => 'required|string|max:255',
             'description_ar'          => 'nullable|string',
@@ -173,10 +152,6 @@ class ExamController extends Controller
 
         if (! empty($data['subject_id'])) {
             abort_unless($this->teacherHasSubject($data['subject_id']), 403);
-        }
-
-        if (! empty($data['class_id'])) {
-            abort_unless($this->teacherHasClass($data['class_id']), 403);
         }
 
         $data['is_published']            = $request->boolean('is_published');

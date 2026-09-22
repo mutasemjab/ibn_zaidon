@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\{Category, Course, Enrollment, LessonProgress, SchoolClass, Subject};
+use App\Models\{Category, Course, Enrollment, LessonProgress, Subject};
 use App\Services\CourseService;
 use Illuminate\Http\Request;
 
@@ -29,7 +29,7 @@ class CourseController extends Controller
 
     private function teacherSubjects(): \Illuminate\Support\Collection
     {
-        return Subject::whereIn('id', $this->teacher()->teacherClasses()->whereNotNull('subject_id')->pluck('subject_id'))
+        return $this->teacher()->subjects()
             ->with(['category.parent.parent'])
             ->get()
             ->sortBy(fn($s) => $s->full_path)
@@ -46,21 +46,12 @@ class CourseController extends Controller
             ->values();
     }
 
-    private function myClasses(): \Illuminate\Database\Eloquent\Collection
-    {
-        return SchoolClass::where('is_active', true)
-            ->whereIn('id', $this->teacher()->teacherClasses()->pluck('class_id'))
-            ->orderBy('name')
-            ->get();
-    }
-
     public function create()
     {
         $categories = $this->teacherCategories();
         $subjects   = $this->teacherSubjects();
-        $classes    = $this->myClasses();
 
-        return view('teacher.courses.create', compact('categories', 'subjects', 'classes'));
+        return view('teacher.courses.create', compact('categories', 'subjects'));
     }
 
     public function store(Request $request)
@@ -68,8 +59,6 @@ class CourseController extends Controller
         $data = $request->validate([
             'category_id'      => 'required|exists:categories,id',
             'subject_id'       => 'nullable|exists:subjects,id',
-            'class_ids'        => 'nullable|array',
-            'class_ids.*'      => 'exists:classes,id',
             'title_ar'         => 'required|string|max:255',
             'title_en'         => 'required|string|max:255',
             'description_ar'   => 'nullable|string',
@@ -88,15 +77,12 @@ class CourseController extends Controller
             'thumbnail'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $classIds = $data['class_ids'] ?? [];
-        unset($data['class_ids']);
-
         $data['teacher_id']         = $this->teacher()->id;
         $data['is_published']       = $request->boolean('is_published');
         $data['is_free']            = $request->boolean('is_free');
         $data['sequential_videos']  = $request->boolean('sequential_videos');
 
-        $course = $this->courses->create($data, $request->file('thumbnail'), $classIds);
+        $course = $this->courses->create($data, $request->file('thumbnail'));
 
         return redirect()->route('teacher.courses.show', $course->id)
             ->with('success', 'Course created. Now add units and lessons.');
@@ -119,9 +105,8 @@ class CourseController extends Controller
 
         $categories = $this->teacherCategories();
         $subjects   = $this->teacherSubjects();
-        $classes    = $this->myClasses();
 
-        return view('teacher.courses.edit', compact('course', 'categories', 'subjects', 'classes'));
+        return view('teacher.courses.edit', compact('course', 'categories', 'subjects'));
     }
 
     public function update(Request $request, int $id)
@@ -133,8 +118,6 @@ class CourseController extends Controller
         $data = $request->validate([
             'category_id'      => 'required|exists:categories,id',
             'subject_id'       => 'nullable|exists:subjects,id',
-            'class_ids'        => 'nullable|array',
-            'class_ids.*'      => 'exists:classes,id',
             'title_ar'         => 'required|string|max:255',
             'title_en'         => 'required|string|max:255',
             'description_ar'   => 'nullable|string',
@@ -153,14 +136,11 @@ class CourseController extends Controller
             'thumbnail'         => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $classIds = $data['class_ids'] ?? [];
-        unset($data['class_ids']);
-
         $data['is_published']      = $request->boolean('is_published');
         $data['is_free']           = $request->boolean('is_free');
         $data['sequential_videos'] = $request->boolean('sequential_videos');
 
-        $this->courses->update($course, $data, $request->file('thumbnail'), $classIds);
+        $this->courses->update($course, $data, $request->file('thumbnail'));
 
         return redirect()->route('teacher.courses.show', $id)
             ->with('success', 'Course updated successfully.');
@@ -168,32 +148,22 @@ class CourseController extends Controller
 
     public function progress(int $id)
     {
-        $course = Course::with(['units.lessons', 'classes'])->findOrFail($id);
+        $course = Course::with('units.lessons')->findOrFail($id);
 
         abort_if($course->teacher_id !== $this->teacher()->id, 403);
 
         $lessonIds    = $course->units->flatMap->lessons->pluck('id');
         $totalLessons = $lessonIds->count();
 
-        // 1) students in linked school classes (course_classes pivot + direct class_id)
-        $classIds = $course->classes->pluck('id');
-        if ($course->class_id && ! $classIds->contains($course->class_id)) {
-            $classIds->push($course->class_id);
-        }
-        $classStudentIds = $classIds->isNotEmpty()
-            ? \App\Models\Student::whereIn('class_id', $classIds)->where('is_active', true)->pluck('id')
-            : collect();
-
-        // 2) students who already have lesson progress (catch-all for free access)
+        // 1) students who already have lesson progress (catch-all for free access)
         $progressStudentIds = $lessonIds->isNotEmpty()
             ? LessonProgress::whereIn('lesson_id', $lessonIds)->distinct()->pluck('student_id')
             : collect();
 
-        // 3) enrolled students (for paid courses)
+        // 2) enrolled students (for paid courses)
         $enrolledIds = Enrollment::where('course_id', $id)->pluck('student_id');
 
-        $allStudentIds = $classStudentIds
-            ->merge($progressStudentIds)
+        $allStudentIds = $progressStudentIds
             ->merge($enrolledIds)
             ->unique()->filter()->values();
 

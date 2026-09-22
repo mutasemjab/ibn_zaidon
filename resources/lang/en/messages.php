@@ -128,7 +128,6 @@ return [
 'female' => 'Female',
 'select_option' => 'Select',
 'nationality' => 'Nationality',
-'grade_level' => 'Grade Level',
 'university_school' => 'University / School',
 'avatar_label' => 'Avatar',
 'active_account' => 'Active Account',
@@ -152,7 +151,6 @@ return [
 'student_info' => 'Student Info',
 'create_student' => 'Create Student',
 'search_name_email_ph' => 'Search name, email, or national ID...',
-'table_grade_level' => 'Grade/Level',
 'no_students_found' => 'No students found.',
 'enrolled_courses' => 'Enrolled Courses',
 'exam_attempts' => 'Exam Attempts',
@@ -498,19 +496,6 @@ return [
 'email_directly' => 'Email Directly',
 'close_message' => 'Close Message',
 
-// ─── School Classes module ───
-'classes_title'       => 'School Classes',
-'manage_classes_desc' => 'Manage school classes available to students.',
-'add_class'           => 'Add Class',
-'edit_class'          => 'Edit Class',
-'class_info'          => 'Class Info',
-'class_name'          => 'Class Name',
-'search_class_ph'     => 'Search for a class...',
-'no_classes_yet'      => 'No classes yet.',
-'class_created'       => 'Class created successfully.',
-'class_updated'       => 'Class updated successfully.',
-'class_deleted'       => 'Class deleted.',
-
 // ─── Subjects module ───
 'subjects_title' => 'Subjects',
 'manage_subjects_desc' => 'Manage subject names in Arabic and English.',
@@ -844,8 +829,5 @@ return [
     'sett_contact_hours'   => 'Working Hours',
     'sett_social_title'    => 'Social Media Links',
     'sett_apps_title'      => 'App Links',
-    'class_label'  => 'Class',
-    'select_class' => 'Select Class',
-    'classes'      => 'Classes',
     'banners'      => 'Banners',
 ];

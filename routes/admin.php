@@ -23,9 +23,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentSiblingController;
-use App\Http\Controllers\Admin\SchoolClassController;
 use App\Http\Controllers\Admin\SubjectController;
-use App\Http\Controllers\Admin\TeacherClassController;
 use App\Http\Controllers\Admin\TeacherController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -75,10 +73,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('teachers/import', [TeacherController::class, 'import'])->name('admin.teachers.import');
         Route::resource('teachers', TeacherController::class, ['as' => 'admin']);
 
-        // ── Teacher Class Assignments ─────────────────────────────────
-        Route::post('teacher-classes',              [TeacherClassController::class, 'store'])->name('admin.teacher-classes.store');
-        Route::delete('teacher-classes/{teacherClass}', [TeacherClassController::class, 'destroy'])->name('admin.teacher-classes.destroy');
-
         // ── Students ──────────────────────────────────────────────────
         Route::get('students/export',  [StudentController::class, 'export'])->name('admin.students.export');
         Route::post('students/import', [StudentController::class, 'import'])->name('admin.students.import');
@@ -113,9 +107,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('card-numbers/bulk-generate', [CardNumberController::class, 'bulkGenerate'])->name('admin.card-numbers.bulk');
         Route::get('card-numbers/print',          [CardNumberController::class, 'printView'])->name('admin.card-numbers.print');
         Route::resource('card-numbers', CardNumberController::class, ['as' => 'admin']);
-
-        // ── School Classes ────────────────────────────────────────────
-        Route::resource('school-classes', SchoolClassController::class, ['as' => 'admin']);
 
         // ── Subjects ──────────────────────────────────────────────────
         Route::resource('subjects', SubjectController::class, ['as' => 'admin']);

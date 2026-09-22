@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PreviousYearExam;
-use App\Models\SchoolClass;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -89,9 +88,8 @@ class PreviousYearExamController extends Controller
     public function edit(PreviousYearExam $previousYearExam)
     {
         $subjects = $this->subjectsWithPath();
-        $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
 
-        return view('admin.previous_year_exams.edit', compact('previousYearExam', 'subjects', 'classes'));
+        return view('admin.previous_year_exams.edit', compact('previousYearExam', 'subjects'));
     }
 
     public function update(Request $request, PreviousYearExam $previousYearExam)

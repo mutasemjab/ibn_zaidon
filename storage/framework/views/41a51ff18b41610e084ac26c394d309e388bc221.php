@@ -1,0 +1,1 @@
+<?php /**PATH C:\xampp\htdocs\zaidon\resources\views\admin\includes\content.blade.php ENDPATH**/ ?>

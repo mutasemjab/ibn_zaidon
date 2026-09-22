@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ApiResponse;
 use App\Models\Enrollment;
-use App\Models\SchoolClass;
 use App\Services\ProgressService;
 use App\Services\StatsService;
 use Illuminate\Http\JsonResponse;
@@ -24,7 +23,7 @@ class ProfileController extends Controller
     // GET /profile
     public function show(Request $request): JsonResponse
     {
-        $student = $request->user()->load('schoolClass');
+        $student = $request->user();
         $appAccountToken = $student->ensureAppAccountToken();
 
         return $this->success([
@@ -37,8 +36,6 @@ class ProfileController extends Controller
             'date_of_birth'  => $student->date_of_birth?->format('Y-m-d'),
             'nationality'    => $student->nationality,
             'avatar'         => $student->avatar ? asset('assets/uploads/students/' . $student->avatar) : null,
-            'class'          => $student->schoolClass?->name,
-            'class_id'       => $student->class_id,
             'is_active'      => $student->is_active,
             'created_at'     => $student->created_at?->format('Y-m-d'),
             'app_account_token' => $appAccountToken,
@@ -59,7 +56,6 @@ class ProfileController extends Controller
             'gender'        => ['sometimes', 'nullable', 'in:male,female'],
             'date_of_birth' => ['sometimes', 'nullable', 'date'],
             'nationality'   => ['sometimes', 'nullable', 'string', 'max:100'],
-            'class_id'      => ['sometimes', 'nullable', 'exists:classes,id'],
             'avatar'        => ['sometimes', 'nullable', 'image', 'max:2048'],
             'password'      => ['sometimes', 'confirmed', Password::min(8)],
             'current_password' => ['required_with:password'],
@@ -89,7 +85,6 @@ class ProfileController extends Controller
             'date_of_birth' => $student->date_of_birth?->format('Y-m-d'),
             'nationality'   => $student->nationality,
             'avatar'        => $student->avatar ? asset('assets/uploads/' . $student->avatar) : null,
-            'class_id'      => $student->class_id,
             'app_account_token' => $appAccountToken,
         ], 'تم تحديث البيانات');
     }

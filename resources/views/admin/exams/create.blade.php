@@ -82,16 +82,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-4">
-                <label class="form-label">الصف الدراسي</label>
-                <select name="class_id" class="form-select">
-                    <option value="">— اختر الصف —</option>
-                    @foreach($classes as $class)
-                        <option value="{{ $class->id }}" @selected(old('class_id') == $class->id)>{{ $class->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
             {{-- ── Course Placement ── --}}
             <div class="col-12" id="placementPanel" style="display:none;">
                 <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px;">

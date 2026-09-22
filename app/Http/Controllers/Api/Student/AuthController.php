@@ -73,7 +73,7 @@ class AuthController extends Controller
 
         return $this->success([
             'token'   => $token,
-            'student' => $this->studentData($student->load('schoolClass')),
+            'student' => $this->studentData($student),
         ]);
     }
 
