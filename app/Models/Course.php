@@ -10,7 +10,7 @@ class Course extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'teacher_id', 'category_id', 'subject_id', 'class_id',
+        'teacher_id', 'category_id', 'subject_id',
         'title_ar', 'title_en',
         'description_ar', 'description_en',
         'what_you_learn_ar', 'what_you_learn_en',
@@ -74,18 +74,6 @@ class Course extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    public function schoolClass()
-    {
-        return $this->belongsTo(SchoolClass::class, 'class_id');
-    }
-
-    // All classes this course is offered to. `class_id`/`schoolClass()` stay in
-    // sync with the first entry here, so any code still reading the single
-    // legacy class (e.g. the mobile API response) keeps working unchanged.
-    public function classes()
-    {
-        return $this->belongsToMany(SchoolClass::class, 'course_classes', 'course_id', 'class_id');
-    }
 
     public function units()
     {

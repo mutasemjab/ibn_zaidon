@@ -32,7 +32,11 @@
 
         {{-- Sidebar Filters --}}
         <div class="col-lg-3">
-            <div style="background:#fff;border-radius:var(--z-radius-lg);padding:1.5rem;border:1.5px solid var(--z-border);position:sticky;top:calc(var(--navbar-h) + 1rem)">
+            <button class="mobile-filter-toggle" id="filterToggle">
+                <i class="bi bi-funnel-fill"></i> {{ __('front.courses_filter_title') }}
+                <i class="bi bi-chevron-down ms-auto" id="filterChevron"></i>
+            </button>
+            <div class="courses-sidebar" id="coursesSidebar" style="background:#fff;border-radius:var(--z-radius-lg);padding:1.5rem;border:1.5px solid var(--z-border);position:sticky;top:calc(var(--navbar-h) + 1rem)">
                 <h6 style="font-weight:700;color:var(--z-primary);margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem">
                     <i class="bi bi-funnel-fill"></i> {{ __('front.courses_filter_title') }}
                 </h6>
@@ -180,4 +184,19 @@
         </div>
     </div>
 </div>
+@push('scripts')
+<script>
+(function () {
+    var btn  = document.getElementById('filterToggle');
+    var side = document.getElementById('coursesSidebar');
+    var chev = document.getElementById('filterChevron');
+    if (!btn || !side) return;
+    btn.addEventListener('click', function () {
+        var open = side.classList.toggle('open');
+        chev.className = open ? 'bi bi-chevron-up ms-auto' : 'bi bi-chevron-down ms-auto';
+    });
+})();
+</script>
+@endpush
+
 @endsection

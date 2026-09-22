@@ -125,7 +125,7 @@
 <body>
 
 {{-- Navbar --}}
-@include('front.partials.navbar')
+@include('front.includes.navbar')
 
 {{-- Flash Messages --}}
 @if(session('activation_success'))
@@ -181,7 +181,7 @@
 @yield('content')
 
 {{-- Footer --}}
-@include('front.partials.footer')
+@include('front.includes.footer')
 
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

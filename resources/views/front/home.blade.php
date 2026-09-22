@@ -155,7 +155,7 @@
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-5 anim-fade-up">
-                <div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:var(--z-radius-xl);height:380px;display:flex;align-items:center;justify-content:center">
+                <div class="about-visual-inner" style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:var(--z-radius-xl);height:380px;display:flex;align-items:center;justify-content:center">
                     <div class="text-center text-white">
                         <i class="bi bi-mortarboard-fill" style="font-size:6rem;opacity:.35"></i>
                         <div style="font-size:1.5rem;font-weight:800;margin-top:1rem;opacity:.8">{{ SiteSetting::val('site_name') }}</div>
@@ -214,7 +214,7 @@
         </div>
         <div class="row g-4 justify-content-center">
             @forelse($categories as $category)
-            <div class="col-lg-4 col-md-5 col-10 anim-fade-up anim-d{{ min($loop->index + 1, 4) }}">
+            <div class="col-lg-4 col-md-6 col-6 anim-fade-up anim-d{{ min($loop->index + 1, 4) }}">
                 <a href="{{ route('categories.show', $category->id) }}" class="cat-card" style="padding:2.5rem 1.5rem">
                     <div class="cat-icon" style="font-size:2.5rem;margin-bottom:1rem">
                         @if($category->icon)<i class="bi {{ $category->icon }}"></i>@else📚@endif

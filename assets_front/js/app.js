@@ -15,16 +15,20 @@
   /* ── Mobile Menu Toggle ──────────────────────────────── */
   const toggle  = document.getElementById('mobileToggle');
   const mobMenu = document.getElementById('mobileMenu');
+  function closeMobileMenu() {
+    if (toggle) toggle.classList.remove('open');
+    if (mobMenu) mobMenu.classList.remove('open');
+  }
   if (toggle && mobMenu) {
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('open');
       mobMenu.classList.toggle('open');
     });
-    mobMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      toggle.classList.remove('open');
-      mobMenu.classList.remove('open');
-    }));
+    mobMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
   }
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 992) closeMobileMenu();
+  }, { passive: true });
 
   /* ── Animated Counters ───────────────────────────────── */
   function runCounter(el) {
