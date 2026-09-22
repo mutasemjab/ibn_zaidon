@@ -30,16 +30,14 @@ class PreviousYearExamController extends Controller
     public function create()
     {
         $subjects = $this->subjectsWithPath();
-        $classes = SchoolClass::where('is_active', true)->orderBy('name')->get();
 
-        return view('admin.previous_year_exams.create', compact('subjects', 'classes'));
+        return view('admin.previous_year_exams.create', compact('subjects'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'subject_id' => 'required|exists:subjects,id',
-            'class_id' => 'nullable|exists:classes,id',
             'year' => 'required|integer',
 
             'title_ar' => 'required|string|max:255',
@@ -66,7 +64,6 @@ class PreviousYearExamController extends Controller
 
         PreviousYearExam::create([
             'subject_id' => $request->subject_id,
-            'class_id' => $request->class_id,
             'year' => $request->year,
 
             'title_ar' => $request->title_ar,
@@ -101,7 +98,6 @@ class PreviousYearExamController extends Controller
     {
         $request->validate([
             'subject_id' => 'required|exists:subjects,id',
-            'class_id' => 'nullable|exists:classes,id',
             'year' => 'required|integer',
 
             'title_ar' => 'required|string|max:255',
@@ -127,7 +123,6 @@ class PreviousYearExamController extends Controller
 
         $previousYearExam->update([
             'subject_id' => $request->subject_id,
-            'class_id' => $request->class_id,
             'year' => $request->year,
 
             'title_ar' => $request->title_ar,

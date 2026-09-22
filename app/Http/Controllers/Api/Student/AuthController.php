@@ -21,7 +21,6 @@ class AuthController extends Controller
             'phone' => ['required', 'string', 'max:50', 'unique:students,phone'],
             'email'       => ['nullable', 'email', 'max:200', 'unique:students,email'],
             'password'    => ['required', 'confirmed', Password::min(8)],
-            'class_id'    => ['nullable', 'exists:classes,id'],
             'deviceId' => ['required', 'string', 'max:36', 'unique:students,deviceId'],
         ]);
 
@@ -30,7 +29,6 @@ class AuthController extends Controller
             'email'       => $validated['email'] ?? null,
             'phone'       => $validated['phone'] ?? null,
             'password'    => $validated['password'],
-            'class_id'    => $validated['class_id'] ?? null,
             'deviceId' => $validated['deviceId'],
             'is_active'   => true,
         ]);
@@ -106,8 +104,6 @@ class AuthController extends Controller
             'email'       => $student->email,
             'phone'       => $student->phone,
             'avatar'      => $student->avatar ? asset('assets/uploads/students/' . $student->avatar) : null,
-            'class'       => $student->schoolClass?->name,
-            'class_id'    => $student->class_id,
             'gender'      => $student->gender,
             'is_active'   => $student->is_active,
             'app_account_token' => $appAccountToken,
