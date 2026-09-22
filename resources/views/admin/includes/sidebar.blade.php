@@ -67,9 +67,7 @@
             $showAcademic = $u?->canAny([
                 'course-table','category-table','subject-table','exam-table',
                 'question-bank-table','previous-exam-table','worksheet-table',
-                'announcement-table','banner-table','weekly-planner-table',
-                'notification-send','educational-note-table',
-                'class-schedule-table','exam-schedule-table',
+                'banner-table','notification-send',
             ]) || $u?->is_super;
         @endphp
         @if($showAcademic)

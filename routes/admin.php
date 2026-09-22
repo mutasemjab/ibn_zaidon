@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\ActivityLogController;
-use App\Http\Controllers\Admin\AnnouncementController;
-use App\Http\Controllers\Admin\WeeklyPlannerController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\Admin\CardNumberController;
@@ -21,14 +19,10 @@ use App\Http\Controllers\Admin\PosController;
 use App\Http\Controllers\Admin\PreviousYearExamController;
 use App\Http\Controllers\Admin\QuestionBankController;
 use App\Http\Controllers\Admin\WorksheetController;
-use App\Http\Controllers\Admin\EducationalNoteController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\StudentSiblingController;
-use App\Http\Controllers\Admin\ClassScheduleController;
-use App\Http\Controllers\Admin\ExamScheduleController;
-use App\Http\Controllers\Admin\ConductDocumentController;
 use App\Http\Controllers\Admin\SchoolClassController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\TeacherClassController;
@@ -75,9 +69,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
         // ── Worksheets ──────────────────────────────────────────────────────
         Route::resource('worksheets', WorksheetController::class, ['as' => 'admin']);
-
-        // ── Educational Notes ───────────────────────────────────────────────
-        Route::resource('educational-notes', EducationalNoteController::class, ['as' => 'admin']);
 
         // ── Teachers ──────────────────────────────────────────────────
         Route::get('teachers/export',  [TeacherController::class, 'export'])->name('admin.teachers.export');
@@ -126,12 +117,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         // ── School Classes ────────────────────────────────────────────
         Route::resource('school-classes', SchoolClassController::class, ['as' => 'admin']);
 
-        // ── Conduct Document ──────────────────────────────────────────
-        Route::get('conduct',              [ConductDocumentController::class, 'index'])->name('admin.conduct.index');
-        Route::get('conduct/edit',         [ConductDocumentController::class, 'edit'])->name('admin.conduct.edit');
-        Route::put('conduct',              [ConductDocumentController::class, 'update'])->name('admin.conduct.update');
-        Route::get('conduct/signatures',   [ConductDocumentController::class, 'signatures'])->name('admin.conduct.signatures');
-
         // ── Subjects ──────────────────────────────────────────────────
         Route::resource('subjects', SubjectController::class, ['as' => 'admin']);
 
@@ -149,21 +134,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::post('units/{id}/materials',   [CourseContentController::class, 'storeMaterial'])->name('admin.courses.materials.store');
         Route::delete('materials/{id}',       [CourseContentController::class, 'destroyMaterial'])->name('admin.courses.materials.destroy');
 
-        // ── Weekly Planners ───────────────────────────────────────────
-        Route::resource('weekly-planners', WeeklyPlannerController::class, ['as' => 'admin']);
-
-        // ── Class Schedule (جدول الحصص) ────────────────────────────────
-        Route::resource('class-schedules', ClassScheduleController::class, ['as' => 'admin']);
-
-        // ── Exam Schedule (جدول الامتحانات) ────────────────────────────
-        Route::resource('exam-schedules', ExamScheduleController::class, ['as' => 'admin']);
-
         // ── Banners ───────────────────────────────────────────────────
         Route::post('banners/{banner}/toggle', [BannerController::class, 'toggleActive'])->name('admin.banners.toggle');
         Route::resource('banners', BannerController::class, ['as' => 'admin']);
-
-        // ── Announcements ─────────────────────────────────────────────
-        Route::resource('announcements', AnnouncementController::class, ['as' => 'admin']);
 
         // ── Push Notifications ────────────────────────────────────────
         Route::get('notifications/send',  [NotificationController::class, 'sendForm'])->name('admin.notifications.send');

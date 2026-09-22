@@ -498,22 +498,6 @@ return [
 'email_directly' => 'Email Directly',
 'close_message' => 'Close Message',
 
-// ─── Conduct Document module ───
-'conduct_title'        => 'Code of Conduct',
-'conduct_desc'         => 'Manage the student code of conduct and track signatures.',
-'conduct_edit'         => 'Edit Document',
-'conduct_create'       => 'Create Document',
-'conduct_info'         => 'Document Info',
-'conduct_title_ar'     => 'Title (Arabic)',
-'conduct_title_en'     => 'Title (English)',
-'conduct_body'         => 'Document Body',
-'conduct_updated'      => 'Code of conduct updated successfully.',
-'conduct_signatures'   => 'Signatures',
-'conduct_guardian_name'=> 'Guardian Name',
-'conduct_signed_at'    => 'Signed At',
-'conduct_no_document'  => 'No conduct document has been created yet.',
-'conduct_no_signatures'=> 'No signatures yet.',
-
 // ─── School Classes module ───
 'classes_title'       => 'School Classes',
 'manage_classes_desc' => 'Manage school classes available to students.',
@@ -648,26 +632,10 @@ return [
 'basic_info' => 'Basic Info',
 'no_records' => 'No records found.',
 
-// ─── Educational Notes ───
-'educational_notes' => 'Educational Notebook',
-'educational_notes_sub' => 'Log given lessons and homework assignments',
-'add_educational_note' => 'Add Note',
-'edit_educational_note' => 'Edit Note',
-'note_type' => 'Note Type',
-'note_type_lesson' => 'Lesson Given',
-'note_type_homework' => 'Homework',
-'note_details' => 'Note Details',
-'additional_info' => 'Additional Info',
-'date_label' => 'Date',
-'attachment_label' => 'Attachment (image or file)',
-'attachment_hint' => 'Image, PDF, or document — max 20 MB',
-'view_attachment' => 'View Attachment',
-'no_notes_yet' => 'No notes yet.',
-'add_note' => 'Add Note',
+// ─── Common CRUD messages ───
 'created_successfully' => 'Created successfully.',
 'updated_successfully' => 'Updated successfully.',
 'deleted_successfully' => 'Deleted successfully.',
-'edit_note' => 'Edit Note',
 
 // ─── Teacher Panel ───
 't_main' => 'Main',
@@ -880,5 +848,4 @@ return [
     'select_class' => 'Select Class',
     'classes'      => 'Classes',
     'banners'      => 'Banners',
-    'announcements'      => 'Announcements',
 ];

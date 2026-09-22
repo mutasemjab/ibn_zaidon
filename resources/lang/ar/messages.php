@@ -498,22 +498,6 @@ return [
 'email_directly' => 'إرسال بريد مباشر',
 'close_message' => 'إغلاق الرسالة',
 
-// ─── Conduct Document module ───
-'conduct_title'        => 'مدونة السلوك',
-'conduct_desc'         => 'إدارة مدونة السلوك والانضباط الداخلي ومتابعة التوقيعات.',
-'conduct_edit'         => 'تعديل المدونة',
-'conduct_create'       => 'إنشاء المدونة',
-'conduct_info'         => 'معلومات المدونة',
-'conduct_title_ar'     => 'العنوان (عربي)',
-'conduct_title_en'     => 'العنوان (إنجليزي)',
-'conduct_body'         => 'نص المدونة',
-'conduct_updated'      => 'تم تحديث مدونة السلوك بنجاح.',
-'conduct_signatures'   => 'التوقيعات',
-'conduct_guardian_name'=> 'اسم ولي الأمر',
-'conduct_signed_at'    => 'تاريخ التوقيع',
-'conduct_no_document'  => 'لم يتم إنشاء مدونة السلوك بعد.',
-'conduct_no_signatures'=> 'لا توجد توقيعات بعد.',
-
 // ─── School Classes module ───
 'classes_title'       => 'الصفوف الدراسية',
 'manage_classes_desc' => 'إدارة الصفوف الدراسية المتاحة للطلاب.',
@@ -648,26 +632,10 @@ return [
 'basic_info' => 'المعلومات الأساسية',
 'no_records' => 'لا توجد سجلات.',
 
-// ─── Educational Notes ───
-'educational_notes' => 'المفكرة اليومية',
-'educational_notes_sub' => 'سجّل الدروس المعطاة والواجبات',
-'add_educational_note' => 'إضافة ملاحظة',
-'edit_educational_note' => 'تعديل ملاحظة',
-'note_type' => 'نوع الملاحظة',
-'note_type_lesson' => 'درس معطى',
-'note_type_homework' => 'واجب',
-'note_details' => 'تفاصيل الملاحظة',
-'additional_info' => 'معلومات إضافية',
-'date_label' => 'التاريخ',
-'attachment_label' => 'المرفق (صورة أو ملف)',
-'attachment_hint' => 'صورة أو ملف PDF أو مستند — الحد الأقصى 20 ميغابايت',
-'view_attachment' => 'عرض المرفق',
-'no_notes_yet' => 'لا توجد ملاحظات بعد.',
-'add_note' => 'إضافة ملاحظة',
+// ─── Common CRUD messages ───
 'created_successfully' => 'تم الإنشاء بنجاح.',
 'updated_successfully' => 'تم التحديث بنجاح.',
 'deleted_successfully' => 'تم الحذف بنجاح.',
-'edit_note' => 'تعديل الملاحظة',
 
 // ─── Teacher Panel ───
 't_main' => 'الرئيسية',
@@ -880,5 +848,4 @@ return [
     'select_class' => 'اختر الفصل',
     'classes'      => 'الفصول الدراسية',
     'banners'      => 'البنرات الدعائية',
-    'announcements'      => 'الإعلانات',
 ];

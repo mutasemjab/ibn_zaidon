@@ -1,17 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\Student\AnnouncementController;
 use App\Http\Controllers\Api\Student\ApplePurchaseController;
-use App\Http\Controllers\Api\Student\ConductController;
 use App\Http\Controllers\Api\Student\AppSettingController;
 use App\Http\Controllers\Api\Student\BannerController;
 use App\Http\Controllers\Api\Student\AuthController;
 use App\Http\Controllers\Api\Student\CategoryController;
-use App\Http\Controllers\Api\Student\ClassScheduleController;
-use App\Http\Controllers\Api\Student\ExamScheduleController;
 use App\Http\Controllers\Api\Student\CourseActivationController;
 use App\Http\Controllers\Api\Student\CourseController;
-use App\Http\Controllers\Api\Student\EducationalNoteController;
 use App\Http\Controllers\Api\Student\ExamController;
 use App\Http\Controllers\Api\Student\HomeController;
 use App\Http\Controllers\Api\Student\LessonController;
@@ -21,7 +16,6 @@ use App\Http\Controllers\Api\Student\PreviousYearExamController;
 use App\Http\Controllers\Api\Student\ProfileController;
 use App\Http\Controllers\Api\Student\QuestionBankController;
 use App\Http\Controllers\Api\Student\TeacherController;
-use App\Http\Controllers\Api\Student\WeeklyPlannerController;
 use App\Http\Controllers\Api\Student\WorksheetController;
 use Illuminate\Support\Facades\Route;
 
@@ -82,9 +76,6 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
     Route::get('worksheets',                [WorksheetController::class, 'index']);
     Route::get('worksheets/{id}',           [WorksheetController::class, 'show']);
 
-    // ── Conduct document (public — read only) ─────────────────────────────
-    Route::get('conduct', [ConductController::class, 'show']);
-
     // ── Protected routes (require Bearer token) ────────────────────────────
     Route::middleware('auth:sanctum')->group(function () {
 
@@ -131,26 +122,6 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
         // GET  /courses/{id}/my-progress
         Route::post('lessons/{id}/progress',       [LessonProgressController::class, 'update']);
         Route::get('courses/{id}/my-progress',     [LessonProgressController::class, 'courseProgress']);
-
-        // Educational notes / daily planner (المفكرة اليومية — filtered by student's class + date reached)
-        Route::get('educational-notes', [EducationalNoteController::class, 'index']);
-
-        // Weekly planner (المفكرة الأسبوعية — filtered by student's class + start_date reached)
-        Route::get('weekly-planner', [WeeklyPlannerController::class, 'index']);
-
-        // Class schedule image (جدول الحصص) — for the logged-in student's class
-        Route::get('class-schedule', [ClassScheduleController::class, 'index']);
-
-        // Exam schedule image (جدول الامتحانات) — for the logged-in student's class
-        Route::get('exam-schedule', [ExamScheduleController::class, 'index']);
-
-        // Announcements (الإعلانات — filtered by student's class or global)
-        Route::get('announcements',      [AnnouncementController::class, 'index']);
-        Route::get('announcements/{id}', [AnnouncementController::class, 'show']);
-
-        // Conduct document — sign + status (auth required)
-        Route::get('conduct/status', [ConductController::class, 'status']);
-        Route::post('conduct/sign',  [ConductController::class, 'sign']);
 
         // Push notifications
         // POST /device-token          body: { fcm_token: "..." }

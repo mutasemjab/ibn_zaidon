@@ -3,14 +3,12 @@
 use App\Http\Controllers\Teacher\CourseController;
 use App\Http\Controllers\Teacher\DashboardController;
 use App\Http\Controllers\Teacher\StudentsController;
-use App\Http\Controllers\Teacher\EducationalNoteController;
 use App\Http\Controllers\Teacher\ExamController;
 use App\Http\Controllers\Teacher\PreviousYearExamController;
 use App\Http\Controllers\Teacher\QuestionBankController;
 use App\Http\Controllers\Teacher\LoginController;
 use App\Http\Controllers\Teacher\ProfileController;
 use App\Http\Controllers\Teacher\UnitController;
-use App\Http\Controllers\Teacher\WeeklyPlannerController;
 use App\Http\Controllers\Teacher\WorksheetController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -69,12 +67,6 @@ Route::group([
 
         // ── Question Banks ────────────────────────────────────────────
         Route::resource('question-banks', QuestionBankController::class, ['as' => 'teacher']);
-
-        // ── Educational Notes ─────────────────────────────────────────
-        Route::resource('educational-notes', EducationalNoteController::class, ['as' => 'teacher']);
-
-        // ── Weekly Planners ───────────────────────────────────────────
-        Route::resource('weekly-planners', WeeklyPlannerController::class, ['as' => 'teacher']);
 
         // ── Exams ─────────────────────────────────────────────────────
         Route::resource('exams', ExamController::class, ['as' => 'teacher']);

@@ -45,18 +45,6 @@ class PermissionSeeder extends Seeder
             // ── Worksheets ─────────────────────────────────────────────────────
             'worksheet-table',        'worksheet-add',        'worksheet-edit',        'worksheet-delete',
 
-            // ── Educational Notes ──────────────────────────────────────────────
-            'educational-note-table', 'educational-note-add', 'educational-note-edit', 'educational-note-delete',
-
-            // ── Weekly Planners ────────────────────────────────────────────────
-            'weekly-planner-table',   'weekly-planner-add',   'weekly-planner-edit',   'weekly-planner-delete',
-
-            // ── Class Schedule (جدول الحصص) ─────────────────────────────────────
-            'class-schedule-table',   'class-schedule-add',   'class-schedule-edit',   'class-schedule-delete',
-
-            // ── Exam Schedule (جدول الامتحانات) ─────────────────────────────────
-            'exam-schedule-table',    'exam-schedule-add',    'exam-schedule-edit',    'exam-schedule-delete',
-
             // ── Enrollments ────────────────────────────────────────────────────
             'enrollment-table',       'enrollment-edit',       'enrollment-delete',
 
@@ -66,9 +54,6 @@ class PermissionSeeder extends Seeder
 
             // ── Banners ────────────────────────────────────────────────────────
             'banner-table',           'banner-add',           'banner-edit',           'banner-delete',
-
-            // ── Announcements ──────────────────────────────────────────────────
-            'announcement-table',     'announcement-add',     'announcement-edit',     'announcement-delete',
 
             // ── Push Notifications ─────────────────────────────────────────────
             'notification-send',
