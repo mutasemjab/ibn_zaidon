@@ -40,7 +40,7 @@
     <div class="col-12 col-md-6 col-xl-4">
         <div class="panel-card h-100">
             @if($course->thumbnail)
-                <img src="{{ asset('uploads/courses/'.$course->thumbnail) }}" class="w-100" style="height:150px;object-fit:cover;border-radius:12px 12px 0 0" alt="">
+                <img src="{{ asset('assets/uploads/courses/'.$course->thumbnail) }}" class="w-100" style="height:150px;object-fit:cover;border-radius:12px 12px 0 0" alt="">
             @else
                 <div style="height:80px;background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:12px 12px 0 0;display:flex;align-items:center;justify-content:center">
                     <i class="bi bi-book" style="color:#fff;font-size:2rem"></i>

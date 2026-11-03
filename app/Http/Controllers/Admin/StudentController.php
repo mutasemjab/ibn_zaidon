@@ -60,7 +60,7 @@ class StudentController extends Controller
         ]);
 
         if ($request->hasFile('avatar')) {
-            $data['avatar'] = uploadImage('public/uploads/students', $request->file('avatar'));
+            $data['avatar'] = uploadImage('assets/uploads/students', $request->file('avatar'));
         }
 
         $student = Student::create($data);
@@ -118,7 +118,7 @@ class StudentController extends Controller
         }
 
         if ($request->hasFile('avatar')) {
-            $data['avatar'] = uploadImage('public/uploads/students', $request->file('avatar'));
+            $data['avatar'] = uploadImage('assets/uploads/students', $request->file('avatar'));
         }
 
         $student->update($data);

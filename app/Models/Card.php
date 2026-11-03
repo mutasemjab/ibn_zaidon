@@ -8,7 +8,7 @@ class Card extends Model
 {
     protected $fillable = [
         'pos_id', 'name_en', 'name_ar', 'selling_price', 'number_of_cards', 'photo',
-        'activation_type', 'linked_course_id', 'linked_teacher_id',
+        'activation_type', 'linked_course_id', 'linked_teacher_id', 'linked_package_id',
     ];
 
     protected $casts = [
@@ -41,5 +41,10 @@ class Card extends Model
     public function linkedTeacher()
     {
         return $this->belongsTo(\App\Models\Teacher::class, 'linked_teacher_id');
+    }
+
+    public function linkedPackage()
+    {
+        return $this->belongsTo(\App\Models\Package::class, 'linked_package_id');
     }
 }

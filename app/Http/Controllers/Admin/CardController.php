@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Card;
 use App\Models\CardNumber;
 use App\Models\Course;
+use App\Models\Package;
 use App\Models\POS;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -43,8 +44,9 @@ class CardController extends Controller
         $posList  = POS::with('city')->orderBy('name_en')->get();
         $courses  = Course::published()->with('teacher')->orderBy('title_ar')->get();
         $teachers = Teacher::where('is_active', true)->orderBy('name')->get();
+        $packages = Package::active()->orderBy('sort_order')->get();
 
-        return view('admin.cards.create', compact('posList', 'courses', 'teachers'));
+        return view('admin.cards.create', compact('posList', 'courses', 'teachers', 'packages'));
     }
 
     public function store(Request $request)
@@ -57,9 +59,10 @@ class CardController extends Controller
             'number_of_cards'   => 'required|integer|min:1|max:1000',
             'photo'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'code_length'       => 'nullable|integer|min:8|max:32',
-            'activation_type'   => 'required|in:course,teacher,price',
+            'activation_type'   => 'required|in:course,teacher,price,package',
             'linked_course_id'  => 'nullable|exists:courses,id',
             'linked_teacher_id' => 'nullable|exists:teachers,id',
+            'linked_package_id' => 'nullable|exists:packages,id',
         ]);
 
         if ($data['activation_type'] === 'course' && empty($data['linked_course_id'])) {
@@ -68,10 +71,14 @@ class CardController extends Controller
         if ($data['activation_type'] === 'teacher' && empty($data['linked_teacher_id'])) {
             return back()->withErrors(['linked_teacher_id' => 'يجب اختيار المعلم المرتبط بهذا النوع من البطاقات.'])->withInput();
         }
+        if ($data['activation_type'] === 'package' && empty($data['linked_package_id'])) {
+            return back()->withErrors(['linked_package_id' => 'يجب اختيار الباقة المرتبطة بهذا النوع من البطاقات.'])->withInput();
+        }
 
         // Clear irrelevant FK based on type
         if ($data['activation_type'] !== 'course')  $data['linked_course_id']  = null;
         if ($data['activation_type'] !== 'teacher') $data['linked_teacher_id'] = null;
+        if ($data['activation_type'] !== 'package') $data['linked_package_id'] = null;
 
         if ($request->hasFile('photo')) {
             $data['photo'] = uploadImage('assets/uploads/cards', $request->file('photo'));
@@ -110,8 +117,9 @@ class CardController extends Controller
         $posList  = POS::with('city')->orderBy('name_en')->get();
         $courses  = Course::published()->with('teacher')->orderBy('title_ar')->get();
         $teachers = Teacher::where('is_active', true)->orderBy('name')->get();
+        $packages = Package::active()->orderBy('sort_order')->get();
 
-        return view('admin.cards.edit', compact('card', 'posList', 'courses', 'teachers'));
+        return view('admin.cards.edit', compact('card', 'posList', 'courses', 'teachers', 'packages'));
     }
 
     public function update(Request $request, Card $card)
@@ -123,9 +131,10 @@ class CardController extends Controller
             'selling_price'     => 'required|numeric|min:0',
             'number_of_cards'   => 'required|numeric|min:0',
             'photo'             => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'activation_type'   => 'required|in:course,teacher,price',
+            'activation_type'   => 'required|in:course,teacher,price,package',
             'linked_course_id'  => 'nullable|exists:courses,id',
             'linked_teacher_id' => 'nullable|exists:teachers,id',
+            'linked_package_id' => 'nullable|exists:packages,id',
         ]);
 
         if ($data['activation_type'] === 'course' && empty($data['linked_course_id'])) {
@@ -134,9 +143,13 @@ class CardController extends Controller
         if ($data['activation_type'] === 'teacher' && empty($data['linked_teacher_id'])) {
             return back()->withErrors(['linked_teacher_id' => 'يجب اختيار المعلم المرتبط.'])->withInput();
         }
+        if ($data['activation_type'] === 'package' && empty($data['linked_package_id'])) {
+            return back()->withErrors(['linked_package_id' => 'يجب اختيار الباقة المرتبطة.'])->withInput();
+        }
 
         if ($data['activation_type'] !== 'course')  $data['linked_course_id']  = null;
         if ($data['activation_type'] !== 'teacher') $data['linked_teacher_id'] = null;
+        if ($data['activation_type'] !== 'package') $data['linked_package_id'] = null;
 
         if ($request->hasFile('photo')) {
             $data['photo'] = uploadImage('assets/uploads/cards', $request->file('photo'));

@@ -173,7 +173,7 @@
             <div class="panel-card-body">
                 <div class="d-flex align-items-center gap-3 mb-3">
                     @if($teacher->avatar)
-                        <img src="{{ asset('uploads/teachers/' . $teacher->avatar) }}" class="avatar" style="width:56px;height:56px" alt="">
+                        <img src="{{ asset('assets/uploads/teachers/' . $teacher->avatar) }}" class="avatar" style="width:56px;height:56px" alt="">
                     @else
                         <div class="avatar" style="width:56px;height:56px;background:var(--primary-light);color:var(--primary);font-size:1.4rem">
                             {{ strtoupper(substr($teacher->name, 0, 1)) }}

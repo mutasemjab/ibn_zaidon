@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             ExamSeeder::class,
             SiteSettingSeeder::class,
+            PageSeeder::class,
         ]);
     }
 }

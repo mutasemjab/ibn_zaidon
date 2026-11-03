@@ -18,7 +18,7 @@
     <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
         <i class="bi bi-magic"></i> رموز رياضية وكيميائية
     </button>
-    <div class="dropdown-menu p-2" style="width:360px;max-height:380px;overflow-y:auto">
+    <div class="dropdown-menu p-2" style="width:360px;max-width:calc(100vw - 2rem);max-height:380px;overflow-y:auto">
         @foreach($symbolGroups as $label => $symbols)
             <div class="mb-2">
                 <div class="text-muted" style="font-size:.72rem;font-weight:600">{{ $label }}</div>

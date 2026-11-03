@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ResourcePageController;
 use App\Http\Controllers\StudentAuthController;
 use Illuminate\Support\Facades\Route;
@@ -32,10 +33,16 @@ Route::group([
     Route::get('/question-banks',                  [ResourcePageController::class, 'questionBanks'])->name('question-banks.index');
     Route::get('/pos',                             [ResourcePageController::class, 'pos'])->name('pos.index');
 
+    // ── Packages ───────────────────────────────────────────────────────────
+    Route::get('/packages',       [PackageController::class, 'index'])->name('packages.index');
+    Route::get('/packages/{id}',  [PackageController::class, 'show'])->name('packages.show');
+
     // ── Cart ────────────────────────────────────────────────────────────────
     Route::get('/cart',                [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{id}',      [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/add-package/{id}', [CartController::class, 'addPackage'])->name('cart.add-package');
     Route::post('/cart/remove/{id}',   [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/remove-package/{id}', [CartController::class, 'removePackage'])->name('cart.remove-package');
     Route::get('/cart/checkout',       [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/activate',      [CartController::class, 'activate'])->name('cart.activate');
 

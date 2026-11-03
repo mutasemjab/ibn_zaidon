@@ -90,7 +90,7 @@
             <div class="panel-card-header"><h2 class="panel-card-title">{{ __('messages.t_profile_photo') }}</h2></div>
             <div class="panel-card-body text-center">
                 @if($teacher->avatar)
-                    <img src="{{ asset('uploads/teachers/'.$teacher->avatar) }}" class="rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover">
+                    <img src="{{ asset('assets/uploads/teachers/'.$teacher->avatar) }}" class="rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover">
                 @else
                     <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width:120px;height:120px;background:linear-gradient(135deg,#7c3aed,#6d28d9)">
                         <span style="color:#fff;font-size:2.5rem;font-weight:700">{{ strtoupper(substr($teacher->name, 0, 1)) }}</span>

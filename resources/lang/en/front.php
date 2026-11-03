@@ -534,6 +534,17 @@ return [
     'packages_custom_title' => 'Want a Custom Bundle?',
     'packages_custom_desc'  => 'Pick the courses that suit you — we\'ll prepare a special offer.',
     'packages_custom_cta'   => 'Contact Us',
+    'packages_breadcrumb'      => 'Packages',
+    'packages_no_packages'     => 'No packages available right now.',
+    'packages_pick_count'      => 'Choose any :count courses',
+    'packages_courses_count'   => ':count courses',
+    'packages_view_btn'        => 'View Package',
+    'packages_pool_title'      => 'Choose the eligible courses',
+    'packages_pick_hint'       => 'Choose exactly :count courses from the list below.',
+    'packages_selected_of'     => 'Selected :selected of :count',
+    'packages_invalid_selection' => 'Invalid selection, please try again.',
+    'packages_price_each'      => 'Original price',
+    'cart_package_remove'      => 'Remove package',
 
     // ── Community Page ────────────────────────────────────────────────────
     'community_no_posts'    => 'No posts yet. Be the first to share!',

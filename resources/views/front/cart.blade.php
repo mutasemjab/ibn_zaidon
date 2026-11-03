@@ -4,7 +4,7 @@
 @section('content')
 @php $isRtl = app()->getLocale() === 'ar'; @endphp
 
-<div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:2.5rem 0">
+<div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));padding:2.5rem 0">
     <div class="container">
         <div class="z-breadcrumb mb-2">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>
@@ -23,7 +23,7 @@
     <div class="z-flash flash-info"><i class="bi bi-info-circle-fill fs-5"></i><span>{{ __('front.cart_removed_msg') }}</span></div>
     @endif
 
-    @if($courses->isEmpty())
+    @if(empty($items))
     {{-- Empty Cart --}}
     <div class="text-center py-5">
         <div style="font-size:5rem;color:var(--z-border);margin-bottom:1.5rem">🛒</div>
@@ -39,28 +39,54 @@
         {{-- Cart Items --}}
         <div class="col-lg-8">
             <h5 style="color:var(--z-primary);font-weight:700;margin-bottom:1.25rem">
-                {{ trans_choice('front.cart_items', $courses->count(), ['count' => $courses->count()]) }}
+                {{ trans_choice('front.cart_items', count($items), ['count' => count($items)]) }}
             </h5>
 
-            @foreach($courses as $course)
+            @foreach($items as $item)
+            @if($item['type'] === 'package')
+            {{-- Package line: one bundled row, priced once --}}
+            <div class="cart-item" style="align-items:flex-start;border-color:var(--z-accent);background:rgba(123,47,247,.03)">
+                <div class="cart-thumb" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--z-accent),var(--z-primary));border-radius:8px">
+                    <i class="bi bi-boxes" style="color:rgba(255,255,255,.6);font-size:1.5rem"></i>
+                </div>
+                <div style="flex:1;min-width:0">
+                    <div class="cart-title">
+                        <span class="pill" style="background:rgba(123,47,247,.1);color:var(--z-accent);font-size:.68rem;padding:.1rem .5rem;border-radius:50px;margin-inline-end:.4rem">{{ __('front.packages_breadcrumb') }}</span>
+                        {{ $item['package']->title }}
+                    </div>
+                    <div class="cart-sub">
+                        {{ $item['courses']->pluck('title')->implode(' · ') }}
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="cart-price">{{ number_format($item['price'], 2) }} {{ __('front.currency') }}</span>
+                    <form method="POST" action="{{ route('cart.remove-package', $item['package']->id) }}">
+                        @csrf
+                        <button type="submit" class="btn-rm" title="{{ __('front.cart_package_remove') }}">
+                            <i class="bi bi-trash3-fill"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            @else
             <div class="cart-item">
                 <div class="cart-thumb" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:8px">
                     <i class="bi bi-play-circle" style="color:rgba(255,255,255,.4);font-size:1.5rem"></i>
                 </div>
                 <div style="flex:1;min-width:0">
-                    <div class="cart-title">{{ $course->title }}</div>
+                    <div class="cart-title">{{ $item['course']->title }}</div>
                     <div class="cart-sub">
-                        <i class="bi bi-person-fill me-1"></i>{{ $course->teacher->name ?? __('front.teacher_fallback') }}
-                        @if($course->category)
-                        &nbsp;·&nbsp;<i class="bi bi-tag me-1"></i>{{ $course->category->name }}
+                        <i class="bi bi-person-fill me-1"></i>{{ $item['course']->teacher->name ?? __('front.teacher_fallback') }}
+                        @if($item['course']->category)
+                        &nbsp;·&nbsp;<i class="bi bi-tag me-1"></i>{{ $item['course']->category->name }}
                         @endif
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <span class="cart-price">
-                        {{ ($course->price??0)>0 ? number_format($course->price,2).' '.__('front.currency') : __('front.courses_free') }}
+                        {{ $item['price'] > 0 ? number_format($item['price'],2).' '.__('front.currency') : __('front.courses_free') }}
                     </span>
-                    <form method="POST" action="{{ route('cart.remove', $course->id) }}">
+                    <form method="POST" action="{{ route('cart.remove', $item['course']->id) }}">
                         @csrf
                         <button type="submit" class="btn-rm" title="{{ __('front.cart_remove') }}">
                             <i class="bi bi-trash3-fill"></i>
@@ -68,6 +94,7 @@
                     </form>
                 </div>
             </div>
+            @endif
             @endforeach
         </div>
 

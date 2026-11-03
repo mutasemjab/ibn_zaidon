@@ -124,7 +124,7 @@
                 </div>
                 @if($course->thumbnail)
                 <div class="mb-2">
-                    <img src="{{ asset('uploads/courses/'.$course->thumbnail) }}" style="width:100%;height:120px;object-fit:cover;border-radius:8px">
+                    <img src="{{ asset('assets/uploads/courses/'.$course->thumbnail) }}" style="width:100%;height:120px;object-fit:cover;border-radius:8px">
                 </div>
                 @endif
                 <label class="form-label">{{ __('messages.t_thumbnail') }}</label>

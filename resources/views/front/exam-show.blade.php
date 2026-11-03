@@ -7,7 +7,7 @@
     $questionCount = $exam->questions()->count();
 @endphp
 
-<div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:2.5rem 0">
+<div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));padding:2.5rem 0">
     <div class="container">
         <div class="z-breadcrumb mb-3">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>
@@ -34,7 +34,7 @@
                 <div class="row g-3 text-center mb-4">
                     @if($questionCount)
                     <div class="col-4">
-                        <div style="background:rgba(11,61,145,.06);border-radius:var(--z-radius);padding:1rem">
+                        <div style="background:rgba(30,43,168,.06);border-radius:var(--z-radius);padding:1rem">
                             <div style="font-size:1.6rem;font-weight:800;color:var(--z-primary)">{{ $questionCount }}</div>
                             <div style="font-size:.8rem;color:var(--z-text-muted)">{{ __('front.questions') }}</div>
                         </div>
@@ -42,7 +42,7 @@
                     @endif
                     @if($exam->duration_minutes)
                     <div class="col-4">
-                        <div style="background:rgba(245,166,35,.08);border-radius:var(--z-radius);padding:1rem">
+                        <div style="background:rgba(255,200,61,.08);border-radius:var(--z-radius);padding:1rem">
                             <div style="font-size:1.6rem;font-weight:800;color:var(--z-highlight)">{{ $exam->duration_minutes }}</div>
                             <div style="font-size:.8rem;color:var(--z-text-muted)">{{ __('front.exams_minutes') }}</div>
                         </div>
@@ -79,7 +79,7 @@
                     @endif
                 </div>
 
-                <div class="p-3 mb-4" style="background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.2);border-radius:var(--z-radius)">
+                <div class="p-3 mb-4" style="background:rgba(255,200,61,.07);border:1px solid rgba(255,200,61,.2);border-radius:var(--z-radius)">
                     <div class="d-flex align-items-start gap-2">
                         <i class="bi bi-info-circle-fill mt-1" style="color:var(--z-highlight);flex-shrink:0"></i>
                         <div style="font-size:.87rem;color:var(--z-text-muted)">

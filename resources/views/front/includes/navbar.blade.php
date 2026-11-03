@@ -30,6 +30,8 @@
             <li><a href="{{ route('home') }}#about">{{ __('front.nav_about') }}</a></li>
             <li><a href="{{ route('courses.index') }}"
                    class="{{ request()->routeIs('courses.*') ? 'active' : '' }}">{{ __('front.nav_courses') }}</a></li>
+            <li><a href="{{ route('packages.index') }}"
+                   class="{{ request()->routeIs('packages.*') ? 'active' : '' }}">{{ __('front.nav_packages') }}</a></li>
             <li><a href="{{ route('home') }}#services">{{ __('front.nav_services') }}</a></li>
             <li><a href="{{ route('home') }}#teachers">{{ __('front.nav_teachers') }}</a></li>
             <li><a href="{{ route('home') }}#contact">{{ __('front.nav_contact') }}</a></li>
@@ -105,6 +107,7 @@
             <li><a href="{{ route('home') }}">{{ __('front.nav_home') }}</a></li>
             <li><a href="{{ route('home') }}#about">{{ __('front.nav_about') }}</a></li>
             <li><a href="{{ route('courses.index') }}">{{ __('front.nav_courses') }}</a></li>
+            <li><a href="{{ route('packages.index') }}">{{ __('front.nav_packages') }}</a></li>
             <li><a href="{{ route('home') }}#services">{{ __('front.nav_services') }}</a></li>
             <li><a href="{{ route('home') }}#teachers">{{ __('front.nav_teachers') }}</a></li>
             <li><a href="{{ route('home') }}#contact">{{ __('front.nav_contact') }}</a></li>

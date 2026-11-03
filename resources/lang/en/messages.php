@@ -496,6 +496,28 @@ return [
 'email_directly' => 'Email Directly',
 'close_message' => 'Close Message',
 
+// ─── Packages module ───
+'packages' => 'Packages',
+'packages_title' => 'Course Packages',
+'manage_packages_desc' => 'Create bundles — the student picks any set number of courses at a fixed price.',
+'add_package' => 'Add Package',
+'edit_package' => 'Edit Package',
+'create_package_desc' => 'Set how many courses to pick, the price, and the eligible course pool.',
+'package_info' => 'Package Info',
+'package' => 'Package',
+'pick_count' => 'Number of Courses to Pick',
+'pick_count_hint' => 'Example: 3 means the student picks any 3 courses from the list below.',
+'eligible_courses' => 'Eligible Courses (Pick Pool)',
+'eligible_courses_hint' => 'Courses the student can choose from. Must be at least as many as the pick count.',
+'save_package' => 'Save Package',
+'no_packages_found' => 'No packages found.',
+'delete_package_confirm' => 'Delete this package?',
+'package_created' => 'Package created successfully.',
+'package_updated' => 'Package updated successfully.',
+'package_deleted' => 'Package deleted.',
+'uncategorized' => 'Uncategorized',
+'courses_count' => 'Courses Count',
+
 // ─── Subjects module ───
 'subjects_title' => 'Subjects',
 'manage_subjects_desc' => 'Manage subject names in Arabic and English.',
@@ -829,5 +851,17 @@ return [
     'sett_contact_hours'   => 'Working Hours',
     'sett_social_title'    => 'Social Media Links',
     'sett_apps_title'      => 'App Links',
+
+    // ── Static Pages ──────────────────────────────────────────────
+    'static_pages'         => 'Static Pages',
+    'static_pages_sub'     => 'App page content (Terms, Privacy, About, Support)',
+    'page_updated'         => 'Page updated successfully',
+    'page_slug'            => 'Slug',
+    'page_title_ar'        => 'Title (Arabic)',
+    'page_title_en'        => 'Title (English)',
+    'page_body_ar'         => 'Body (Arabic)',
+    'page_body_en'         => 'Body (English)',
+    'page_last_updated'    => 'Last Updated',
+
     'banners'      => 'Banners',
 ];

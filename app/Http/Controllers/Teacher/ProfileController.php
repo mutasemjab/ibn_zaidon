@@ -39,7 +39,7 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('avatar')) {
-            $data['avatar'] = uploadImage('public/uploads/teachers', $request->file('avatar'));
+            $data['avatar'] = uploadImage('assets/uploads/teachers', $request->file('avatar'));
         }
 
         $teacher->update($data);

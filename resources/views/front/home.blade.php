@@ -86,7 +86,7 @@
                 <div class="hero-visual">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <span style="color:rgba(255,255,255,.7);font-size:.83rem">{{ __('front.hero_featured_courses') }}</span>
-                        <span style="background:rgba(245,166,35,.2);color:var(--z-highlight);padding:.15rem .6rem;border-radius:50px;font-size:.75rem;font-weight:700">{{ __('front.hero_new_badge') }}</span>
+                        <span style="background:rgba(255,200,61,.2);color:var(--z-highlight);padding:.15rem .6rem;border-radius:50px;font-size:.75rem;font-weight:700">{{ __('front.hero_new_badge') }}</span>
                     </div>
                     @forelse($courses->take(3) as $course)
                     <div class="mini-course">
@@ -340,7 +340,13 @@
             @forelse($teachers as $teacher)
             <div class="col-lg-3 col-md-6 anim-fade-up anim-d{{ min($loop->index + 1, 4) }}">
                 <div class="teacher-card">
-                    <div class="t-photo-ph"><i class="bi bi-person-circle"></i></div>
+                    @if($teacher->avatar)
+                        <a href="{{ route('teachers.show', $teacher->id) }}" class="t-cover">
+                            <img src="{{ asset('assets/uploads/teachers/' . $teacher->avatar) }}" alt="{{ $teacher->name }}" loading="lazy">
+                        </a>
+                    @else
+                        <div class="t-photo-ph"><i class="bi bi-person-circle"></i></div>
+                    @endif
                     <div class="t-name">{{ $teacher->name }}</div>
                     <div class="t-subj">{{ $teacher->specialization ?: __('front.teachers_fallback_subj') }}</div>
                     <div class="stars">

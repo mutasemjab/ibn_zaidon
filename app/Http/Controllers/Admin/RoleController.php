@@ -27,6 +27,7 @@ class RoleController extends Controller
             'المعلمون'             => ['teacher-table', 'teacher-add', 'teacher-edit', 'teacher-delete'],
             'الدورات'              => ['course-table', 'course-add', 'course-edit', 'course-delete'],
             'محتوى الدورات'        => ['course-content-add', 'course-content-edit', 'course-content-delete'],
+            'الباقات'              => ['package-table', 'package-add', 'package-edit', 'package-delete'],
             'الفئات'               => ['category-table', 'category-add', 'category-edit', 'category-delete'],
             'المواد الدراسية'      => ['subject-table', 'subject-add', 'subject-edit', 'subject-delete'],
             'الاختبارات'           => ['exam-table', 'exam-add', 'exam-edit', 'exam-delete'],

@@ -536,6 +536,17 @@ return [
     'packages_custom_title' => 'تريد باقة مخصصة؟',
     'packages_custom_desc'  => 'اختر الدورات التي تناسبك — وسنعدّ لك عرضاً خاصاً.',
     'packages_custom_cta'   => 'تواصل معنا',
+    'packages_breadcrumb'      => 'الباقات',
+    'packages_no_packages'     => 'لا توجد باقات متاحة حالياً.',
+    'packages_pick_count'      => 'اختر أي :count دورات',
+    'packages_courses_count'   => ':count دورة',
+    'packages_view_btn'        => 'عرض الباقة',
+    'packages_pool_title'      => 'اختر الدورات المؤهّلة',
+    'packages_pick_hint'       => 'اختر بالضبط :count دورة من القائمة أدناه.',
+    'packages_selected_of'     => 'اخترت :selected من :count',
+    'packages_invalid_selection' => 'الاختيار غير صحيح، حاول مرة أخرى.',
+    'packages_price_each'      => 'سعرها الأصلي',
+    'cart_package_remove'      => 'إزالة الباقة',
 
     // ── Community Page ────────────────────────────────────────────────────
     'community_no_posts'    => 'لا توجد منشورات حالياً. كن أول من يشارك!',

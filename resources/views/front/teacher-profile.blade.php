@@ -10,7 +10,7 @@
 @endphp
 
 {{-- Teacher Hero --}}
-<div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:3rem 0 2.5rem">
+<div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));padding:3rem 0 2.5rem">
     <div class="container">
         <div class="z-breadcrumb mb-4">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>
@@ -21,9 +21,14 @@
         </div>
         <div class="row align-items-center g-4">
             <div class="col-auto">
+                @if($teacher->avatar)
+                    <img src="{{ asset('assets/uploads/teachers/' . $teacher->avatar) }}" alt="{{ $teacher->name }}"
+                         style="width:150px;height:150px;border-radius:var(--z-radius-lg);object-fit:cover;object-position:center top;border:3px solid var(--z-highlight);box-shadow:0 12px 32px rgba(0,0,0,.25)">
+                @else
                 <div style="width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.15);border:3px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:2.8rem;color:rgba(255,255,255,.6)">
                     <i class="bi bi-person-circle"></i>
                 </div>
+                @endif
             </div>
             <div class="col">
                 <h1 style="color:#fff;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:.4rem">{{ $teacher->name }}</h1>
@@ -34,7 +39,7 @@
                 @endif
                 <div class="d-flex flex-wrap gap-3">
                     @if($rating > 0)
-                    <span style="background:rgba(245,166,35,.18);color:var(--z-highlight);padding:.3rem .85rem;border-radius:50px;font-size:.82rem;font-weight:700">
+                    <span style="background:rgba(255,200,61,.18);color:var(--z-highlight);padding:.3rem .85rem;border-radius:50px;font-size:.82rem;font-weight:700">
                         <i class="bi bi-star-fill me-1"></i>{{ number_format($rating, 1) }} {{ __('front.teacher_info_rating') }}
                     </span>
                     @endif
@@ -72,7 +77,7 @@
                     <h6 style="color:var(--z-primary);font-weight:700;font-size:.88rem;margin-bottom:.75rem">{{ __('front.teacher_info_subjects') }}</h6>
                     <div class="d-flex flex-wrap gap-2">
                         @foreach($teacher->subjects as $subject)
-                        <span style="background:rgba(11,61,145,.08);color:var(--z-primary);padding:.25rem .75rem;border-radius:50px;font-size:.8rem;font-weight:600">
+                        <span style="background:rgba(30,43,168,.08);color:var(--z-primary);padding:.25rem .75rem;border-radius:50px;font-size:.8rem;font-weight:600">
                             {{ $subject->name }}
                         </span>
                         @endforeach

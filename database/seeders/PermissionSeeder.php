@@ -27,6 +27,9 @@ class PermissionSeeder extends Seeder
             'course-table',           'course-add',           'course-edit',           'course-delete',
             'course-content-add',     'course-content-edit',  'course-content-delete',
 
+            // ── Packages ───────────────────────────────────────────────────────
+            'package-table',          'package-add',          'package-edit',          'package-delete',
+
             // ── Categories ─────────────────────────────────────────────────────
             'category-table',         'category-add',         'category-edit',         'category-delete',
 

@@ -114,7 +114,7 @@
 
             {{-- What You'll Learn --}}
             @if($course->what_you_learn)
-            <div class="mb-5 p-4" style="background:rgba(245,166,35,.06);border-radius:var(--z-radius-lg);border:1.5px solid rgba(245,166,35,.2)">
+            <div class="mb-5 p-4" style="background:rgba(255,200,61,.06);border-radius:var(--z-radius-lg);border:1.5px solid rgba(255,200,61,.2)">
                 <h5 style="color:var(--z-primary);font-weight:700;margin-bottom:1rem">
                     <i class="bi bi-lightbulb-fill text-warning me-2"></i>{{ __('front.course_what_learn') }}
                 </h5>
@@ -172,20 +172,20 @@
                         @endif
                     </div>
                     @if(isset($lessonExams[$lesson->id]))
-                    <div class="lesson-row" style="background:rgba(245,166,35,.06);border-color:rgba(245,166,35,.25)">
-                        <div class="lesson-ic" style="background:rgba(245,166,35,.15)"><i class="bi bi-clipboard-check text-warning"></i></div>
+                    <div class="lesson-row" style="background:rgba(255,200,61,.06);border-color:rgba(255,200,61,.25)">
+                        <div class="lesson-ic" style="background:rgba(255,200,61,.15)"><i class="bi bi-clipboard-check text-warning"></i></div>
                         <span style="flex:1;font-size:.85rem">{{ $lessonExams[$lesson->id]->title }}</span>
-                        <span style="font-size:.75rem;color:#b97700;background:rgba(245,166,35,.12);padding:.15rem .5rem;border-radius:50px">{{ __('front.exam_label') }}</span>
+                        <span style="font-size:.75rem;color:#b97700;background:rgba(255,200,61,.12);padding:.15rem .5rem;border-radius:50px">{{ __('front.exam_label') }}</span>
                     </div>
                     @endif
                     @empty
                     <div class="lesson-row" style="color:var(--z-text-muted);font-size:.88rem">{{ __('front.course_no_lessons') }}</div>
                     @endforelse
                     @if(isset($unitEndExams[$unit->id]))
-                    <div class="lesson-row" style="background:rgba(11,61,145,.05);border-color:rgba(11,61,145,.18)">
-                        <div class="lesson-ic" style="background:rgba(11,61,145,.1)"><i class="bi bi-journal-check text-primary"></i></div>
+                    <div class="lesson-row" style="background:rgba(30,43,168,.05);border-color:rgba(30,43,168,.18)">
+                        <div class="lesson-ic" style="background:rgba(30,43,168,.1)"><i class="bi bi-journal-check text-primary"></i></div>
                         <span style="flex:1;font-size:.88rem;font-weight:600">{{ $unitEndExams[$unit->id]->title }}</span>
-                        <span style="font-size:.75rem;color:var(--z-primary);background:rgba(11,61,145,.1);padding:.15rem .5rem;border-radius:50px">{{ __('front.unit_exam') }}</span>
+                        <span style="font-size:.75rem;color:var(--z-primary);background:rgba(30,43,168,.1);padding:.15rem .5rem;border-radius:50px">{{ __('front.unit_exam') }}</span>
                     </div>
                     @endif
                 </div>

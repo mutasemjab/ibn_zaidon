@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\ExamController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\PackageController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PosController;
 use App\Http\Controllers\Admin\PreviousYearExamController;
 use App\Http\Controllers\Admin\QuestionBankController;
@@ -58,6 +60,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         // ── Courses ───────────────────────────────────────────────────
         Route::get('courses/{id}/progress', [CourseController::class, 'progress'])->name('admin.courses.progress');
         Route::resource('courses', CourseController::class, ['as' => 'admin']);
+
+        // ── Packages ──────────────────────────────────────────────────
+        Route::resource('packages', PackageController::class, ['as' => 'admin']);
 
         // ── Previous Year Exam ───────────────────────────────────────────────────
         Route::resource('previous-year-exams', PreviousYearExamController::class, ['as' => 'admin']);
@@ -137,6 +142,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         Route::get('site-settings',           [SiteSettingController::class, 'edit'])->name('admin.site-settings.edit');
         Route::put('site-settings',           [SiteSettingController::class, 'update'])->name('admin.site-settings.update');
         Route::post('site-settings/toggle-price-display', [SiteSettingController::class, 'togglePriceDisplay'])->name('admin.site-settings.toggle-price');
+
+        // ── Static Pages (terms, privacy, about, support) ───────────────
+        // Content-only editing of a fixed slug set — no create/delete routes.
+        Route::get('pages',              [PageController::class, 'index'])->name('admin.pages.index');
+        Route::get('pages/{page}/edit',  [PageController::class, 'edit'])->name('admin.pages.edit');
+        Route::put('pages/{page}',       [PageController::class, 'update'])->name('admin.pages.update');
 
         // ── Contact Messages ──────────────────────────────────────────
 

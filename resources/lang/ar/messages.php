@@ -496,6 +496,28 @@ return [
 'email_directly' => 'إرسال بريد مباشر',
 'close_message' => 'إغلاق الرسالة',
 
+// ─── Packages module ───
+'packages' => 'الباقات',
+'packages_title' => 'باقات الدورات',
+'manage_packages_desc' => 'إنشاء باقات — يختار الطالب أي عدد محدد من الدورات بسعر ثابت.',
+'add_package' => 'إضافة باقة',
+'edit_package' => 'تعديل باقة',
+'create_package_desc' => 'حدّد عدد الدورات المطلوب اختيارها والسعر ومجموعة الدورات المؤهّلة.',
+'package_info' => 'معلومات الباقة',
+'package' => 'الباقة',
+'pick_count' => 'عدد الدورات المطلوب اختيارها',
+'pick_count_hint' => 'مثال: 3 يعني يختار الطالب أي 3 دورات من القائمة أدناه.',
+'eligible_courses' => 'الدورات المؤهّلة (مجموعة الاختيار)',
+'eligible_courses_hint' => 'الدورات التي يمكن للطالب الاختيار من بينها. يجب أن يكون عددها أكبر من أو يساوي عدد الاختيار.',
+'save_package' => 'حفظ الباقة',
+'no_packages_found' => 'لا توجد باقات.',
+'delete_package_confirm' => 'حذف هذه الباقة؟',
+'package_created' => 'تم إنشاء الباقة بنجاح.',
+'package_updated' => 'تم تحديث الباقة بنجاح.',
+'package_deleted' => 'تم حذف الباقة.',
+'uncategorized' => 'غير مصنّف',
+'courses_count' => 'عدد الدورات',
+
 // ─── Subjects module ───
 'subjects_title' => 'المواد الدراسية',
 'manage_subjects_desc' => 'إدارة أسماء المواد بالعربية والإنجليزية.',
@@ -829,5 +851,17 @@ return [
     'sett_contact_hours'   => 'ساعات العمل',
     'sett_social_title'    => 'روابط التواصل الاجتماعي',
     'sett_apps_title'      => 'روابط التطبيقات',
+
+    // ── Static Pages ──────────────────────────────────────────────
+    'static_pages'         => 'الصفحات الثابتة',
+    'static_pages_sub'     => 'محتوى صفحات التطبيق (الشروط، الخصوصية، من نحن، الدعم)',
+    'page_updated'         => 'تم تحديث الصفحة بنجاح',
+    'page_slug'            => 'المعرّف',
+    'page_title_ar'        => 'العنوان (عربي)',
+    'page_title_en'        => 'العنوان (إنجليزي)',
+    'page_body_ar'         => 'المحتوى (عربي)',
+    'page_body_en'         => 'المحتوى (إنجليزي)',
+    'page_last_updated'    => 'آخر تحديث',
+
     'banners'      => 'البنرات الدعائية',
 ];

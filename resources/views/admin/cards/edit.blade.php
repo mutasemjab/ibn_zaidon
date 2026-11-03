@@ -98,6 +98,15 @@
                             <div style="font-size:.75rem;color:var(--muted)">تفعّل أي دورة بنفس سعر البيع</div>
                         </div>
                     </label>
+                    <label class="d-flex align-items-center gap-2 p-3 rounded border cursor-pointer activation-option {{ $currentType === 'package' ? 'border-primary' : '' }}" style="min-width:160px">
+                        <input type="radio" name="activation_type" value="package"
+                               {{ $currentType === 'package' ? 'checked' : '' }}
+                               class="activation-radio" style="accent-color:var(--primary)">
+                        <div>
+                            <div style="font-weight:600;font-size:.9rem">باقة</div>
+                            <div style="font-size:.75rem;color:var(--muted)">تفعّل باقة دورات محددة</div>
+                        </div>
+                    </label>
                 </div>
             </div>
 
@@ -127,6 +136,19 @@
                 @error('linked_teacher_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
             </div>
 
+            <div class="col-12" id="pick-package" style="{{ $currentType === 'package' ? '' : 'display:none' }}">
+                <label class="form-label">اختر الباقة <span class="text-danger">*</span></label>
+                <select name="linked_package_id" class="form-select @error('linked_package_id') is-invalid @enderror">
+                    <option value="">— اختر باقة —</option>
+                    @foreach($packages as $p)
+                        <option value="{{ $p->id }}" @selected(old('linked_package_id', $card->linked_package_id) == $p->id)>
+                            {{ $p->title_ar }} — {{ number_format($p->price, 2) }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('linked_package_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+            </div>
+
             <div class="col-12">
                 <button type="submit" class="btn-primary-sm"><i class="bi bi-save"></i> {{ __('messages.save_changes') }}</button>
             </div>
@@ -143,6 +165,7 @@ document.querySelectorAll('.activation-radio').forEach(radio => {
     radio.addEventListener('change', function () {
         document.getElementById('pick-course').style.display  = this.value === 'course'  ? '' : 'none';
         document.getElementById('pick-teacher').style.display = this.value === 'teacher' ? '' : 'none';
+        document.getElementById('pick-package').style.display = this.value === 'package' ? '' : 'none';
         document.querySelectorAll('.activation-option').forEach(el => el.classList.remove('border-primary'));
         this.closest('.activation-option').classList.add('border-primary');
     });

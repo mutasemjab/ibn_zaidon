@@ -4,11 +4,11 @@
 @section('content')
 @php
     $cur        = __('front.currency');
-    $cartTotal  = number_format(collect($courses)->sum('price'), 2);
+    $cartTotal  = number_format(collect($items)->sum('price'), 2);
     $cliqAlias  = \App\Models\SiteSetting::raw('cliq_alias');
 @endphp
 
-<div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:2.5rem 0">
+<div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));padding:2.5rem 0">
     <div class="container">
         <div class="z-breadcrumb mb-2">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>
@@ -85,7 +85,7 @@
                             {{ __('front.pay_cliq_ref_hint') }}
                         </span>
                     </div>
-                    <p style="font-size:.82rem;color:var(--z-text-muted);background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:.75rem">
+                    <p style="font-size:.82rem;color:var(--z-text-muted);background:rgba(255,200,61,.07);border:1px solid rgba(255,200,61,.2);border-radius:8px;padding:.75rem">
                         <i class="bi bi-info-circle-fill me-1" style="color:var(--z-highlight)"></i>
                         {{ __('front.pay_cliq_note') }}
                     </p>
@@ -140,14 +140,21 @@
             <div class="cart-summary">
                 <h5 style="color:var(--z-primary);font-weight:700;margin-bottom:1.25rem">{{ __('front.order_summary') }}</h5>
 
-                @foreach($courses as $course)
+                @foreach($items as $item)
                 <div style="display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--z-border)">
                     <div style="width:40px;height:30px;background:linear-gradient(135deg,var(--z-primary),var(--z-accent));border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                        <i class="bi bi-play-fill" style="color:rgba(255,255,255,.5);font-size:.7rem"></i>
+                        <i class="bi bi-{{ $item['type'] === 'package' ? 'boxes' : 'play-fill' }}" style="color:rgba(255,255,255,.5);font-size:.7rem"></i>
                     </div>
-                    <span style="flex:1;font-size:.87rem;font-weight:600">{{ Str::limit($course->title, 35) }}</span>
+                    <span style="flex:1;font-size:.87rem;font-weight:600">
+                        {{ Str::limit($item['type'] === 'package' ? $item['package']->title : $item['course']->title, 35) }}
+                        @if($item['type'] === 'package')
+                            <span style="display:block;font-weight:400;color:var(--z-text-muted);font-size:.75rem">
+                                {{ __('front.packages_courses_count', ['count' => $item['courses']->count()]) }}
+                            </span>
+                        @endif
+                    </span>
                     <span style="font-weight:700;color:var(--z-primary);font-size:.9rem;white-space:nowrap">
-                        {{ ($course->price??0)>0 ? number_format($course->price,2).' '.$cur : __('front.courses_free') }}
+                        {{ $item['price'] > 0 ? number_format($item['price'],2).' '.$cur : __('front.courses_free') }}
                     </span>
                 </div>
                 @endforeach

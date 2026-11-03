@@ -48,7 +48,7 @@
                         <h4 style="color:var(--z-primary);font-weight:800;margin:0">{{ $exam->title }}</h4>
                         <span style="font-size:.85rem;color:var(--z-text-muted)">{{ $questions->count() }} {{ __('front.questions') }}</span>
                     </div>
-                    <div style="background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);border-radius:var(--z-radius);padding:.5rem 1rem;font-size:.85rem;font-weight:600;color:var(--z-primary)">
+                    <div style="background:rgba(255,200,61,.1);border:1px solid rgba(255,200,61,.25);border-radius:var(--z-radius);padding:.5rem 1rem;font-size:.85rem;font-weight:600;color:var(--z-primary)">
                         <i class="bi bi-shield-check-fill me-1" style="color:var(--z-success)"></i>
                         {{ __('front.exam_autosaved') }}
                     </div>
@@ -61,7 +61,7 @@
                     <div class="q-card" id="q-{{ $question->id }}">
                         <span class="q-num">{{ __('front.exam_question_of', ['n' => $i + 1, 'total' => $questions->count()]) }}</span>
                         @if($question->marks > 1)
-                        <span style="float:inline-end;font-size:.75rem;background:rgba(11,61,145,.08);color:var(--z-primary);padding:.15rem .5rem;border-radius:50px">{{ __('front.exam_marks', ['n' => $question->marks]) }}</span>
+                        <span style="float:inline-end;font-size:.75rem;background:rgba(30,43,168,.08);color:var(--z-primary);padding:.15rem .5rem;border-radius:50px">{{ __('front.exam_marks', ['n' => $question->marks]) }}</span>
                         @endif
                         <div class="q-text">{{ $question->question_text }}</div>
 

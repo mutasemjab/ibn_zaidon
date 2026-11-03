@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:2.5rem 0">
+<div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));padding:2.5rem 0">
     <div class="container">
         <div class="z-breadcrumb mb-2">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>

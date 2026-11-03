@@ -264,6 +264,20 @@ ul { list-style: none; }
 .activity-title { font-size: .845rem; font-weight: 500; }
 .activity-time  { font-size: .75rem; color: var(--muted); margin-top: 2px; }
 
+/* ── Option rows (exam question builder) ────────────────────────
+   A radio + two text inputs + a delete button share one flex row.
+   Bootstrap's .form-control is width:100%, so two of them side by
+   side in a plain flex row fight over space and overflow the card
+   on any narrow screen. Letting the row wrap, and giving the text
+   inputs a shrinkable flex-basis instead of a fixed width, keeps
+   every field usable instead of squeezed to a few pixels wide. */
+.option-row { flex-wrap: wrap; }
+.option-row input[type="text"],
+.option-row input[type="url"] { flex: 1 1 140px; min-width: 0; width: auto; }
+.option-row input[type="radio"],
+.option-row > button,
+.option-row > .btn-outline-sm { flex-shrink: 0; }
+
 /* ── Course Card ─────────────────────────────────────────────── */
 .course-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--sh-sm); overflow: hidden; transition: var(--tr); }
 .course-card:hover { box-shadow: var(--sh-md); transform: translateY(-2px); }
@@ -285,8 +299,11 @@ ul { list-style: none; }
     .main-footer { flex-direction: column; text-align: center; padding: 12px 14px; }
     .sidebar-collapse-btn { display: none; }
 
-    /* Page header: stack title & buttons */
+    /* Page header: stack title & buttons, and let the action button
+       group itself wrap instead of overflowing (e.g. exam show page
+       has 3 buttons — "Results" / "Edit" / "Back" — side by side) */
     .page-header { flex-direction: column !important; align-items: flex-start !important; gap: 10px; }
+    .page-header .d-flex { flex-wrap: wrap; }
 
     /* Panel card header: allow wrap */
     .panel-card-header { flex-wrap: wrap; gap: 8px; }
@@ -294,6 +311,12 @@ ul { list-style: none; }
     /* Tables: make card horizontally scrollable */
     .panel-card { overflow-x: auto; }
     .data-table th, .data-table td { white-space: nowrap; }
+
+    /* Tabs (course content / overview / add unit): scroll horizontally
+       instead of wrapping into a cramped multi-line tab bar */
+    .nav-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tabs .nav-link { white-space: nowrap; }
 
     /* Stat cards: tighter padding */
     .stat-card { padding: 14px; }

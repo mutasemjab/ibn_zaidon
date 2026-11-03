@@ -10,7 +10,7 @@
 @endphp
 
 {{-- Page Header --}}
-<div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:2.5rem 0">
+<div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));padding:2.5rem 0">
     <div class="container">
         <div class="z-breadcrumb mb-2">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>
@@ -99,7 +99,7 @@
                 @if(request()->hasAny(['q','category']))
                 <div class="d-flex gap-2 flex-wrap">
                     @if(request('q'))
-                        <span style="background:rgba(30,107,214,.1);color:var(--z-accent);padding:.2rem .7rem;border-radius:50px;font-size:.8rem;font-weight:600">
+                        <span style="background:rgba(123,47,247,.1);color:var(--z-accent);padding:.2rem .7rem;border-radius:50px;font-size:.8rem;font-weight:600">
                             {{ __('front.courses_search_tag') }} {{ request('q') }}
                         </span>
                     @endif

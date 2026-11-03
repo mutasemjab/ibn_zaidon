@@ -4,7 +4,7 @@
 @section('content')
 @php $letters = __('front.option_letters'); @endphp
 
-<div style="background:linear-gradient(135deg,var(--z-primary),#1a4ab0);padding:2.5rem 0">
+<div style="background:linear-gradient(135deg,var(--z-primary),var(--z-accent));padding:2.5rem 0">
     <div class="container">
         <div class="z-breadcrumb mb-2">
             <a href="{{ route('home') }}">{{ __('front.home') }}</a>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="col-6">
-                        <div style="background:rgba(11,61,145,.06);border-radius:var(--z-radius);padding:.75rem">
+                        <div style="background:rgba(30,43,168,.06);border-radius:var(--z-radius);padding:.75rem">
                             <div style="font-size:1.3rem;font-weight:800;color:var(--z-primary)">{{ $attempt->total_marks }}</div>
                             <div style="font-size:.75rem;color:var(--z-text-muted)">{{ __('front.exam_total_marks') }}</div>
                         </div>
@@ -134,7 +134,7 @@
                 @endforeach
 
                 @if(!$isCorrect && $question->explanation)
-                <div style="margin-top:.75rem;padding:.75rem;background:rgba(30,107,214,.06);border-radius:8px;border-inline-start:3px solid var(--z-accent)">
+                <div style="margin-top:.75rem;padding:.75rem;background:rgba(123,47,247,.06);border-radius:8px;border-inline-start:3px solid var(--z-accent)">
                     <div style="font-size:.8rem;font-weight:700;color:var(--z-accent);margin-bottom:.3rem">
                         <i class="bi bi-lightbulb-fill me-1"></i>{{ __('front.exam_explanation') }}
                     </div>

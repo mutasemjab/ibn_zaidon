@@ -65,7 +65,7 @@
         {{-- ── Academic ──────────────────────────────────────── --}}
         @php
             $showAcademic = $u?->canAny([
-                'course-table','category-table','subject-table','exam-table',
+                'course-table','package-table','category-table','subject-table','exam-table',
                 'question-bank-table','previous-exam-table','worksheet-table',
                 'banner-table','notification-send',
             ]) || $u?->is_super;
@@ -106,6 +106,17 @@
                     </li>
                     @endif
                 </ul>
+            </li>
+            @endif
+
+            {{-- Packages --}}
+            @if($u?->can('package-table'))
+            <li class="nav-item">
+                <a href="{{ route('admin.packages.index') }}"
+                   class="nav-link {{ request()->routeIs('admin.packages.*') ? 'active' : '' }}">
+                    <i class="nav-icon bi bi-boxes"></i>
+                    <span>{{ __('messages.packages') }}</span>
+                </a>
             </li>
             @endif
 
@@ -279,6 +290,13 @@
                    class="nav-link {{ request()->routeIs('admin.site-settings.*') ? 'active' : '' }}">
                     <i class="nav-icon bi bi-gear"></i>
                     <span>{{ __('messages.site_settings') }}</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('admin.pages.index') }}"
+                   class="nav-link {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
+                    <i class="nav-icon bi bi-file-text"></i>
+                    <span>{{ __('messages.static_pages') }}</span>
                 </a>
             </li>
             @endif

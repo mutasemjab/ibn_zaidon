@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\Student\HomeController;
 use App\Http\Controllers\Api\Student\LessonController;
 use App\Http\Controllers\Api\Student\LessonProgressController;
 use App\Http\Controllers\Api\Student\NotificationController;
+use App\Http\Controllers\Api\Student\PackageController;
+use App\Http\Controllers\Api\Student\PageController;
 use App\Http\Controllers\Api\Student\PreviousYearExamController;
 use App\Http\Controllers\Api\Student\ProfileController;
 use App\Http\Controllers\Api\Student\QuestionBankController;
@@ -41,6 +43,13 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
 
     // ── App settings (public — no auth) ───────────────────────────────────
     Route::get('app-settings', [AppSettingController::class, 'index']);
+
+    // ── Static pages (terms, privacy, about, support — public, no auth) ────
+    Route::get('pages/{slug}', [PageController::class, 'show']);
+
+    // ── Course packages (public browse — pick N courses from a pool) ───────
+    Route::get('packages',      [PackageController::class, 'index']);
+    Route::get('packages/{id}', [PackageController::class, 'show']);
 
     // ── Banners (slider images — no auth needed) ────────────────────────────
     Route::get('banners', [BannerController::class, 'index']);
@@ -110,6 +119,10 @@ Route::prefix('v1/student')->middleware('api.locale')->group(function () {
         // Course activation via card code
         // POST /courses/{id}/activate   body: { card_code: "XXXX-XXXX" }
         Route::post('courses/{id}/activate', [CourseActivationController::class, 'activate']);
+
+        // Package activation via card code
+        // POST /packages/{id}/activate  body: { card_code: "XXXX-XXXX", course_ids: [1,2,3] }
+        Route::post('packages/{id}/activate', [PackageController::class, 'activate']);
 
         // Apple StoreKit 2 signed-transaction verification and enrollment.
         Route::post('purchases/apple/verify', [ApplePurchaseController::class, 'verify'])
